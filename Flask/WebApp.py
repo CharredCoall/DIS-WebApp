@@ -11,6 +11,11 @@ def show_test():
     
     return "Success"
 
+@app.route("/game")
+def show_game():
+    return render_template("Game.html");
+
+
 @app.after_request
 def add_header_home(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
