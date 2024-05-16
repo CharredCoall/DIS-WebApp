@@ -1,0 +1,77 @@
+[gd_scene load_steps=8 format=3 uid="uid://dcne03gg2yltb"]
+
+[ext_resource type="Script" path="res://PigeonSpawner.gd" id="1_llwul"]
+[ext_resource type="Texture2D" uid="uid://cn4rs31ep3b7d" path="res://Art/BackButton.png" id="2_bsngf"]
+[ext_resource type="Texture2D" uid="uid://bf4flmh363ft" path="res://Art/Hotels.jpg" id="2_jg7dq"]
+[ext_resource type="Texture2D" uid="uid://batnscjojqbjp" path="res://Art/BackButtonHover.png" id="3_55fyq"]
+[ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="4_oh1k7"]
+[ext_resource type="PackedScene" uid="uid://t8ujyfxc0bj2" path="res://shop.tscn" id="6_h10t3"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_5u83m"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_llwul")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1001, 608)
+
+[node name="BackButton" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = -354.0
+offset_top = 143.0
+offset_right = -291.0
+offset_bottom = 204.0
+texture_normal = ExtResource("2_bsngf")
+texture_pressed = ExtResource("3_55fyq")
+texture_hover = ExtResource("3_55fyq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AccessoryButton" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = -277.0
+offset_top = 143.0
+offset_right = -214.0
+offset_bottom = 204.0
+texture_normal = ExtResource("2_bsngf")
+texture_pressed = ExtResource("3_55fyq")
+texture_hover = ExtResource("3_55fyq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="AccessoriesArea" type="MeshInstance2D" parent="Camera2D/AccessoryButton"]
+visible = false
+modulate = Color(0.623529, 0.792157, 0.509804, 1)
+position = Vector2(16, -183.75)
+scale = Vector2(181, 296.5)
+mesh = SubResource("QuadMesh_5u83m")
+
+[node name="ItemList" type="ItemList" parent="Camera2D/AccessoryButton"]
+visible = false
+layout_mode = 0
+offset_left = -60.0
+offset_top = -317.0
+offset_right = 94.0
+offset_bottom = -51.0
+item_count = 1
+item_0/text = ""
+item_0/icon = ExtResource("4_oh1k7")
+
+[node name="Hotels" type="Sprite2D" parent="."]
+position = Vector2(1000.11, 600)
+scale = Vector2(1.04155, 1.11111)
+texture = ExtResource("2_jg7dq")
+
+[node name="Shop" parent="." instance=ExtResource("6_h10t3")]
+z_index = 10
+position = Vector2(0, 18)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="pressed" from="Camera2D/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Camera2D/AccessoryButton" to="." method="_on_accessory_button_pressed"]
+[connection signal="item_clicked" from="Camera2D/AccessoryButton/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

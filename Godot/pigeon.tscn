@@ -1,0 +1,235 @@
+[gd_scene load_steps=35 format=3 uid="uid://fcj0ymrgpa2m"]
+
+[ext_resource type="Script" path="res://pigeon.gd" id="2_op8wt"]
+[ext_resource type="Texture2D" uid="uid://cy8cd6jfknacx" path="res://Art/Animations/pigeonfly/Flying_Goob-1.png" id="3_fq4i0"]
+[ext_resource type="Texture2D" uid="uid://blk7b1jbsa3h3" path="res://Art/Animations/pigeonfly/Flying_Goob-2.png" id="4_1usv8"]
+[ext_resource type="Texture2D" uid="uid://c8m4g551yju5o" path="res://Art/Animations/pigeonfly/Flying_Goob-3.png" id="5_jdt3d"]
+[ext_resource type="Texture2D" uid="uid://bhl4w5ljh6mx3" path="res://Art/Animations/pigeonfly/Flying_Goob-4.png" id="6_dn1ih"]
+[ext_resource type="Texture2D" uid="uid://bb774ncnnyum7" path="res://Art/Animations/pigeonidle/Idling_Goobing-1.png" id="7_gk6wr"]
+[ext_resource type="Texture2D" uid="uid://ck2fa30sqnk7f" path="res://Art/Animations/pigeonidle/Idling_Goobing-2.png" id="8_hi6um"]
+[ext_resource type="Texture2D" uid="uid://dd1mtyetggu7x" path="res://Art/Animations/pigeonidle/Idling_Goobing-3.png" id="9_oxm83"]
+[ext_resource type="Texture2D" uid="uid://bmcoep2scsi4f" path="res://Art/Animations/pigeonidle/Idling_Goobing-4.png" id="10_ag0sl"]
+[ext_resource type="Texture2D" uid="uid://0lqqgr12tvwv" path="res://Art/Animations/pigeonidle/Idling_Goobing-5.png" id="11_gye40"]
+[ext_resource type="Texture2D" uid="uid://cesnm3q5p23lh" path="res://Art/Animations/pigeontouch/Dont_Touch!-1.png" id="12_cidb3"]
+[ext_resource type="Texture2D" uid="uid://crynf0fpt7kmd" path="res://Art/Animations/pigeontouch/Dont_Touch!-2.png" id="13_su8ic"]
+[ext_resource type="Texture2D" uid="uid://b3ju7uxeigvq" path="res://Art/Animations/pigeontouch/Dont_Touch!-3.png" id="14_c5gr5"]
+[ext_resource type="Texture2D" uid="uid://oclylrxt2xuy" path="res://Art/Animations/pigeontouch/Dont_Touch!-4.png" id="15_eju57"]
+[ext_resource type="Texture2D" uid="uid://diwdamrtl3dqy" path="res://Art/Animations/pigeontouch/Dont_Touch!-5.png" id="16_gm5pw"]
+[ext_resource type="Texture2D" uid="uid://ug15ugbxu7gy" path="res://Art/Animations/pigeontouch/Dont_Touch!-6.png" id="17_gsux8"]
+[ext_resource type="Texture2D" uid="uid://cdpwhtmaj6bmr" path="res://Art/Animations/pigeontouch/Dont_Touch!-7.png" id="18_8tjwu"]
+[ext_resource type="Texture2D" uid="uid://dbdcpcut03un1" path="res://Art/Animations/pigeontouch/Dont_Touch!-8.png" id="19_nyqw2"]
+[ext_resource type="Texture2D" uid="uid://dbr0pbn65di1r" path="res://Art/Animations/pigeontouch/Dont_Touch!-9.png" id="20_h8pfi"]
+[ext_resource type="Texture2D" uid="uid://cnkp8ii0eapde" path="res://Art/Animations/pigeontouch/Dont_Touch!-10.png" id="21_jw0fg"]
+[ext_resource type="Texture2D" uid="uid://d2gqy43x8c88o" path="res://Art/Animations/pigeontouch/Dont_Touch!-11.png" id="22_g1k55"]
+[ext_resource type="Texture2D" uid="uid://sbkcyx83f2s6" path="res://Art/Animations/pigeontouch/Dont_Touch!-12.png" id="23_8n85x"]
+[ext_resource type="Texture2D" uid="uid://ywul2vqdvxoe" path="res://Art/Animations/pigeonwalk/Walking_Goober-1.png" id="23_t0hs6"]
+[ext_resource type="Texture2D" uid="uid://p6mfdvcorsst" path="res://Art/Animations/pigeonwalk/Walking_Goober-2.png" id="24_p5bja"]
+[ext_resource type="Texture2D" uid="uid://b0lq43kn0vbwq" path="res://Art/Animations/pigeonwalk/Walking_Goober-3.png" id="25_c3d2o"]
+[ext_resource type="Texture2D" uid="uid://8ytfbfs2x2nr" path="res://Art/Animations/pigeonwalk/Walking_Goober-4.png" id="26_jauur"]
+[ext_resource type="Texture2D" uid="uid://colipft8u1rrk" path="res://Art/Animations/pigeonwalk/Walking_Goober-5.png" id="27_gruo0"]
+[ext_resource type="Texture2D" uid="uid://d1bhvtmof8x53" path="res://Art/Animations/pigeonwalk/Walking_Goober-6.png" id="28_wuax3"]
+[ext_resource type="Texture2D" uid="uid://bdh3op0jkvmeb" path="res://Art/Animations/pigeonwalk/Walking_Goober-7.png" id="29_6gb8r"]
+[ext_resource type="Texture2D" uid="uid://c2eq6fdlrthp5" path="res://Art/Animations/pigeonwalk/Walking_Goober-8.png" id="30_nmmk7"]
+[ext_resource type="Texture2D" uid="uid://be1vwvd3cfm82" path="res://Art/Items/placeholder_texture_2d.tres" id="31_i4nbw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0gn46"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fq4i0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1usv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jdt3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dn1ih")
+}],
+"loop": true,
+"name": &"pigeon_fly",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 5.0,
+"texture": ExtResource("7_gk6wr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hi6um")
+}, {
+"duration": 10.0,
+"texture": ExtResource("9_oxm83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ag0sl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gye40")
+}],
+"loop": true,
+"name": &"pigeon_idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 2.5,
+"texture": ExtResource("12_cidb3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_su8ic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_c5gr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_eju57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gm5pw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_gsux8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_8tjwu")
+}, {
+"duration": 0.6,
+"texture": ExtResource("19_nyqw2")
+}, {
+"duration": 0.7,
+"texture": ExtResource("20_h8pfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_jw0fg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_g1k55")
+}, {
+"duration": 2.5,
+"texture": ExtResource("23_8n85x")
+}],
+"loop": false,
+"name": &"pigeon_touch",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_t0hs6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_p5bja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_c3d2o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_jauur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_gruo0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_wuax3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_6gb8r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_nmmk7")
+}],
+"loop": true,
+"name": &"pigeon_walk",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_m55cw"]
+resource_name = "pigeon_move"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 2.5, 3.5, 4.5, 5.5, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-20, -10), Vector2(-40, 0), Vector2(-40, 0), Vector2(0, 0), Vector2(20, -10), Vector2(40, 0), Vector2(40, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D/Accessory:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 1.9, 2.4, 2.5, 3.5, 4.5, 5.5, 5.9, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-21, -50), Vector2(-40, -60), Vector2(-60, -50), Vector2(-60, -50), Vector2(-25, -50), Vector2(23, -50), Vector2(40, -60), Vector2(60, -50), Vector2(60, -50), Vector2(20, -50), Vector2(-20, -50)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D/Accessory:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.5, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yp0uo"]
+_data = {
+"pigeon_move": SubResource("Animation_m55cw")
+}
+
+[node name="Pigeon" type="Node2D"]
+position = Vector2(-25, 0)
+script = ExtResource("2_op8wt")
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -38.0
+offset_top = -73.0
+offset_right = 88.0
+offset_bottom = 59.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-7, -24)
+sprite_frames = SubResource("SpriteFrames_0gn46")
+animation = &"pigeon_idle"
+
+[node name="Accessory" type="Sprite2D" parent="AnimatedSprite2D"]
+position = Vector2(-20, -50)
+texture = ExtResource("31_i4nbw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 4.0
+libraries = {
+"": SubResource("AnimationLibrary_yp0uo")
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.378
+one_shot = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_idle_anim_timer_timeout"]

@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://t8ujyfxc0bj2"]
+
+[ext_resource type="Script" path="res://shop.gd" id="1_mc7t8"]
+[ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_naglo"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_0fh1w"]
+
+[node name="Shop" type="Node2D"]
+script = ExtResource("1_mc7t8")
+
+[node name="ShopButton" type="TextureButton" parent="."]
+offset_left = 1638.0
+offset_top = 1016.0
+offset_right = 1932.0
+offset_bottom = 1122.0
+texture_normal = ExtResource("5_naglo")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Area" type="MeshInstance2D" parent="ShopButton"]
+visible = false
+self_modulate = Color(0.623529, 0.792157, 0.509804, 1)
+position = Vector2(-623.625, -496.688)
+scale = Vector2(1550.75, 852.625)
+mesh = SubResource("QuadMesh_0fh1w")
+
+[node name="MoneyLabel" type="RichTextLabel" parent="ShopButton"]
+visible = false
+layout_mode = 0
+offset_left = -1318.0
+offset_top = -855.688
+offset_right = -506.0
+offset_bottom = -771.688
+theme_override_font_sizes/normal_font_size = 52
+text = "Money: "
+
+[node name="ItemList" type="ItemList" parent="ShopButton"]
+visible = false
+layout_mode = 0
+offset_left = -1313.63
+offset_top = -729.688
+offset_right = 68.375
+offset_bottom = -239.688
+theme_override_font_sizes/font_size = 50
+select_mode = 1
+max_columns = 6
+icon_scale = 2.0
+
+[node name="BuyButton" type="TextureButton" parent="ShopButton"]
+visible = false
+layout_mode = 0
+offset_left = -749.625
+offset_top = -196.688
+offset_right = -519.625
+offset_bottom = -113.688
+texture_normal = ExtResource("5_naglo")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="item_clicked" from="ShopButton/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="ShopButton/BuyButton" to="." method="_on_buy_button_pressed"]
