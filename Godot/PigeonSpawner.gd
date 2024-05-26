@@ -44,10 +44,7 @@ func _process(_delta):
 			GameVariables.pigeon_state[str(get_child(-1).get_name())] = "pigeon_idle" #State ændrer animation
 			landed = true
 			
-			#PROBLEM with animations. Until next pigeon arrives, the bird is constantly idling, so one can't make bird SQUACK before the next bird arrives.
-			
 			if str(new_pig.get_name()) not in GameVariables.tenants:
-				#new_pig.visible = false #FIX!
 				get_child(-1).queue_free()
 	
 	if GameVariables.room_occupancy.get(str(room_pos)) == 2 and GameVariables.room_occupancy.has(str(room_pos)):

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cw0b1olpt8m7r"]
+
+[ext_resource type="Texture2D" uid="uid://70bsvtwr3k5d" path="res://Art/Minigames/PigeonShooter/PinkHoodie.png" id="1_08gre"]
+[ext_resource type="Script" path="res://clothing.gd" id="1_g4eqf"]
+[ext_resource type="Texture2D" uid="uid://df1ybyspr4x7d" path="res://Art/Minigames/PigeonShooter/RedShirt.png" id="3_640ei"]
+[ext_resource type="Texture2D" uid="uid://dr74yssbm3cwq" path="res://Art/Minigames/PigeonShooter/Underwear.png" id="4_scfrk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_knx2v"]
+radius = 64.0312
+
+[node name="Clothing" type="RigidBody2D"]
+script = ExtResource("1_g4eqf")
+
+[node name="Hoodie" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -12)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_08gre")
+
+[node name="Shirt" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_640ei")
+
+[node name="Underwear" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_scfrk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -6)
+shape = SubResource("CircleShape2D_knx2v")

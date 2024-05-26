@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkwuh018r8bah"]
+
+[ext_resource type="Script" path="res://Projectile.gd" id="1_87oo6"]
+[ext_resource type="Texture2D" uid="uid://c1if7xera7158" path="res://Art/Minigames/PigeonShooter/Poop.png" id="2_c24u3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymp1p"]
+radius = 33.92
+
+[node name="Projectile" type="StaticBody2D"]
+script = ExtResource("1_87oo6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_ymp1p")
+
+[node name="PoopSprite" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_c24u3")
