@@ -71,6 +71,13 @@ sql = '''
         amount integer CHECK (amount > 0),
         PRIMARY KEY (player_id, hat)
     );
+
+    CREATE OR REPLACE FUNCTION public.get_pigeon_by_id(_id integer)
+    RETURNS pigeons
+    LANGUAGE sql
+    AS $function$
+    SELECT * FROM pigeons WHERE id = _id LIMIT 1;
+    $function$
 '''
 
 cursor.execute(sql)
