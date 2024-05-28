@@ -1,7 +1,4 @@
-from flask import Flask
-from flask import jsonify
-from flask import render_template
-from flask import request
+from flask import Flask, jsonify, render_template, request, session
 import psycopg2
 import json
 
@@ -178,6 +175,34 @@ def load_game():
 
         return "Input Error: {}".format(request_result), 400  
     return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
+
+@app.route("/user", methods=["POST","GET"])
+def user():
+    match request.method:
+        case "POST":
+            if request.content_type == "application/json":
+                request_result = request.get_json()
+
+                if request_result != None and "username" in request_result and "pass" in request_result :
+                    if type(request_result["username"]) == str and type(request_result["pass"]) == str:
+
+                        call_sql("create_user",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], False)
+                        return jsonify("Succes")
+
+                return "Input Error: {}".format(request_result), 400  
+            return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
+        case "GET":
+            if request.content_type == "application/json":
+                request_result = request.get_json()
+
+                if request_result != None and "username" in request_result and "pass" in request_result :
+                    if type(request_result["username"]) == str and type(request_result["pass"]) == str:
+                        return jsonify(call_sql("confirm_pass",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], True)[0][0])
+
+                return "Input Error: {}".format(request_result), 400  
+            return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
+            
+        
 
 
 @app.after_request
