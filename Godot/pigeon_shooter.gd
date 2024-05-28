@@ -1,6 +1,8 @@
 extends Node2D
 
-@onready var timer = $Timer
+@onready var cd_timer = $CountDownTimer
+@onready var game_timer = $GameTimer
+@onready var time_left_label = $TimeLeft
 @onready var count_down_label = $CountDown
 @onready var animation_player = $Background/AnimationPlayer
 @onready var player = $Player
@@ -10,9 +12,10 @@ extends Node2D
 
 var count_down = 3
 var speed = 800
+var seconds = 0
 
 func _ready():
-	timer.wait_time = 1
+	cd_timer.wait_time = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -35,15 +38,26 @@ func _on_timer_timeout():
 		
 		if count_down == 0:
 			count_down_label.queue_free()   #removed after use
-			timer.wait_time = 2
+			cd_timer.wait_time = 2
+			game_timer.start()
+			time_left_label.visible = true
 		
 		count_down -= 1
 	else:
-		if timer.wait_time > 0.8:
-			timer.wait_time -= 0.1
+		if cd_timer.wait_time > 0.8:
+			cd_timer.wait_time -= 0.1
 		
 		var clothing = clothing_scene.instantiate()
 		clothing.position = Vector2(1721,457)
 		add_child(clothing)
 		
 		animation_player.play("woman_throw")
+
+func _on_game_timer_timeout():	
+	if seconds != 30:
+		seconds += 1
+		game_timer.start()
+		time_left_label.text = "[center]" + str(int(time_left_label.text) - 1)
+	else: 
+		cd_timer.stop()
+		#play some sort of ending animation! (use animationplayer)

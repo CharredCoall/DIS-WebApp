@@ -11,8 +11,7 @@ func _ready():
 	var rnd_time = randf_range(1.5,2.5)
 	
 	v0 = calculate_v0(rnd_time)
-	print(v0)
-	#load a random clothing sprite
+	
 	#play animation
 	#randomize the vector
 	#if clothing collides with hanging line (metadata?) then make it run along the line and disappear
