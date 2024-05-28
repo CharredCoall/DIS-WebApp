@@ -78,6 +78,21 @@ sql = '''
     AS $function$
     SELECT * FROM pigeons WHERE id = _id LIMIT 1;
     $function$
+
+    CREATE OR REPLACE PROCEDURE public.set_score(IN _id integer, IN _game game, IN _score integer)
+    LANGUAGE plpgsql
+    AS $procedure$
+    BEGIN
+        IF EXISTS( SELECT * FROM highscore WHERE game = _game AND user_id = _id) THEN
+            UPDATE highscore 
+            SET score = _score 
+            WHERE game = _game AND user_id = _id;
+        ELSE
+            INSERT INTO highscore (user_id, game, score, created_at) 
+            VALUES (_id, _game, _score, current_timestamp);
+        END IF;
+    END;
+    $procedure$
 '''
 
 cursor.execute(sql)

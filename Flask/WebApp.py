@@ -17,21 +17,21 @@ def call_sql(function, input,returns):
     if not type(input) == list :
         input_string = input
     else:
-        input_string = input.pop(0)
+        input_string = str(input.pop(0))
         for v in input :
-            input_string += ", " + v
+            input_string += ", " + str(v)
 
     if (returns):
         cursor.execute("SELECT * FROM {}({});".format(function, input_string))
     else:
-        cursor.execute("{}({});".format(function, input_string))
+        print ("CALL {}({});".format(function, input_string))
+        cursor.execute("CALL {}({});".format(function, input_string))
 
     if returns :
         result = cursor.fetchall()
-    conn.close  
-
-    if returns :
+        conn.close
         return result
+    conn.close  
 
 @app.route("/")
 def show_test():
@@ -60,7 +60,41 @@ def pigeon():
             return "Pigeon with id: {} Not Found".format(request_result["pigeon"]), 404
         return "ServerError, Incorrect Result" + str(result[0]), 500
 
-    return jsonify(result)
+    return jsonify(result[0])
+
+@app.route("/score", methods=["GET","PUT"])
+def score():
+    match request.method:
+        case "GET":
+            if request.content_type == "json":
+                request_result = request.get_json()
+            
+                if request_result != None or "user" in request_result:
+                    if type(request_result["user"]) == int:
+                        result = call_sql("get_score_by_user",request_result["user"],True)
+                        if result[0][0] == None :
+                            return jsonify(None)
+                        return jsonify(result)
+            
+            print(request.content_type)
+
+            result = call_sql("get_all_scores", "", True)
+
+            if result[0][0] == None:
+                return jsonify(None)
+            return jsonify(result)
+        
+        case "PUT":
+            request_result = request.get_json()
+    
+            if request_result != None or "user" in request_result and "score" in request_result and "game" in request_result:
+                if type(request_result["user"]) == int and type(request_result["score"]) == int and type(request_result["game"]) == str:
+
+                    call_sql("set_score",[request_result['user'], "'" + request_result['game'] + "'", request_result['score']], False)
+                    return jsonify("Succes")
+
+            return "Input Error: {}".format(request_result), 400    
+            
 
 @app.after_request
 def add_header_home(response):
