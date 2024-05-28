@@ -22,3 +22,9 @@ var pigeon_clothes = {} #Clothes pigeons are wearing
 
 var pigeon_pool #Pigeons that are availble for other players to adopt. Try making a pigeon fly to hotel
 
+#temporary variables for mini games
+var current_score = 0
+var current_chance = 0
+var current_con = 0
+var current_int = 0
+

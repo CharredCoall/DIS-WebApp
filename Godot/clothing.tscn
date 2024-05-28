@@ -9,6 +9,8 @@
 radius = 64.0312
 
 [node name="Clothing" type="RigidBody2D"]
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_g4eqf")
 
 [node name="Hoodie" type="Sprite2D" parent="."]
@@ -30,3 +32,5 @@ texture = ExtResource("4_scfrk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, -6)
 shape = SubResource("CircleShape2D_knx2v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
