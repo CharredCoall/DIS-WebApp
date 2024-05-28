@@ -4,6 +4,11 @@ import json
 
 app = Flask(__name__)
 
+app.secret_key = '''rG7Oj}{mKXfN5f*pF$1f<]WQ-tm8I*b0^L"FgZfshA$]cBD8B-gi.W-*0~H0!j;'''
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True
+)
+
 def call_sql(function, input,returns):
     conn = psycopg2.connect(database="pigeonhole", user="postgres", password="testPassword", host="127.0.0.1", port="5432")
 
@@ -192,12 +197,20 @@ def user():
                 return "Input Error: {}".format(request_result), 400  
             return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
         case "GET":
+            if 'user_id' in session:
+                print(session['user_id'])
             if request.content_type == "application/json":
                 request_result = request.get_json()
 
                 if request_result != None and "username" in request_result and "pass" in request_result :
                     if type(request_result["username"]) == str and type(request_result["pass"]) == str:
-                        return jsonify(call_sql("confirm_pass",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], True)[0][0])
+                        if call_sql("confirm_pass",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], True)[0][0]:
+                            session.clear()
+                            session['user_id'] = call_sql("get_user","'" + request_result['username'] + "'",True)[0][0]
+                            session.modified = True
+                            return jsonify(True)
+                        
+                        return "Incorrect Password: {}".format(request_result), 400
 
                 return "Input Error: {}".format(request_result), 400  
             return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
