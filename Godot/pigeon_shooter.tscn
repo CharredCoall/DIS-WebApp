@@ -98,6 +98,23 @@ bbcode_enabled = true
 text = "[center]30"
 text_direction = 1
 
+[node name="Score" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 664.0
+offset_top = 63.0
+offset_right = 1935.0
+offset_bottom = 259.0
+theme_override_colors/default_color = Color(0.979564, 0.643826, 1.92523e-06, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.517647)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 30
+theme_override_constants/outline_size = 75
+theme_override_font_sizes/normal_font_size = 120
+bbcode_enabled = true
+text = " 0"
+autowrap_mode = 0
+text_direction = 2
+
 [node name="Tester" type="MeshInstance2D" parent="."]
 modulate = Color(0.907533, 0, 0.42548, 1)
 position = Vector2(400, 450)
@@ -108,6 +125,8 @@ position = Vector2(939, 1039)
 scale = Vector2(1.3, 1.3)
 sprite_frames = SubResource("SpriteFrames_86sv1")
 animation = &"Shooter_idle"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="timeout" from="CountDownTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

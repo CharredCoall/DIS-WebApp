@@ -4,6 +4,8 @@ var landing_pos = Vector2(400, 450)
 var gravity = 980   #this just matches godot's default gravity
 var v0
 
+signal clothes_shot
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_child(randi_range(0,2)).visible = true
@@ -33,3 +35,10 @@ func calculate_v0(dt):    #time it takes to travel
 	var dist_max = (v0_x**2+v0_y**2)/abs(gravity)
 	
 	return Vector2(v0_x, -v0_y)  #y op er negativ, da godot op er negativ
+
+func _on_body_entered(body):
+	if body.get_name() == "Projectile" or "StaticBody2D" in body.get_name():
+		queue_free()
+		GameVariables.current_score += 10
+		
+		emit_signal("clothes_shot")
