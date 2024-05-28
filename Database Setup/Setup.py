@@ -71,13 +71,155 @@ sql = '''
         amount integer CHECK (amount > 0),
         PRIMARY KEY (player_id, hat)
     );
+    
+    CREATE OR REPLACE FUNCTION public.get_all_scores()
+    RETURNS highscore
+    LANGUAGE sql
+    AS $function$
+        SELECT * FROM highscore;
+    $function$
+        
+    CREATE OR REPLACE FUNCTION public.get_all_scores(_id integer)
+    RETURNS highscore
+    LANGUAGE sql
+    AS $function$
+        SELECT * FROM highscore;
+    $function$
 
     CREATE OR REPLACE FUNCTION public.get_pigeon_by_id(_id integer)
     RETURNS pigeons
     LANGUAGE sql
     AS $function$
-    SELECT * FROM pigeons WHERE id = _id LIMIT 1;
+        SELECT * FROM pigeons WHERE id = _id LIMIT 1;
     $function$
+
+    CREATE OR REPLACE FUNCTION public.get_pigeon_by_pigeonhole(_id integer)
+    RETURNS TABLE(id integer)
+    LANGUAGE sql
+    AS $function$
+        SELECT id FROM pigeons WHERE pigeonhole_id = _id;
+    $function$
+       
+    
+    CREATE OR REPLACE FUNCTION public.get_pigeonholes_by_user(_id integer)
+    RETURNS TABLE(id integer, pos integer)
+    LANGUAGE sql
+    AS $function$
+        SELECT id, position AS pos FROM pigeonholes WHERE player_id = _id;
+    $function$
+
+    
+    CREATE OR REPLACE FUNCTION public.get_pigeons_by_user(_id integer)
+    RETURNS TABLE(pigeonhole_id integer, state text, chance integer, intelligence integer, constitution integer, hat integer)
+    LANGUAGE sql
+    AS $function$
+        SELECT pigeonhole_id, state, chance, intelligence, constitution, hat FROM pigeons LEFT JOIN wears ON id = pigeon  WHERE owner_id = _id;
+    $function$
+
+
+    CREATE OR REPLACE FUNCTION public.get_score_by_user(_id integer)
+    RETURNS highscore
+    LANGUAGE sql
+    AS $function$
+            SELECT * FROM highscore WHERE user_id = _id;
+    $function$
+    
+
+    CREATE OR REPLACE FUNCTION public.get_user(_username text)
+    RETURNS TABLE(id integer, username text, money integer)
+    LANGUAGE sql
+    AS $function$
+        SELECT id, username, money FROM players WHERE username = _username LIMIT 1;
+    $function$
+
+    
+    CREATE OR REPLACE FUNCTION public.get_user(_id integer)
+    RETURNS TABLE(id integer, username text, money integer)
+    LANGUAGE sql
+    AS $function$
+        SELECT id, username, money FROM players WHERE id = _id LIMIT 1;
+    $function$
+
+
+    CREATE OR REPLACE FUNCTION public.getpigeonbyid(_id integer)
+    RETURNS pigeons
+    LANGUAGE sql
+    AS $function$
+        SELECT * FROM pigeons WHERE id = _id LIMIT 1;
+    $function$
+
+
+    
+    CREATE OR REPLACE FUNCTION public.pigeonhole_is_available(_id integer)
+    RETURNS boolean
+    LANGUAGE plpgsql
+    AS $function$
+    BEGIN
+        IF (NOT EXISTS (SELECT * FROM pigeonholes WHERE id = _id)) THEN
+            RETURN FALSE;
+        ELSE
+            IF (EXISTS (SELECT id FROM pigeons WHERE pigeonhole_id = _id LIMIT 1)) THEN
+                RETURN FALSE;
+            ELSE 
+                RETURN TRUE;
+            END IF;
+        END IF;
+    END;
+    $function$
+
+    CREATE OR REPLACE PROCEDURE public.add_score(IN _id integer, IN _game game, IN _score integer)
+    LANGUAGE sql
+    AS $procedure$
+        INSERT INTO highscore VALUES(_id, _game, _score, current_timestamp)
+    $procedure$
+
+    
+    CREATE OR REPLACE PROCEDURE public.buy_hat(IN _id integer, IN _hat integer)
+    LANGUAGE plpgsql
+    AS $procedure$
+    BEGIN
+        IF EXISTS( SELECT * FROM owns WHERE player_id = _id AND hat = _hat) THEN
+            UPDATE owns 
+            SET amount = amount + 1  
+            WHERE player_id = _id AND hat = _hat;
+        ELSE
+            INSERT INTO owns 
+            VALUES (_id, _hat, 1);
+        END IF;
+    END;
+    $procedure$
+
+
+    CREATE OR REPLACE PROCEDURE public.create_pigeon(IN _owner_id integer, IN _pigeonhole_id integer)
+    LANGUAGE sql
+    AS $procedure$
+        INSERT INTO pigeons(owner_id, pigeonhole_id, state, chance, intelligence, constitution) VALUES(_owner_id, _pigeonhole_id, 'vibin', (SELECT ROUND(RANDOM()*19+1)), (SELECT ROUND(RANDOM()*19+1)), (SELECT ROUND(RANDOM()*19+1)));
+    $procedure$
+
+
+    CREATE OR REPLACE PROCEDURE public.create_user(IN _username text, IN _password text)
+    LANGUAGE plpgsql
+    AS $procedure$
+        BEGIN
+            INSERT INTO players(username, password, money) VALUES(_username, crypt(_password, gen_salt('bf')), 500);
+            FOR hole in 1..20 LOOP
+                INSERT INTO pigeonholes(player_id,position) VALUES((SELECT id FROM get_user(_username)), hole);
+            END LOOP;
+        END;
+    $procedure$
+
+    
+    CREATE OR REPLACE PROCEDURE public.equip_hat(IN _id integer, IN _hat integer)
+    LANGUAGE plpgsql
+    AS $procedure$
+    BEGIN
+        IF EXISTS( SELECT * FROM wears WHERE pigeon = _id) THEN
+            DELETE FROM wears WHERE pigeon = _id;
+        END IF;
+        INSERT INTO wears 
+        VALUES (_id, _hat);
+    END;
+    $procedure$
 
     CREATE OR REPLACE PROCEDURE public.set_score(IN _id integer, IN _game game, IN _score integer)
     LANGUAGE plpgsql
@@ -93,6 +235,15 @@ sql = '''
         END IF;
     END;
     $procedure$
+
+    
+    CREATE OR REPLACE PROCEDURE public.update_pigeon(IN _id integer, IN _chance integer, IN _constitution integer)
+    LANGUAGE sql
+    AS $procedure$
+        UPDATE pigeons SET chance = _chance, constitution = _constitution WHERE id = _id 
+    $procedure$
+
+
 '''
 
 cursor.execute(sql)
