@@ -42,25 +42,57 @@ def show_test():
 def show_game():
     return render_template("Game.html")
 
-@app.route("/pigeon", methods=["GET"])
+@app.route("/pigeon", methods=["GET","PUT","POST"])
 def pigeon():
-    request_result = request.get_json()
-    if request_result == None or not "pigeon" in request_result:
-        return "Input needs dictionary with positive integer at 'pigeon'\n Instead got: {}".format(request_result), 400
-    if not type(request_result["pigeon"]) == int:
-        return "Input needs dictionary with positive integer at 'pigeon'\n Instead got: {} with type: {}".format(request_result,type(request_result["pigeon"])), 400
+    match request.method:
+        case "GET":
+            request_result = request.get_json()
+            if request_result == None or not "pigeon" in request_result:
+                return "Input needs dictionary with positive integer at 'pigeon'\n Instead got: {}".format(request_result), 400
+            if not type(request_result["pigeon"]) == int:
+                return "Input needs dictionary with positive integer at 'pigeon'\n Instead got: {} with type: {}".format(request_result,type(request_result["pigeon"])), 400
 
-    result = call_sql("get_pigeon_by_id",request_result["pigeon"],True)
+            result = call_sql("get_pigeon_by_id",request_result["pigeon"],True)
 
-    if len(result) > 1:
-        return "ServerError, Too many results", 500
+            if len(result) > 1:
+                return "ServerError, Too many results", 500
 
-    if result[0][0] != request_result["pigeon"]:
-        if result[0][0] == None:
-            return "Pigeon with id: {} Not Found".format(request_result["pigeon"]), 404
-        return "ServerError, Incorrect Result" + str(result[0]), 500
+            if result[0][0] != request_result["pigeon"]:
+                if result[0][0] == None:
+                    return "Pigeon with id: {} Not Found".format(request_result["pigeon"]), 404
+                return "ServerError, Incorrect Result" + str(result[0]), 500
 
-    return jsonify(result[0])
+            return jsonify(result[0])
+        case "PUT":
+            if request.content_type == "application/json":
+                request_result = request.get_json()
+        
+                if request_result != None and "pigeon" in request_result and "chance" in request_result and "constitution" in request_result:
+                    if type(request_result["pigeon"]) == int and type(request_result["chance"]) == int and type(request_result["constitution"]) == int:
+
+                        call_sql("update_pigeon",[request_result['pigeon'], request_result["chance"], request_result['constitution']], False)
+                        return jsonify("Succes")
+
+                return "Input Error: {}".format(request_result), 400  
+            return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
+        case "POST":
+            if request.content_type == "application/json":
+                request_result = request.get_json()
+        
+                if request_result != None and "user" in request_result and "pigeonhole":
+                    if type(request_result["user"]) == int and type(request_result["pigeonhole"]) == int :
+                        available = call_sql("pigeonhole_is_available",request_result["pigeonhole"], True)
+                        if not available[0][0]:
+                            return "Input Error, Pigeon already lives here, Or Hole does not exist: {}".format(request_result), 400  
+ 
+                        call_sql("create_pigeon",[request_result["user"], request_result["pigeonhole"]], False)
+
+                        return jsonify("Succes")
+
+                return "Input Error: {}".format(request_result), 400  
+            return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
+
+
 
 @app.route("/score", methods=["GET","PUT"])
 def score():
@@ -87,7 +119,7 @@ def score():
         case "PUT":
             request_result = request.get_json()
     
-            if request_result != None or "user" in request_result and "score" in request_result and "game" in request_result:
+            if request_result != None and "user" in request_result and "score" in request_result and "game" in request_result:
                 if type(request_result["user"]) == int and type(request_result["score"]) == int and type(request_result["game"]) == str:
 
                     call_sql("set_score",[request_result['user'], "'" + request_result['game'] + "'", request_result['score']], False)
@@ -95,6 +127,58 @@ def score():
 
             return "Input Error: {}".format(request_result), 400    
             
+@app.route("/buy_hat", methods=["PUT"])
+def buy_hat():
+    if request.content_type == "application/json":
+        request_result = request.get_json()
+
+        if request_result != None and "user" in request_result and "hat" in request_result :
+            if type(request_result["user"]) == int and type(request_result["hat"]) == int:
+
+                call_sql("buy_hat",[request_result['user'], request_result["hat"],], False)
+                return jsonify("Succes")
+
+        return "Input Error: {}".format(request_result), 400  
+    return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
+
+@app.route("/equip_hat", methods=["PUT"])
+def equip_hat():
+    if request.content_type == "application/json":
+        request_result = request.get_json()
+
+        if request_result != None and "pigeon" in request_result and "hat" in request_result :
+            if type(request_result["pigeon"]) == int and type(request_result["hat"]) == int:
+
+                call_sql("equip_hat",[request_result['pigeon'], request_result["hat"],], False)
+                return jsonify("Succes")
+
+        return "Input Error: {}".format(request_result), 400  
+    return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
+
+@app.route("/load_game", methods=["GET"])
+def load_game():
+    if request.content_type == "application/json":
+        request_result = request.get_json()
+
+        if request_result != None and "user" in request_result :
+            if type(request_result["user"]) == int or type(request_result["user"]) == str:
+
+                if type(request_result["user"]) == str:
+                    request_result["user"] = "'" + request_result["user"] + "'"
+                    
+                userData = call_sql("get_user", request_result['user'], True)
+                if userData == []:
+                    return "User: {} Not Found".format(request_result["user"]), 404
+                userData = userData[0]
+                id = userData[0]
+                pigeons = call_sql("get_pigeons_by_user", id, True)
+                pigeonholes = call_sql("get_pigeonholes_by_user", id, True)
+
+                return jsonify({"pigeons": pigeons, "pigeonholes": pigeonholes, "userData": userData})
+
+        return "Input Error: {}".format(request_result), 400  
+    return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
+
 
 @app.after_request
 def add_header_home(response):
