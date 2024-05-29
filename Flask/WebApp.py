@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, render_template, request, session
 import psycopg2
 import json
+from sys import (path)
+import os
+path.append(os.path.dirname(os.path.dirname(__file__)) + "/Database Setup")
+from Setup import user, password, host, port
 
 app = Flask(__name__)
 
@@ -11,7 +15,7 @@ app.config.update(
 
 login_security = True
 
-db = "database='pigeonhole', user='postgres', password='testPassword', host='127.0.0.1', port='5432'"
+db = "database='pigeonhole', user='{}', password='{}', host='{}', port='{}'".format(user, password, host, port)
 
 
 def call_sql(function, input,returns):
