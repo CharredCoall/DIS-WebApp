@@ -73,7 +73,7 @@ def pigeon():
                     if type(request_result["pigeon"]) == int and type(request_result["chance"]) == int and type(request_result["constitution"]) == int:
 
                         call_sql("update_pigeon",[request_result['pigeon'], request_result["chance"], request_result['constitution']], False)
-                        return jsonify("Succes")
+                        return jsonify("Success")
 
                 return "Input Error: {}".format(request_result), 400  
             return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
@@ -89,7 +89,7 @@ def pigeon():
  
                         call_sql("create_pigeon",[request_result["user"], request_result["pigeonhole"]], False)
 
-                        return jsonify("Succes")
+                        return jsonify("Success")
 
                 return "Input Error: {}".format(request_result), 400  
             return "Format Error \n Expected : json Got {}".format(request.content_type), 400  
@@ -125,7 +125,7 @@ def score():
                 if type(request_result["user"]) == int and type(request_result["score"]) == int and type(request_result["game"]) == str:
 
                     call_sql("set_score",[request_result['user'], "'" + request_result['game'] + "'", request_result['score']], False)
-                    return jsonify("Succes")
+                    return jsonify("Success")
 
             return "Input Error: {}".format(request_result), 400    
             
@@ -138,7 +138,7 @@ def buy_hat():
             if type(request_result["user"]) == int and type(request_result["hat"]) == int:
 
                 call_sql("buy_hat",[request_result['user'], request_result["hat"],], False)
-                return jsonify("Succes")
+                return jsonify("Success")
 
         return "Input Error: {}".format(request_result), 400  
     return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
@@ -152,7 +152,7 @@ def equip_hat():
             if type(request_result["pigeon"]) == int and type(request_result["hat"]) == int:
 
                 call_sql("equip_hat",[request_result['pigeon'], request_result["hat"],], False)
-                return jsonify("Succes")
+                return jsonify("Success")
 
         return "Input Error: {}".format(request_result), 400  
     return "Format Error \n Expected : json Got {}".format(request.content_type), 400    
