@@ -78,13 +78,6 @@ sql = '''
     AS $function$
         SELECT * FROM highscore;
     $function$
-        
-    CREATE OR REPLACE FUNCTION public.get_all_scores(_id integer)
-    RETURNS highscore
-    LANGUAGE sql
-    AS $function$
-        SELECT * FROM highscore;
-    $function$
 
     CREATE OR REPLACE FUNCTION public.get_pigeon_by_id(_id integer)
     RETURNS pigeons
