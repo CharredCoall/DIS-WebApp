@@ -15,11 +15,8 @@ app.config.update(
 
 login_security = True
 
-db = "database='pigeonhole', user='{}', password='{}', host='{}', port='{}'".format(user, password, host, port)
-
-
 def call_sql(function, input,returns):
-    conn = psycopg2.connect(db)
+    conn = psycopg2.connect(database="pigeonhole", user=user, password=password, host=host, port=port)
 
     conn.autocommit = True
 
