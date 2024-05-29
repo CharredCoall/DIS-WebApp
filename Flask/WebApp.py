@@ -9,8 +9,13 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True
 )
 
+login_security = True
+
+db = "database='pigeonhole', user='postgres', password='testPassword', host='127.0.0.1', port='5432'"
+
+
 def call_sql(function, input,returns):
-    conn = psycopg2.connect(database="pigeonhole", user="postgres", password="testPassword", host="127.0.0.1", port="5432")
+    conn = psycopg2.connect(db)
 
     conn.autocommit = True
 
@@ -35,6 +40,16 @@ def call_sql(function, input,returns):
         return result
     conn.close  
 
+def auth_conn():
+    if not login_security:
+        return True
+    
+    if "user_id" in session :
+        if call_sql("get_user", session["user_id"], True) != []:
+            return True
+    
+    return False
+
 @app.route("/")
 def show_test():
     
@@ -46,6 +61,8 @@ def show_game():
 
 @app.route("/pigeon", methods=["GET","PUT","POST"])
 def pigeon():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
     match request.method:
         case "GET":
             if request.content_type == "application/json":
@@ -100,6 +117,8 @@ def pigeon():
 
 @app.route("/score", methods=["GET","PUT"])
 def score():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
     match request.method:
         case "GET":
             if request.content_type == "application/json":
@@ -133,6 +152,8 @@ def score():
             
 @app.route("/buy_hat", methods=["PUT"])
 def buy_hat():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
     if request.content_type == "application/json":
         request_result = request.get_json()
 
@@ -147,6 +168,8 @@ def buy_hat():
 
 @app.route("/equip_hat", methods=["PUT"])
 def equip_hat():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
     if request.content_type == "application/json":
         request_result = request.get_json()
 
@@ -161,6 +184,8 @@ def equip_hat():
 
 @app.route("/load_game", methods=["GET"])
 def load_game():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
     if request.content_type == "application/json":
         request_result = request.get_json()
 
