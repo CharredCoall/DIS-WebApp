@@ -39,9 +39,10 @@ func _ready():
 	
 	timer.wait_time = randi_range(5,20)
 
-func _place_pigeons():
 	for item in GameVariables.items:
-		item_list.add_icon_item(load(item))
+		item_list.add_icon_item(load(GameVariables.store_items[item][0]))
+		
+func _place_pigeons():
 	
 	for saved_pig in GameVariables.tenants:
 		var the_pig = pigeon_scene.instantiate()
@@ -52,6 +53,8 @@ func _place_pigeons():
 		add_child(the_pig)
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
+		if GameVariables.tenants[saved_pig]["hat"] != null:
+			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.pigeon_clothes[str(saved_pig)]) 
 		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 		
 		
@@ -182,41 +185,59 @@ func _on_accessory_button_pressed():
 	accessory_area.visible = !accessory_area.visible
 	item_list.visible = !item_list.visible
 	
-	if len(GameVariables.items) > item_list.item_count - 1:
-		var diff = abs(len(GameVariables.items) - (item_list.item_count - 1))
-		for n in range(-diff,0):
-			print(n)
-			item_list.add_icon_item(load(GameVariables.items[n]))
+	item_list.clear()
+	item_list.add_icon_item(load("res://Art/Cross.png"))
+	for item in GameVariables.items:
+		item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
-	var accessory_node = clicked_pig.get_node("AnimatedSprite2D/Accessory")
-	var previous_clothing
-	
-	#DEFO CLEAN CODE
-	if index == 0:
-		accessory_node.texture = load("res://Art/Items/placeholder_texture_2d.tres")
-		previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-		#could also just remove entry?
-		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = "res://Art/Items/placeholder_texture_2d.tres"
+	if mouse_button_index == 1 :
+		var accessory_node = clicked_pig.get_node("AnimatedSprite2D/Accessory")
+		var previous_clothing
 		
-		if previous_clothing != null and previous_clothing != "res://Art/Items/placeholder_texture_2d.tres":
-			GameVariables.items.append(previous_clothing)
-			item_list.add_icon_item(load(previous_clothing))
-		
-	else:
-		accessory_node.texture = load(GameVariables.items[index - 1])
-		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
-			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-		
-		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
-		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
-			GameVariables.items.remove_at(index - 1)
-			item_list.remove_item(index)
-			if previous_clothing != null:
-				GameVariables.items.append(previous_clothing)
-				item_list.add_icon_item(load(previous_clothing))
-	
-	print(GameVariables.pigeon_clothes)
+		#DEFO CLEAN CODE (NOT ANYMORRE!! - Natali)
+		if index == 0:
+			accessory_node.texture = load("res://Art/Items/placeholder_texture_2d.tres")
+			if clicked_pig.get_name() in GameVariables.pigeon_clothes:
+				previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
+				print(previous_clothing)
+			#could also just remove entry?
+			GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = "res://Art/Items/placeholder_texture_2d.tres"
+			if previous_clothing != null and previous_clothing != "res://Art/Items/placeholder_texture_2d.tres":
+				for store_item in GameVariables.store_items:
+					if GameVariables.store_items[store_item][0] == previous_clothing:
+						if !store_item in GameVariables.items :
+							GameVariables.items[store_item] = 0
+						GameVariables.items[store_item] += 1
+						item_list.clear()
+						item_list.add_icon_item(load("res://Art/Cross.png"))
+						for item in GameVariables.items:
+							item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
+			
+		else:
+			var item_index = GameVariables.items.keys()[index - 1]
+			accessory_node.texture = load(GameVariables.store_items[item_index][0])
+			if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+				previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
+			
+			GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.store_items[item_index][0]
+			if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+				if item_index in GameVariables.items:
+					if GameVariables.items[item_index] > 0 :
+						GameVariables.items[item_index] -= 1
+					if GameVariables.items[item_index] < 1 :
+						GameVariables.items.erase(item_index)
+				if previous_clothing != null:
+					for store_item in GameVariables.store_items:
+						if GameVariables.store_items[store_item][0] == previous_clothing:
+							if !store_item in GameVariables.items :
+								GameVariables.items[store_item] = 0
+							GameVariables.items[store_item] += 1
+				item_list.clear()
+				item_list.add_icon_item(load("res://Art/Cross.png"))
+				for item in GameVariables.items:
+					item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
+					
 	
 #Send HTTP Request to server
 func _start_request(route, method, data):

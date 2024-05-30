@@ -112,8 +112,6 @@ def pigeon():
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
 
-
-
 @app.route("/score", methods=["GET","PUT"])
 def score():
     if not auth_conn():
@@ -201,8 +199,9 @@ def load_game():
                 id = userData[0]
                 pigeons = call_sql("get_pigeons_by_user", id, True)
                 pigeonholes = call_sql("get_pigeonholes_by_user", id, True)
+                hats = call_sql("get_hats_by_user", id, True)
 
-                return jsonify({"pigeons": pigeons, "pigeonholes": pigeonholes, "userData": userData})
+                return jsonify({"pigeons": pigeons, "pigeonholes": pigeonholes, "userData": userData, "hats": hats})
 
         return jsonify("Input Error: {}".format(request_result)), 400  
     return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  

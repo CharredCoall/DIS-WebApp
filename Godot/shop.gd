@@ -11,16 +11,18 @@ func _ready():
 	money_label.text = "Money: " + str(GameVariables.money) + "g"
 	
 	for item in GameVariables.store_items:
-		item_list.add_item(str(GameVariables.store_items[item]) + "g",load(item))
+		item_list.add_item(str(GameVariables.store_items[item][1]) + "g",load(GameVariables.store_items[item][0]))
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	item_to_buy = index
 
 func _on_buy_button_pressed():
 	if item_to_buy != null:
-		if GameVariables.money >= GameVariables.store_items.values()[item_to_buy]:
-			GameVariables.items.append(GameVariables.store_items.keys()[item_to_buy])
-			GameVariables.money -= GameVariables.store_items.values()[item_to_buy]
+		if GameVariables.money >= GameVariables.store_items[item_to_buy][1]:
+			if !item_to_buy in GameVariables.items:
+				GameVariables.items[item_to_buy] = 0
+			GameVariables.items[item_to_buy] += 1
+			GameVariables.money -=  GameVariables.store_items[item_to_buy][1]
 			print(GameVariables.items)
 			
 			money_label.text = "Money: " + str(GameVariables.money) + "g"

@@ -33,6 +33,9 @@ func _start_request(route, method, data):
 		http_ready = false
 	
 func _on_request_completed(result, response_code, headers, body):
+	if response_code != 200:
+		print(body.get_string_from_utf8())
+		return
 	var header_dict = {}
 	var regex = RegEx.new()
 	regex.compile(r"(\b[^:]*\b): (.*)")

@@ -86,9 +86,8 @@ if __name__ == "__main__":
 
         
         CREATE TABLE wears(
-            pigeon integer REFERENCES pigeons(id) ON DELETE CASCADE,
-            hat integer REFERENCES hats(id) ON DELETE CASCADE,
-            PRIMARY KEY (pigeon, hat)
+            pigeon integer REFERENCES pigeons(id) ON DELETE CASCADE PRIMARY KEY,
+            hat integer REFERENCES hats(id) ON DELETE CASCADE
         );
 
         
@@ -153,7 +152,17 @@ if __name__ == "__main__":
             SELECT id, pigeonhole_id, chance, intelligence, constitution, hat FROM pigeons LEFT JOIN wears ON id = pigeon  WHERE owner_id = _id;
         $function$;
 
+        
+        CREATE OR REPLACE FUNCTION public.get_hats_by_user(_id integer)
+        RETURNS TABLE(hat integer, amount integer)
+        LANGUAGE sql
+        AS $function$
+            SELECT hat, amount - COALESCE(cnt,0) AS amount FROM (owns INNER JOIN hats h ON hat = id) FULL JOIN 
+            (SELECT count(hat) AS cnt, hat AS _hat FROM wears INNER JOIN pigeons ON pigeon = id GROUP BY hat, owner_id HAVING owner_id = 0 ) ON hat = _hat
+            WHERE player_id = 0;
+        $function$;
 
+        
         CREATE OR REPLACE FUNCTION public.get_score_by_user(_id integer)
         RETURNS highscore
         LANGUAGE sql
@@ -271,6 +280,7 @@ if __name__ == "__main__":
             UPDATE pigeons SET chance = _chance, constitution = _constitution WHERE id = _id 
         $procedure$;
 
+        
 
     '''
 
