@@ -58,7 +58,7 @@ func _place_pigeons():
 		
 
 func _process(_delta):
-	if get_child(-1) != timer and landed == false:
+	if get_child(-1) != timer and !landed:
 		new_pig = get_child(-1)
 		var pig_pos = new_pig.position 
 		
@@ -69,17 +69,13 @@ func _process(_delta):
 			GameVariables.pigeon_state[str(get_child(-1).get_name())] = "pigeon_idle" #State ændrer animation
 			landed = true
 			
-			if str(new_pig.get_name()) not in GameVariables.tenants && str(new_pig.get_name()) != "newpig":
+			if str(new_pig.get_name()) not in GameVariables.tenants:
 				get_child(-1).queue_free()
-	
-	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
-		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbpos(room_pos)})
-		rooms.erase(room_pos)
-		full_rooms.append(room_pos)
+			timer.wait_time = randi_range(5,20) + 2
 
+#Creates a new pigeon
 func _on_timer_timeout():
 	landed = false
-	timer.wait_time = randi_range(5,20) + 2
 	var pigeon = pigeon_scene.instantiate()
 	
 	#1/10 chance for different colored pigeons:
@@ -99,24 +95,53 @@ func _on_timer_timeout():
 			GameVariables.room_occupancy[str(room_pos)] = 1
 		else:
 			GameVariables.room_occupancy[str(room_pos)] += 1
-		GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
 	else:
-		room_pos = Vector2(0,0) #CHANGE!
-		GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
+		var x 
+		var y 
+		match spawn_points.find(pigeon.position) :
+			-1:
+				x = 2030
+				y = 1220
+				print("wrong?")
+			0:
+				x = 2030
+				y = randi_range(-50, 610)
+				if pigeon.position.y < 610:
+					y = randi_range(610, 1220)
+			1: 
+				x = randi_range(-20, 1000)
+				if pigeon.position.x < 1000 :
+					x = randi_range(1000, 2030)
+				y = -50
+			2: 
+				x = -85
+				y = randi_range(-50, 610)
+				if pigeon.position.y < 610:
+					y = randi_range(610, 1220)
+			3:
+				x = randi_range(-20, 1000)
+				if pigeon.position.x < 1000 :
+					x = randi_range(1000, 2030)
+				y = -50 
+		print("Positions:")
+		print(pigeon.position)
+		print(str(x) + ", " + str(y))
+		room_pos = Vector2(x,y)
+	
+	GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
 	
 	standing_spot = room_pos
-	
-	if GameVariables.room_occupancy.has(str(room_pos)) and GameVariables.room_occupancy[str(room_pos)] == 1:
-		standing_spot.x -= 25
-	else:
-		standing_spot.x += 25
 	
 	get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
 	
 	if (room_pos.x - pigeon.position.x) > 0:
 		pigeon.scale.x = -1
 	
-	#maybe move full rooms sorting down here?
+	#Remove room 
+	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
+		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbpos(room_pos)})
+		rooms.erase(room_pos)
+		full_rooms.append(room_pos)
 	
 	print('BIRB')
 	print(GameVariables.tenants)
@@ -127,7 +152,7 @@ func _on_pigeon_clicked():
 	print(GameVariables.visiting)
 	if GameVariables.visiting == false and not GameVariables.shop_opened:
 		clicked_pig = get_node(str(GameVariables.visited_pigeon))
-		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] #ændr
+		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] 
 		
 		camera.zoom = Vector2(2.5,2.5)
 		camera.position = clicked_pos
@@ -193,12 +218,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	
 	print(GameVariables.pigeon_clothes)
 	
-	
-	
-	
-
-
-
+#Send HTTP Request to server
 func _start_request(route, method, data):
 	if http_ready :
 		last_route = route
@@ -210,8 +230,7 @@ func _start_request(route, method, data):
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
 
-
-
+#Handle response data from HTTP Request
 func _on_request_completed(result, response_code, headers, body):
 	if response_code != 200:
 		print(body.get_string_from_utf8())
@@ -235,9 +254,7 @@ func _on_request_completed(result, response_code, headers, body):
 			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[json[2]], "state": "idle", "con": json[5], "int": json[4], "cha": json[3]}
 			new_pig.name = str(json[0])
 			
-			
-			
-			
+#Convert game pigeonhole position to database pigeonhole position
 func _gamepos_to_dbpos(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return translate_list.find(pos)
