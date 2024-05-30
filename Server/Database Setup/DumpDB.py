@@ -1,5 +1,8 @@
 import psycopg2
-from Setup import user, password, host, port
+from sys import path
+import os
+path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
+from DBInit import user, password, host, port
 
 def dump_db ():
     conn = psycopg2.connect(database="pigeonhole", user=user, password=password, host=host, port=port)

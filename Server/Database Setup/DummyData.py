@@ -1,5 +1,8 @@
 from DumpDB import dump_db
-from Setup import user, password, host, port
+from sys import path
+import os
+path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
+from DBInit import user, password, host, port
 import psycopg2
 
 dump_db()

@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, render_template, request, session
 import psycopg2
-import json
-from sys import (path)
+from sys import path
 import os
-path.append(os.path.dirname(os.path.dirname(__file__)) + "/Database Setup")
-from Setup import user, password, host, port
+path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
+from DBInit import user, password, host, port
 
 app = Flask(__name__)
 
@@ -16,6 +15,7 @@ app.config.update(
 login_security = True
 
 def call_sql(function, input,returns):
+    print(user)
     conn = psycopg2.connect(database="pigeonhole", user=user, password=password, host=host, port=port)
 
     conn.autocommit = True
