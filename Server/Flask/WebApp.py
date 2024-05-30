@@ -31,7 +31,6 @@ def call_sql(function, input,returns):
     if (returns):
         cursor.execute("SELECT * FROM {}({});".format(function, input_string))
     else:
-        print ("CALL {}({});".format(function, input_string))
         cursor.execute("CALL {}({});".format(function, input_string))
 
     if returns :
@@ -108,7 +107,7 @@ def pigeon():
  
                         call_sql("create_pigeon",[request_result["user"], request_result["pigeonhole"]], False)
 
-                        return jsonify("Success")
+                        return jsonify(call_sql("get_pigeon_by_pigeonhole", request_result["pigeonhole"], True))
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
@@ -224,8 +223,6 @@ def user():
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400    
         case "GET":
-            if 'user_id' in session:
-                print(session['user_id'])
             if request.content_type == "application/json":
                 request_result = request.get_json()
 

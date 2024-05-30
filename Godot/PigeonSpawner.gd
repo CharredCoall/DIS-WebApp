@@ -24,13 +24,38 @@ var landed = false
 var pigeon_spawned = false
 var room_pos = null
 var standing_spot = null
+	
+var http_ready := true
+var last_route := ""
+var last_method 
+var last_data
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	timer.wait_time = randi_range(5,20)
+	#TEMPORARY LOGIN
+	if GameVariables.current_user_id == -1:
+		$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
 	
+	
+	timer.wait_time = randi_range(5,20)
+
+func _place_pigeons():
 	for item in GameVariables.items:
 		item_list.add_icon_item(load(item))
+	
+	for saved_pig in GameVariables.tenants:
+		var the_pig = pigeon_scene.instantiate()
+		the_pig.position = GameVariables.tenants[saved_pig]["pos"]
+		standing_spot = GameVariables.tenants[saved_pig]["pos"]
+		full_rooms.append(GameVariables.tenants[saved_pig]["pos"])
+		rooms.erase(GameVariables.tenants[saved_pig]["pos"])
+		add_child(the_pig)
+		move_child(the_pig,-2)
+		the_pig.name = saved_pig
+		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
+		
+		
+		
 
 func _process(_delta):
 	if get_child(-1) != timer and landed == false:
@@ -44,10 +69,11 @@ func _process(_delta):
 			GameVariables.pigeon_state[str(get_child(-1).get_name())] = "pigeon_idle" #State ændrer animation
 			landed = true
 			
-			if str(new_pig.get_name()) not in GameVariables.tenants:
+			if str(new_pig.get_name()) not in GameVariables.tenants && str(new_pig.get_name()) != "newpig":
 				get_child(-1).queue_free()
 	
-	if GameVariables.room_occupancy.get(str(room_pos)) == 2 and GameVariables.room_occupancy.has(str(room_pos)):
+	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
+		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbpos(room_pos)})
 		rooms.erase(room_pos)
 		full_rooms.append(room_pos)
 
@@ -64,6 +90,7 @@ func _on_timer_timeout():
 	
 	pigeon.position = spawn_points.pick_random()
 	add_child(pigeon)
+	pigeon.name = "newpig"
 	
 	if not rooms.is_empty():
 		room_pos = rooms.pick_random()
@@ -100,7 +127,7 @@ func _on_pigeon_clicked():
 	print(GameVariables.visiting)
 	if GameVariables.visiting == false and not GameVariables.shop_opened:
 		clicked_pig = get_node(str(GameVariables.visited_pigeon))
-		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]
+		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] #ændr
 		
 		camera.zoom = Vector2(2.5,2.5)
 		camera.position = clicked_pos
@@ -165,3 +192,57 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 				item_list.add_icon_item(load(previous_clothing))
 	
 	print(GameVariables.pigeon_clothes)
+	
+	
+	
+	
+
+
+
+func _start_request(route, method, data):
+	if http_ready :
+		last_route = route
+		last_method = method
+		last_data = data
+		$HTTPRequest.request_completed.connect(self._on_request_completed)
+		var error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
+		if error != OK:
+			push_error("An error occurred in the HTTP request.")
+		http_ready = false
+
+
+
+func _on_request_completed(result, response_code, headers, body):
+	if response_code != 200:
+		print(body.get_string_from_utf8())
+		return
+	var header_dict = {}
+	var regex = RegEx.new()
+	regex.compile(r"(\b[^:]*\b): (.*)")
+	for header in headers:
+		result = regex.search(header)
+		header_dict[result.get_string(1)] = result.get_string(2) 
+	if 'Set-Cookie' in header_dict :
+		GameVariables.cookie = header_dict['Set-Cookie']
+	http_ready = true
+	var body_string = body.get_string_from_utf8()
+	var json = JSON.parse_string(body_string)
+	match (last_route):
+		"/pigeon" when last_method == HTTPClient.METHOD_POST:
+			_start_request("/pigeon", HTTPClient.METHOD_GET, {"pigeon": json[0][0]})
+		"/pigeon" when last_method == HTTPClient.METHOD_GET:
+			GameVariables.tenants.erase("newpig")
+			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[json[2]], "state": "idle", "con": json[5], "int": json[4], "cha": json[3]}
+			new_pig.name = str(json[0])
+			
+			
+			
+			
+func _gamepos_to_dbpos(pos):
+	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+	return translate_list.find(pos)
+			
+			
+			
+			
+			

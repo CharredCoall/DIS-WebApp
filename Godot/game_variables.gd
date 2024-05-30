@@ -10,9 +10,10 @@ var visited_pigeon
 
 var money = 500
 
-var tenants = {}
+var tenants = {} #     {"pigID":{"hole":vector(1,2),"stats":[788,7,9]},"clothing":NULL}
 var room_occupancy = {}
 var pigeon_state = {}
+var pigeonholes = {}
 
 var items = ["res://Art/Items/Hat.png", "res://Art/Items/SunHat.png", "res://Art/Items/Cowboy.png"]
 
@@ -22,6 +23,7 @@ var store_items = {"res://Art/Items/Hat.png":25, "res://Art/Items/SunHat.png":50
 	"res://Art/Items/BunnyEars.png":3, "res://Art/Items/Sombrero.png":5, "res://Art/Items/FancyHat.png":50, "res://Art/Items/FrogHat.png":10}
 var pigeon_clothes = {} #Clothes pigeons are wearing
 
+var pigeon_stats = {} #pigeon ID : [3,4,6]
 # {"Pigeon":{"INT":50,"STR":15}}
 
 var pigeon_pool #Pigeons that are availble for other players to adopt. Try making a pigeon fly to hotel
@@ -35,3 +37,5 @@ var current_int = 0
 #Server variables
 var url = "http://127.0.0.1:5000/"
 var cookie := ""
+
+var data

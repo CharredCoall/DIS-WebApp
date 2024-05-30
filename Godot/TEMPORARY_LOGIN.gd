@@ -5,23 +5,6 @@ var last_route := ""
 var last_method 
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$Label.text = GameVariables.current_user + " " + str(GameVariables.current_user_id)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func _open_logintab():
-	$LoginTab/LoginAnimation.play("ZoomLoginTab")
-
-
-func _close_logintab():
-	$LoginTab/LoginAnimation.play_backwards("ZoomLoginTab")
-
-
 func _start_request(route, method, data):
 	if http_ready :
 		last_route = route
@@ -46,22 +29,22 @@ func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body_string)
 	if last_route == "/user" && last_method == HTTPClient.METHOD_GET:
 		if json :
-			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": "testUser"})
 	elif last_route == "/load_game" :
 		GameVariables.current_user = json["userData"][1]
 		GameVariables.current_user_id = json["userData"][0]
-		$Label.text = GameVariables.current_user + " " + str(GameVariables.current_user_id)
 		print(json)
 		GameVariables.data = json
 		var pigeonholes := {}
 		for pigeonhole in json['pigeonholes']:
 			pigeonholes[pigeonhole[0]] = _dbpos_to_gamepos(pigeonhole[1])
+		GameVariables.pigeonholes = pigeonholes
 		for pigeon in json['pigeons']:
 			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[pigeon[1]], "state": "idle", "con": pigeon[2], "int": pigeon[3], "cha": pigeon[4], "hat": pigeon[5]} 
 		GameVariables.money = json["userData"][2]
-		get_tree().change_scene_to_file("res://hotel.tscn")
+		get_parent()._place_pigeons()		
 	elif last_route == "/user" && last_method == HTTPClient.METHOD_POST:
-			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": "testUser"})
 		
 	
 			
@@ -69,12 +52,6 @@ func _on_request_completed(result, response_code, headers, body):
 			
 			
 func _dbpos_to_gamepos(pos):
-	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
-	return translate_list[pos]
+	var translate_dict = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+	return translate_dict[pos]
 			
-			
-			
-			
-			
-			
-			 
