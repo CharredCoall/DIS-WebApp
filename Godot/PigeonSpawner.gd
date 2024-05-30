@@ -7,6 +7,8 @@ extends Node2D
 @onready var back_button = $Camera2D/BackButton
 @onready var accessory_button = $Camera2D/AccessoryButton
 @onready var accessory_area = $Camera2D/AccessoryButton/AccessoriesArea
+@onready var minigames_button = $Camera2D/MinigamesButton
+@onready var shooter_button = $Camera2D/MinigamesButton/ShooterButton
 @onready var shop = $Shop
 
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
@@ -108,8 +110,8 @@ func _on_pigeon_clicked():
 		GameVariables.visiting = true
 		back_button.visible = true
 		accessory_button.visible = true
+		minigames_button.visible = true
 		shop.visible = false
-		
 
 func _on_back_button_pressed():
 	camera.zoom = Vector2(1,1)
@@ -120,6 +122,8 @@ func _on_back_button_pressed():
 	back_button.visible = false
 	
 	accessory_button.visible = false
+	
+	minigames_button.visble = false
 	
 	accessory_area.visible = false
 	item_list.visible = false
@@ -165,3 +169,11 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 				item_list.add_icon_item(load(previous_clothing))
 	
 	print(GameVariables.pigeon_clothes)
+
+#åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
+func _on_minigames_button_pressed():
+	shooter_button.visible = !shooter_button.visible
+
+#To pigeon shooter!!
+func _on_shooter_button_pressed():
+	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
