@@ -177,16 +177,7 @@ if __name__ == "__main__":
             SELECT id, username, money FROM players WHERE id = _id LIMIT 1;
         $function$;
 
-
-        CREATE OR REPLACE FUNCTION public.getpigeonbyid(_id integer)
-        RETURNS pigeons
-        LANGUAGE sql
-        AS $function$
-            SELECT * FROM pigeons WHERE id = _id LIMIT 1;
-        $function$;
-
-
-        
+                
         CREATE OR REPLACE FUNCTION public.pigeonhole_is_available(_id integer)
         RETURNS boolean
         LANGUAGE plpgsql
