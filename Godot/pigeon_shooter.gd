@@ -35,7 +35,7 @@ func _process(delta):
 		projectile.position = Vector2(player.position.x, player.position.y - 120)
 		add_child(projectile)
 	
-	#måske skal der ikke opdateres hvert sekundt?
+	#måske skal der ikke opdateres hvert sekund?
 	score.text = " " + str(GameVariables.current_score)
 
 func _on_timer_timeout():
@@ -64,7 +64,7 @@ func _on_timer_timeout():
 		
 		animation_player.play("woman_throw")
 
-func _on_game_timer_timeout():	
+func _on_game_timer_timeout():
 	if seconds != 30:
 		seconds += 1
 		game_timer.start()
@@ -72,8 +72,6 @@ func _on_game_timer_timeout():
 	else: 
 		cd_timer.stop()
 		#play some sort of ending animation! (use animationplayer)
-
-
 
 #DATABASE STUFF
 func _start_request():  #henter pigeon 0's data
@@ -87,6 +85,8 @@ func _on_request_completed(result, response_code, headers, body):
 	http_ready = true
 	var body_string = body.get_string_from_utf8()
 	var json = JSON.parse_string(body_string)
+	
+	#Sætter current pigeons stats til game variables
 	GameVariables.current_chance = json[4]
 	GameVariables.current_int = json[5]
 	GameVariables.current_con = json[6]

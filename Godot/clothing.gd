@@ -4,8 +4,6 @@ var landing_pos = Vector2(400, 450)
 var gravity = 980   #this just matches godot's default gravity
 var v0
 
-signal clothes_shot
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_child(randi_range(0,2)).visible = true
@@ -40,5 +38,10 @@ func _on_body_entered(body):
 	if body.get_name() == "Projectile" or "StaticBody2D" in body.get_name():
 		queue_free()
 		GameVariables.current_score += 10
+		body.speed = 500
 		
-		emit_signal("clothes_shot")
+		body.get_node("CollisionShape2D").queue_free()
+		body.get_node("PoopSprite").texture = load("res://Art/Minigames/PigeonShooter/PoopSplatter.png")
+		
+		print(body.speed)
+
