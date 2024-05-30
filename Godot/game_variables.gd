@@ -1,5 +1,9 @@
 extends Node
 
+
+var current_user := ""
+var current_user_id := -1 
+
 var visiting = false
 var shop_opened = false
 var visited_pigeon
@@ -28,3 +32,6 @@ var current_chance = 0
 var current_con = 0
 var current_int = 0
 
+#Server variables
+var url = "http://127.0.0.1:5000/"
+var cookie := ""
