@@ -223,6 +223,7 @@ if __name__ == "__main__":
                 INSERT INTO owns 
                 VALUES (_id, _hat, 1);
             END IF;
+            UPDATE players SET money = money - (SELECT price FROM hats WHERE id = _hat) WHERE id = _id;
         END;
         $procedure$;
 

@@ -29,18 +29,23 @@ var http_ready := true
 var last_route := ""
 var last_method 
 var last_data
+var request_queue := []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#TEMPORARY LOGIN
 	if GameVariables.current_user_id == -1:
-		$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
-	
-	
-	timer.wait_time = randi_range(5,20)
+		get_tree().change_scene_to_file("res://login.tscn")
+		return
+		#$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
+	else:
+		timer.wait_time = randi_range(5,20)
+		timer.start()
 
-	for item in GameVariables.items:
-		item_list.add_icon_item(load(GameVariables.store_items[item][0]))
+		for item in GameVariables.items:
+			item_list.add_icon_item(load(GameVariables.store_items[item][0]))
+			
+		_place_pigeons()
 		
 func _place_pigeons():
 	
@@ -54,7 +59,7 @@ func _place_pigeons():
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
 		if GameVariables.tenants[saved_pig]["hat"] != null:
-			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.pigeon_clothes[str(saved_pig)]) 
+			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0]) 
 		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 		
 		
@@ -75,6 +80,7 @@ func _process(_delta):
 			if str(new_pig.get_name()) not in GameVariables.tenants:
 				get_child(-1).queue_free()
 			timer.wait_time = randi_range(5,20) + 2
+			timer.start()
 
 #Creates a new pigeon
 func _on_timer_timeout():
@@ -253,6 +259,8 @@ func _start_request(route, method, data):
 		if error != OK:
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
+	else:
+		request_queue.append({"route": route, "method": method, "data": data})
 
 #Handle response data from HTTP Request
 func _on_request_completed(result, response_code, headers, body):
