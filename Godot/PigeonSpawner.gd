@@ -206,6 +206,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 			if previous_clothing != null and previous_clothing != "res://Art/Items/placeholder_texture_2d.tres":
 				for store_item in GameVariables.store_items:
 					if GameVariables.store_items[store_item][0] == previous_clothing:
+						_start_request("/equip_hat", HTTPClient.METHOD_PUT, {"pigeon": int(str(clicked_pig.get_name())), "hat": store_item})
 						if !store_item in GameVariables.items :
 							GameVariables.items[store_item] = 0
 						GameVariables.items[store_item] += 1
@@ -213,9 +214,11 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 						item_list.add_icon_item(load("res://Art/Cross.png"))
 						for item in GameVariables.items:
 							item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
+						
 			
 		else:
 			var item_index = GameVariables.items.keys()[index - 1]
+			_start_request("/equip_hat", HTTPClient.METHOD_PUT, {"pigeon": int(str(clicked_pig.get_name())), "hat": item_index})
 			accessory_node.texture = load(GameVariables.store_items[item_index][0])
 			if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
 				previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]

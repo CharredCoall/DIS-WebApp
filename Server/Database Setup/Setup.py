@@ -250,11 +250,15 @@ if __name__ == "__main__":
         LANGUAGE plpgsql
         AS $procedure$
         BEGIN
-            IF EXISTS( SELECT * FROM wears WHERE pigeon = _id) THEN
+            If Exists (SELECT * FROM wears WHERE pigeon = _id AND hat = _hat) THEN
                 DELETE FROM wears WHERE pigeon = _id;
+            ELSE 
+                IF EXISTS( SELECT * FROM wears WHERE pigeon = _id) THEN
+                    DELETE FROM wears WHERE pigeon = _id;
+                END IF;
+                INSERT INTO wears 
+                VALUES (_id, _hat);
             END IF;
-            INSERT INTO wears 
-            VALUES (_id, _hat);
         END;
         $procedure$;
 
