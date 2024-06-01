@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request, session
 import psycopg2
+import re
 from sys import path
 import os
 path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
@@ -22,11 +23,18 @@ def call_sql(function, input,returns):
     cursor = conn.cursor()
 
     if not type(input) == list :
+        if type(input) == str :
+            input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% " , input)) + "'"
         input_string = input
     else:
-        input_string = str(input.pop(0))
+        first_input = input.pop(0)
+        if type(first_input) == str :
+            first_input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(first_input))) + "'"
+        input_string = first_input
         for v in input :
-            input_string += ", " + str(v)
+            if type(v) == str :
+                v = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(v))) + "'"
+            input_string += ", " + v
 
     if (returns):
         cursor.execute("SELECT * FROM {}({});".format(function, input_string))
@@ -36,6 +44,13 @@ def call_sql(function, input,returns):
     if returns :
         result = cursor.fetchall()
         conn.close
+
+        for t in result :
+            for v in t:
+                if type(v) == str :
+                    v = re.sub(r" %22% ", r"\"", re.sub(r" %27% ", "'", str(v)))
+                
+
         return result
     conn.close  
 
@@ -141,7 +156,7 @@ def score():
                 if request_result != None and "user" in request_result and "score" in request_result and "game" in request_result:
                     if type(request_result["user"]) == int and type(request_result["score"]) == int and type(request_result["game"]) == str:
 
-                        call_sql("set_score",[request_result['user'], "'" + request_result['game'] + "'", request_result['score']], False)
+                        call_sql("set_score",[request_result['user'],request_result['game'], request_result['score']], False)
                         return jsonify("Success")
 
                 return jsonify("Input Error: {}".format(request_result)), 400    
@@ -188,9 +203,6 @@ def load_game():
 
         if request_result != None and "user" in request_result :
             if type(request_result["user"]) == int or type(request_result["user"]) == str:
-
-                if type(request_result["user"]) == str:
-                    request_result["user"] = "'" + request_result["user"] + "'"
                     
                 userData = call_sql("get_user", request_result['user'], True)
                 if userData == []:
@@ -216,7 +228,7 @@ def user():
                 if request_result != None and "username" in request_result and "pass" in request_result :
                     if type(request_result["username"]) == str and type(request_result["pass"]) == str:
 
-                        call_sql("create_user",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], False)
+                        call_sql("create_user",[request_result['username'], request_result["pass"],], False)
                         return jsonify("Succes")
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
@@ -227,9 +239,9 @@ def user():
 
                 if request_result != None and "username" in request_result and "pass" in request_result :
                     if type(request_result["username"]) == str and type(request_result["pass"]) == str:
-                        if call_sql("confirm_pass",["'" + request_result['username'] + "'", "'" + request_result["pass"] + "'",], True)[0][0]:
+                        if call_sql("confirm_pass",[request_result['username'],request_result["pass"],], True)[0][0]:
                             session.clear()
-                            session['user_id'] = call_sql("get_user","'" + request_result['username'] + "'",True)[0][0]
+                            session['user_id'] = call_sql("get_user", request_result['username'],True)[0][0]
                             session.modified = True
                             return jsonify(True)
                         
