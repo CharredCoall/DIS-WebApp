@@ -39,6 +39,7 @@ func _ready():
 		return
 		#$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
 	else:
+		$HTTPRequest.request_completed.connect(self._on_request_completed)
 		timer.wait_time = randi_range(5,20)
 		timer.start()
 
@@ -79,6 +80,7 @@ func _process(_delta):
 			
 			if str(new_pig.get_name()) not in GameVariables.tenants:
 				get_child(-1).queue_free()
+			print(get_children(true))
 			timer.wait_time = randi_range(5,20) + 2
 			timer.start()
 
@@ -148,7 +150,7 @@ func _on_timer_timeout():
 	
 	#Remove room 
 	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
-		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbpos(room_pos)})
+		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
 		rooms.erase(room_pos)
 		full_rooms.append(room_pos)
 	
@@ -159,7 +161,8 @@ func _on_timer_timeout():
 
 func _on_pigeon_clicked():
 	print(GameVariables.visiting)
-	if GameVariables.visiting == false and not GameVariables.shop_opened:
+	if GameVariables.visiting == false and not GameVariables.shop_opened and not typeof(GameVariables.tenants[str(GameVariables.visited_pigeon)]) == TYPE_VECTOR2:
+		print(str(GameVariables.visited_pigeon))
 		clicked_pig = get_node(str(GameVariables.visited_pigeon))
 		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] 
 		
@@ -254,8 +257,16 @@ func _start_request(route, method, data):
 		last_route = route
 		last_method = method
 		last_data = data
-		$HTTPRequest.request_completed.connect(self._on_request_completed)
-		var error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
+		var error
+		if method == HTTPClient.METHOD_GET :
+			var query_string = "?"
+			for i in range(len(data)):
+				if i != 0:
+					query_string += "&"
+				query_string += str(data.keys()[i]) + "=" + str(data[data.keys()[i]]) 
+			error = $HTTPRequest.request(GameVariables.url + route + query_string, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method)
+		else:
+			error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
 		if error != OK:
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
@@ -283,13 +294,13 @@ func _on_request_completed(result, response_code, headers, body):
 			_start_request("/pigeon", HTTPClient.METHOD_GET, {"pigeon": json[0][0]})
 		"/pigeon" when last_method == HTTPClient.METHOD_GET:
 			GameVariables.tenants.erase("newpig")
-			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[json[2]], "state": "idle", "con": json[5], "int": json[4], "cha": json[3]}
+			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[int(json[2])], "state": "idle", "con": int(json[5]), "int": int(json[4]), "cha": int(json[3])}
 			new_pig.name = str(json[0])
 			
 #Convert game pigeonhole position to database pigeonhole position
-func _gamepos_to_dbpos(pos):
+func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
-	return translate_list.find(pos)
+	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
 			
 			
 			

@@ -21,15 +21,16 @@ func _process(_delta):
 	#make pigeons h flip at random times
 
 func _on_button_pressed():
-	print("Clicky click!")
+	if ! "newpig" in button.get_parent().get_name() and str(get_name()) not in GameVariables.pigeon_state or GameVariables.pigeon_state[str(get_name())] != "pigeon_fly": 
+		print("Clicky click!")
+		
+		GameVariables.pigeon_state[str(get_name())] = "pigeon_touch"
+		
+		sprite_animator.play("pigeon_touch")
 	
-	GameVariables.pigeon_state[str(get_name())] = "pigeon_touch"
-	
-	sprite_animator.play("pigeon_touch")
-	
-	GameVariables.visited_pigeon = button.get_parent().get_name()
-	
-	emit_signal("pigeon_clicked")
+		GameVariables.visited_pigeon = button.get_parent().get_name()
+		
+		emit_signal("pigeon_clicked")
 
 func _on_animation_finished():
 	#sprite animation finished

@@ -15,5 +15,5 @@ func _new_login():
 	%GameManager._start_request("/user", HTTPClient.METHOD_POST, {"username": $UsernameField.text, "pass": $PasswordField.text})
 	
 func _login():
-	%GameManager._start_request("/user", HTTPClient.METHOD_GET, {"username": $UsernameField.text, "pass": $PasswordField.text})
+	%GameManager._start_request("/user", HTTPClient.METHOD_PUT, {"username": $UsernameField.text, "pass": $PasswordField.text})
 

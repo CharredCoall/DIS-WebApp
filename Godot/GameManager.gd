@@ -7,6 +7,7 @@ var last_method
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$HTTPRequest.request_completed.connect(self._on_request_completed)
 	$Label.text = GameVariables.current_user + " " + str(GameVariables.current_user_id)
 
 
@@ -26,8 +27,16 @@ func _start_request(route, method, data):
 	if http_ready :
 		last_route = route
 		last_method = method
-		$HTTPRequest.request_completed.connect(self._on_request_completed)
-		var error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
+		var error
+		if method == HTTPClient.METHOD_GET :
+			var query_string = "?"
+			for i in range(len(data)):
+				if i != 0:
+					query_string += "&"
+				query_string += data.keys()[i] + "=" + data[data.keys()[i]] 
+			error = $HTTPRequest.request(GameVariables.url + route + query_string, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method)
+		else:
+			error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
 		if error != OK:
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
@@ -47,7 +56,7 @@ func _on_request_completed(result, response_code, headers, body):
 		GameVariables.cookie = header_dict['Set-Cookie']
 	var body_string = body.get_string_from_utf8()
 	var json = JSON.parse_string(body_string)
-	if last_route == "/user" && last_method == HTTPClient.METHOD_GET:
+	if last_route == "/user" && last_method == HTTPClient.METHOD_PUT:
 		if json :
 			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
 	elif last_route == "/load_game" :
@@ -56,13 +65,13 @@ func _on_request_completed(result, response_code, headers, body):
 		GameVariables.data = json
 		var pigeonholes := {}
 		for pigeonhole in json['pigeonholes']:
-			pigeonholes[pigeonhole[0]] = _dbpos_to_gamepos(pigeonhole[1])
+			pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[1])
 		GameVariables.pigeonholes = pigeonholes
 		for pigeon in json['pigeons']:
 			if pigeon[5] != null:
 				pigeon[5] = int(pigeon[5])
 				GameVariables.pigeon_clothes[str(pigeon[0])] = GameVariables.store_items[int(pigeon[5])][0]
-			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[pigeon[1]], "state": "idle", "con": pigeon[2], "int": pigeon[3], "cha": pigeon[4], "hat": pigeon[5]} 
+			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "idle", "con": pigeon[2], "int": pigeon[3], "cha": pigeon[4], "hat": pigeon[5]} 
 		GameVariables.money = json["userData"][2]
 		GameVariables.items = {}
 		for hat in json['hats']:

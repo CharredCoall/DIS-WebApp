@@ -25,16 +25,16 @@ def call_sql(function, input,returns):
     if not type(input) == list :
         if type(input) == str :
             input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% " , input)) + "'"
-        input_string = input
+        input_string = str(input)
     else:
         first_input = input.pop(0)
         if type(first_input) == str :
             first_input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(first_input))) + "'"
-        input_string = first_input
+        input_string = str(first_input)
         for v in input :
             if type(v) == str :
                 v = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(v))) + "'"
-            input_string += ", " + v
+            input_string += ", " + str(v)
 
     if (returns):
         cursor.execute("SELECT * FROM {}({});".format(function, input_string))
@@ -79,25 +79,25 @@ def pigeon():
         return jsonify("Not logged In"), 401
     match request.method:
         case "GET":
-            if request.content_type == "application/json":
-                request_result = request.get_json()
-                if request_result == None or not "pigeon" in request_result:
+                request_result = request.args.get("pigeon")
+                if request_result == None:
+                    return jsonify("Input argument with positive integer at 'pigeon'\n Instead got: {}".format(request_result)), 400
+                try :
+                    request_result = int(request_result)
+                except :
                     return jsonify("Input needs dictionary with positive integer at 'pigeon'\n Instead got: {}".format(request_result)), 400
-                if not type(request_result["pigeon"]) == int:
-                    return jsonify("Input needs dictionary with positive integer at 'pigeon'\n Instead got: {} with type: {}".format(request_result,type(request_result["pigeon"]))), 400
 
-                result = call_sql("get_pigeon_by_id",request_result["pigeon"],True)
+                result = call_sql("get_pigeon_by_id",request_result,True)
 
                 if len(result) > 1:
                     return jsonify("ServerError, Too many results"), 500
 
-                if result[0][0] != request_result["pigeon"]:
+                if result[0][0] != request_result:
                     if result[0][0] == None:
-                        return jsonify("Pigeon with id: {} Not Found".format(request_result["pigeon"])), 404
+                        return jsonify("Pigeon with id: {} Not Found".format(request_result)), 404
                     return jsonify("ServerError, Incorrect Result" + str(result[0])), 500
 
                 return jsonify(result[0])
-            return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
         case "PUT":
             if request.content_type == "application/json":
                 request_result = request.get_json()
@@ -129,19 +129,16 @@ def pigeon():
 
 @app.route("/score", methods=["GET","PUT"])
 def score():
-    if not auth_conn():
-        return jsonify("Not logged In"), 401
     match request.method:
         case "GET":
-            if request.content_type == "application/json":
-                request_result = request.get_json()
-            
-                if request_result != None or "user" in request_result:
-                    if type(request_result["user"]) == int:
-                        result = call_sql("get_score_by_user",request_result["user"],True)
-                        if result[0][0] == None :
-                            return jsonify(None)
-                        return jsonify(result)
+            user = request.args.get('user')
+        
+            if user != None :
+                if type(user) == int:
+                    result = call_sql("get_score_by_user",user,True)
+                    if result[0][0] == None :
+                        return jsonify(None)
+                    return jsonify(result)
 
             result = call_sql("get_all_scores", "", True)
 
@@ -150,6 +147,9 @@ def score():
             return jsonify(result)
         
         case "PUT":
+            
+            if not auth_conn():
+                return jsonify("Not logged In"), 401
             if request.content_type == "application/json":
                 request_result = request.get_json()
         
@@ -198,27 +198,28 @@ def equip_hat():
 def load_game():
     if not auth_conn():
         return jsonify("Not logged In"), 401
-    if request.content_type == "application/json":
-        request_result = request.get_json()
+    
+    request_result = request.args.get("user")
 
-        if request_result != None and "user" in request_result :
-            if type(request_result["user"]) == int or type(request_result["user"]) == str:
-                    
-                userData = call_sql("get_user", request_result['user'], True)
-                if userData == []:
-                    return jsonify("User: {} Not Found".format(request_result["user"])), 404
-                userData = userData[0]
-                id = userData[0]
-                pigeons = call_sql("get_pigeons_by_user", id, True)
-                pigeonholes = call_sql("get_pigeonholes_by_user", id, True)
-                hats = call_sql("get_hats_by_user", id, True)
+    if request_result != None :
+        if type(request_result) == int or type(request_result) == str:
+                
+            userData = call_sql("get_user", request_result, True)
+            if userData == []:
+                return jsonify("User: {} Not Found".format(request_result)), 404
+            userData = userData[0]
+            if not request_result in userData:
+                return jsonify("Input Error, Not logged in as this user: {} ".format(request_result)), 400
+            id = userData[0]
+            pigeons = call_sql("get_pigeons_by_user", id, True)
+            pigeonholes = call_sql("get_pigeonholes_by_user", id, True)
+            hats = call_sql("get_hats_by_user", id, True)
 
-                return jsonify({"pigeons": pigeons, "pigeonholes": pigeonholes, "userData": userData, "hats": hats})
+            return jsonify({"pigeons": pigeons, "pigeonholes": pigeonholes, "userData": userData, "hats": hats})
 
-        return jsonify("Input Error: {}".format(request_result)), 400  
-    return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
+    return jsonify("Input Error: {}".format(request_result)), 400  
 
-@app.route("/user", methods=["POST","GET"])
+@app.route("/user", methods=["POST","PUT"])
 def user():
     match request.method:
         case "POST":
@@ -227,13 +228,18 @@ def user():
 
                 if request_result != None and "username" in request_result and "pass" in request_result :
                     if type(request_result["username"]) == str and type(request_result["pass"]) == str:
-
+                        if call_sql("get_user", request_result['username'],True) != []:
+                            return jsonify("User already exists: {}".format(request_result)), 400
                         call_sql("create_user",[request_result['username'], request_result["pass"],], False)
+                        session.clear()
+                        session['user_id'] = call_sql("get_user", request_result['username'],True)[0][0]
+                        session.modified = True
+
                         return jsonify("Succes")
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400    
-        case "GET":
+        case "PUT":
             if request.content_type == "application/json":
                 request_result = request.get_json()
 

@@ -10,7 +10,7 @@ var visited_pigeon
 
 var money = 500
 
-var tenants = {} #     {"pigID":{"hole":vector(1,2),"stats":[788,7,9]},"clothing":NULL}
+var tenants := {} #     {"pigID":{"hole":vector(1,2),"stats":[788,7,9]},"clothing":NULL}
 var room_occupancy = {}
 var pigeon_state = {}
 var pigeonholes = {}
