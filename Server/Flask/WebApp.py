@@ -265,8 +265,6 @@ def user():
             
 @app.route("/quit")
 def quit():
-    print("WHOOOAH")
-    print(session)
     if not session.permanent:  
         session.clear()  
         session.modified = True   
