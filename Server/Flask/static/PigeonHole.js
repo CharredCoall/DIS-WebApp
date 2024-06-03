@@ -9706,7 +9706,30 @@ function _godot_js_display_window_blur_cb(callback) {
 }
 
 function _godot_js_display_window_icon_set(p_ptr, p_len) {
- 
+ if (ENVIRONMENT_IS_PTHREAD) return proxyToMainThread(88, 1, p_ptr, p_len);
+ let link = document.getElementById("-gd-engine-icon");
+ const old_icon = GodotDisplay.window_icon;
+ if (p_ptr) {
+  if (link === null) {
+   link = document.createElement("link");
+   link.rel = "icon";
+   link.id = "-gd-engine-icon";
+   document.head.appendChild(link);
+  }
+  const png = new Blob([ GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr, p_len) ], {
+   type: "image/png"
+  });
+  GodotDisplay.window_icon = URL.createObjectURL(png);
+  link.href = GodotDisplay.window_icon;
+ } else {
+  if (link) {
+   link.remove();
+  }
+  GodotDisplay.window_icon = null;
+ }
+ if (old_icon) {
+  URL.revokeObjectURL(old_icon);
+ }
 }
 
 function _godot_js_display_window_size_get(p_width, p_height) {

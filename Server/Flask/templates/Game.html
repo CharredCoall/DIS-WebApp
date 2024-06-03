@@ -48,7 +48,19 @@ body {
 	visibility: hidden;
 }
 
+#bg-img {
+	background-image: url(static/PigeonHole.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+	visibility: visible;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
 #status-progress {
+	z-index: 100;
 	width: 366px;
 	height: 7px;
 	background-color: #38363A;
@@ -57,11 +69,12 @@ body {
 	box-shadow: 0 0 2px 1px #1B1C22;
 	border-radius: 2px;
 	visibility: visible;
+	
 }
 
 @media only screen and (orientation:portrait) {
 	#status-progress {
-		width: 61.8%;
+		width: 32%;
 	}
 }
 
@@ -119,6 +132,7 @@ body {
 			Please try updating or use a different browser.
 		</canvas>
 		<div id="status">
+			<div id="bg-img" style="display:none;"></div>
 			<div id="status-progress" style="display: none;" oncontextmenu="event.preventDefault();">
 				<div id ="status-progress-inner"></div>
 			</div>
@@ -146,6 +160,7 @@ const engine = new Engine(GODOT_CONFIG);
 	const statusProgressInner = document.getElementById('status-progress-inner');
 	const statusIndeterminate = document.getElementById('status-indeterminate');
 	const statusNotice = document.getElementById('status-notice');
+	const bgImage = document.getElementById('bg-img');
 
 	let initializing = true;
 	let statusMode = 'hidden';
@@ -171,7 +186,7 @@ const engine = new Engine(GODOT_CONFIG);
 		if (statusMode === mode || !initializing) {
 			return;
 		}
-		[statusProgress, statusIndeterminate, statusNotice].forEach((elem) => {
+		[statusProgress, statusIndeterminate, statusNotice, bgImage].forEach((elem) => {
 			elem.style.display = 'none';
 		});
 		animationCallbacks = animationCallbacks.filter(function (value) {
@@ -180,13 +195,16 @@ const engine = new Engine(GODOT_CONFIG);
 		switch (mode) {
 		case 'progress':
 			statusProgress.style.display = 'block';
+			bgImage.style.display = 'block';
 			break;
 		case 'indeterminate':
 			statusIndeterminate.style.display = 'block';
+			bgImage.style.display = 'block';
 			animationCallbacks.push(animateStatusIndeterminate);
 			break;
 		case 'notice':
 			statusNotice.style.display = 'block';
+			bgImage.style.display = 'block';
 			break;
 		case 'hidden':
 			break;
@@ -224,7 +242,7 @@ const engine = new Engine(GODOT_CONFIG);
 		engine.startGame({
 			'onProgress': function (current, total) {
 				if (total > 0) {
-					statusProgressInner.style.width = `${(current / total) * 100}%`;
+					statusProgressInner.style.width = `${Math.min((current / total) * 100, 100)}%`;
 					setStatusMode('progress');
 					if (current === total) {
 						// wait for progress bar animation
