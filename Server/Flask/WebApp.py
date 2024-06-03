@@ -13,7 +13,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SECURE=True,
-    SESSION_COOKIE_SAMESITE='Lax'
+    SESSION_COOKIE_SAMESITE='None'
 )
 
 login_security = True
@@ -68,11 +68,6 @@ def auth_conn():
     return False
 
 @app.route("/")
-def show_test():
-    
-    return "Success"
-
-@app.route("/game")
 def show_game():
     return render_template("Game.html")
 
@@ -222,7 +217,7 @@ def load_game():
 
     return jsonify("Input Error: {}".format(request_result)), 400  
 
-@app.route("/user", methods=["POST","PUT"])
+@app.route("/user", methods=["POST","PUT","GET"])
 def user():
     match request.method:
         case "POST":
@@ -237,7 +232,9 @@ def user():
                         session.clear()
                         session['user_id'] = call_sql("get_user", request_result['username'],True)[0][0]
                         session.modified = True
-
+                        if "remember" in request_result:
+                            if type(request_result["remember"]) == bool:
+                                session.permanent = request_result["remember"]
                         return jsonify("Succes")
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
@@ -252,12 +249,20 @@ def user():
                             session.clear()
                             session['user_id'] = call_sql("get_user", request_result['username'],True)[0][0]
                             session.modified = True
-                            return jsonify(True), 200, {'Authorization': 'Basic user:' + str(session['user_id'])}
+                            if "remember" in request_result:
+                                if type(request_result["remember"]) == bool:
+                                    session.permanent = request_result["remember"]
+                            return jsonify(True), 200
                         
                         return jsonify("Incorrect Password: {}".format(request_result)), 400
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
+        case "GET":
+            if 'user_id' in session:
+                print(session)
+                return jsonify(call_sql("get_user",session['user_id'],True)[0])
+            return jsonify(False)
             
         
 

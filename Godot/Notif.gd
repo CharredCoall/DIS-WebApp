@@ -17,5 +17,5 @@ func _process(delta):
 
 func _show_notif(text):
 	self.text = text
-	$AnimationPlayer.play("Got_Notif")
+	%GameManager/AnimationPlayer.play("Got_Notif")
 

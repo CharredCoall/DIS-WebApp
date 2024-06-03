@@ -3,12 +3,21 @@ extends Node
 var http_ready := true
 var last_route := ""
 var last_method 
+var last_user = ""
+var last_user_id = -1
 
 signal error
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var window = JavaScriptBridge.get_interface("window")
+	
+	if window != null :
+		var this_url = window.location.href
+		GameVariables.url = this_url
+	
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
+	_start_request("/user",HTTPClient.METHOD_GET,{})
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,12 +25,14 @@ func _process(delta):
 	pass
 
 func _open_logintab():
-	$LoginTab/LoginAnimation.play("ZoomLoginTab")
+	$AnimationPlayer.play("ZoomLoginTab")
 
 
 func _close_logintab():
-	$LoginTab/LoginAnimation.play_backwards("ZoomLoginTab")
+	$AnimationPlayer.play_backwards("ZoomLoginTab")
 
+func _login_last_user():
+	_start_request("/load_game",HTTPClient.METHOD_GET, {"user": last_user})
 
 func _start_request(route, method, data):
 	if http_ready :
@@ -81,7 +92,14 @@ func _on_request_completed(result, response_code, headers, body):
 				GameVariables.items[int(hat[0])] = hat[1]
 		get_tree().change_scene_to_file("res://hotel.tscn")
 	elif last_route == "/user" && last_method == HTTPClient.METHOD_POST:
-			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+		_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+	elif last_route == "/user" && last_method == HTTPClient.METHOD_GET:
+		if typeof(json) == TYPE_ARRAY:
+			last_user_id = json[0]
+			last_user = json[1]
+			$LoginAs/Label.text = "Login as: \"" + last_user + "\""
+			$LoginAs/AnimationPlayer.play("ZoomLoginAs")
+			
 		
 	
 			
@@ -92,9 +110,3 @@ func _dbpos_to_gamepos(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return translate_list[pos]
 			
-			
-			
-			
-			
-			
-			 

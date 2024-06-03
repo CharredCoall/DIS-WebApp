@@ -12,8 +12,8 @@ func _process(delta):
 
 
 func _new_login():
-	%GameManager._start_request("/user", HTTPClient.METHOD_POST, {"username": $UsernameField.text, "pass": $PasswordField.text})
+	%GameManager._start_request("/user", HTTPClient.METHOD_POST, {"username": $UsernameField.text, "pass": $PasswordField.text, "remember": $RememberField.button_pressed})
 	
 func _login():
-	%GameManager._start_request("/user", HTTPClient.METHOD_PUT, {"username": $UsernameField.text, "pass": $PasswordField.text})
+	%GameManager._start_request("/user", HTTPClient.METHOD_PUT, {"username": $UsernameField.text, "pass": $PasswordField.text, "remember": $RememberField.button_pressed})
 
