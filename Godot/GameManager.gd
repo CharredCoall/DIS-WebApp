@@ -4,6 +4,7 @@ var http_ready := true
 var last_route := ""
 var last_method 
 
+signal error
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,6 +45,7 @@ func _on_request_completed(result, response_code, headers, body):
 	http_ready = true
 	if response_code != 200:
 		print(body.get_string_from_utf8())
+		emit_signal("error",body.get_string_from_utf8())
 		return
 	var header_dict = {}
 	var regex = RegEx.new()

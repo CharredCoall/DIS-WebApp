@@ -159,7 +159,7 @@ if __name__ == "__main__":
         AS $function$
             SELECT hat, amount - COALESCE(cnt,0) AS amount FROM (owns INNER JOIN hats h ON hat = id) FULL JOIN 
             (SELECT count(hat) AS cnt, hat AS _hat FROM wears INNER JOIN pigeons ON pigeon = id GROUP BY hat, owner_id HAVING owner_id = 0 ) ON hat = _hat
-            WHERE player_id = 0;
+            WHERE player_id = _id;
         $function$;
 
         
