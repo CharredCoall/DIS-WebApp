@@ -280,7 +280,7 @@ func _on_request_completed(result, response_code, headers, body):
 		return
 	var header_dict = {}
 	var regex = RegEx.new()
-	regex.compile(r"(\b[^:]*\b): (.*)")
+	regex.compile(r"(\b[^:]*\b): ?(.*)")
 	for header in headers:
 		result = regex.search(header)
 		header_dict[result.get_string(1)] = result.get_string(2) 

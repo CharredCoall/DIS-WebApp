@@ -9,8 +9,11 @@ from DBInit import _user, password, host, port
 app = Flask(__name__)
 
 app.secret_key = '''rG7Oj}{mKXfN5f*pF$1f<]WQ-tm8I*b0^L"FgZfshA$]cBD8B-gi.W-*0~H0!j;'''
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.update(
-    SESSION_COOKIE_HTTPONLY=True
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SAMESITE='Lax'
 )
 
 login_security = True
@@ -249,7 +252,7 @@ def user():
                             session.clear()
                             session['user_id'] = call_sql("get_user", request_result['username'],True)[0][0]
                             session.modified = True
-                            return jsonify(True)
+                            return jsonify(True), 200, {'Authorization': 'Basic user:' + str(session['user_id'])}
                         
                         return jsonify("Incorrect Password: {}".format(request_result)), 400
 
@@ -263,6 +266,10 @@ def user():
 def add_header_home(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
+    response.headers['Access-Control-Allow-Methods'] = "GET, PUT, POST"
+    response.headers['Access-Control-Allow-Headers'] = "Content-type"
+    response.headers['Access-Control-Allow-Credentials'] = "true"
     return response
 
 

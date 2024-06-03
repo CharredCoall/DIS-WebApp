@@ -164,14 +164,6 @@ texture_normal = ExtResource("3_q3ffk")
 texture_pressed = ExtResource("4_7uhwf")
 texture_hover = ExtResource("3_q3ffk")
 
-[node name="Label" type="Label" parent="GameManager"]
-offset_left = 121.0
-offset_top = 36.0
-offset_right = 152.0
-offset_bottom = 59.0
-scale = Vector2(5.47354, 3.80124)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-
 [node name="HTTPRequest" type="HTTPRequest" parent="GameManager"]
 
 [connection signal="pressed" from="GameManager/LoginTab/New user" to="GameManager/LoginTab" method="_new_login"]

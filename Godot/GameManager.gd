@@ -8,7 +8,6 @@ var last_method
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
-	$Label.text = GameVariables.current_user + " " + str(GameVariables.current_user_id)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,9 +33,9 @@ func _start_request(route, method, data):
 				if i != 0:
 					query_string += "&"
 				query_string += data.keys()[i] + "=" + data[data.keys()[i]] 
-			error = $HTTPRequest.request(GameVariables.url + route + query_string, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method)
+			error = $HTTPRequest.request(GameVariables.url + route + query_string, ["Content-Type: application/json", "Cookie: " + GameVariables.cookie], method)
 		else:
-			error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json","Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
+			error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json", "Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
 		if error != OK:
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
@@ -48,7 +47,8 @@ func _on_request_completed(result, response_code, headers, body):
 		return
 	var header_dict = {}
 	var regex = RegEx.new()
-	regex.compile(r"(\b[^:]*\b): (.*)")
+	regex.compile(r"(\b[^:]*\b): ?(.*)")
+	print(headers)
 	for header in headers:
 		result = regex.search(header)
 		header_dict[result.get_string(1)] = result.get_string(2) 
