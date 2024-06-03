@@ -260,6 +260,10 @@ const engine = new Engine(GODOT_CONFIG);
 		}, displayFailureNotice);
 	}
 }());
+
+window.onbeforeunload = function (e) {
+	fetch(window.location.href + "/quit");
+}
 		</script>
 	</body>
 </html>

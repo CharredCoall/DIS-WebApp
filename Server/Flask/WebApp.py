@@ -260,11 +260,17 @@ def user():
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
         case "GET":
             if 'user_id' in session:
-                print(session)
                 return jsonify(call_sql("get_user",session['user_id'],True)[0])
             return jsonify(False)
             
-        
+@app.route("/quit")
+def quit():
+    print("WHOOOAH")
+    print(session)
+    if not session.permanent:  
+        session.clear()  
+        session.modified = True   
+    return jsonify("done")
 
 
 @app.after_request
