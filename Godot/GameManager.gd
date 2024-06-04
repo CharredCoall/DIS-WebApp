@@ -78,7 +78,7 @@ func _on_request_completed(result, response_code, headers, body):
 		GameVariables.data = json
 		var pigeonholes := {}
 		for pigeonhole in json['pigeonholes']:
-			pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[1])
+			pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[2])
 		GameVariables.pigeonholes = pigeonholes
 		for pigeon in json['pigeons']:
 			if pigeon[5] != null:
