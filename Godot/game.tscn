@@ -1,0 +1,176 @@
+[gd_scene load_steps=23 format=3 uid="uid://bn4t1onfm65ar"]
+
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_dya7i"]
+[ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_tukf1"]
+[ext_resource type="Texture2D" uid="uid://bovaoq7alcrt1" path="res://assets/Sprites/Munch/banana1.png" id="3_nih1l"]
+[ext_resource type="Texture2D" uid="uid://bnmul0wm236e0" path="res://assets/Sprites/Goober Idle/Eat_Idle-1.png" id="5_tsjk4"]
+[ext_resource type="Texture2D" uid="uid://dqxmlg0ud3dab" path="res://assets/Sprites/Goober Idle/Eat_Idle-2.png" id="6_eos6e"]
+[ext_resource type="Texture2D" uid="uid://f11r2du2mlbf" path="res://assets/Sprites/Goober Idle/Eat_Idle-3.png" id="7_cyp4k"]
+[ext_resource type="Texture2D" uid="uid://cjp6mhtkixelb" path="res://assets/Sprites/Goober Idle/Eat_Idle-4.png" id="8_kovg4"]
+[ext_resource type="Texture2D" uid="uid://cbchjm8ffhlr0" path="res://assets/Sprites/Goober Idle/Eat_Idle-5.png" id="9_sp1lv"]
+[ext_resource type="Texture2D" uid="uid://b68i24d04v8l0" path="res://assets/Sprites/Goober Eat/Goober_Bite-1.png" id="10_1cwxb"]
+[ext_resource type="Texture2D" uid="uid://c51kl8v4i0vni" path="res://assets/Sprites/Goober Idle/Eat_Idle-6.png" id="10_uaj3x"]
+[ext_resource type="Texture2D" uid="uid://bxettilspslkb" path="res://assets/Sprites/Goober Eat/Goober_Bite-2.png" id="11_1g6yj"]
+[ext_resource type="Texture2D" uid="uid://bbcm3oq3bcprl" path="res://assets/Sprites/Goober Idle/Eat_Idle-7.png" id="11_b42qh"]
+[ext_resource type="Texture2D" uid="uid://jahu7extfavo" path="res://assets/Sprites/Goober Idle/Eat_Idle-8.png" id="12_fgkd4"]
+[ext_resource type="Texture2D" uid="uid://drbqcuym7s7xe" path="res://assets/Sprites/Goober Eat/Goober_Bite-3.png" id="12_hdmat"]
+[ext_resource type="Texture2D" uid="uid://c7hh3sbbja8c2" path="res://assets/Sprites/Goober Eat/Goober_Bite-4.png" id="13_tfv4e"]
+[ext_resource type="Texture2D" uid="uid://kpn0dwbaj1g0" path="res://assets/Sprites/Goober Eat/Goober_Bite-5.png" id="14_06jxj"]
+[ext_resource type="Texture2D" uid="uid://rsibpoic1hbr" path="res://assets/Sprites/Goober Eat/Goober_Bite-6.png" id="15_oplic"]
+[ext_resource type="Texture2D" uid="uid://c71oiq6jiolkr" path="res://assets/Sprites/Goober Eat/Goober_Bite-7.png" id="16_fw677"]
+[ext_resource type="Texture2D" uid="uid://dimi38cisovmd" path="res://assets/Sprites/Goober Eat/Goober_Bite-8.png" id="17_hdduu"]
+[ext_resource type="PackedScene" uid="uid://bhjequvq22d0w" path="res://end_screen.tscn" id="22_0mdwp"]
+[ext_resource type="Script" path="res://scripts/Munch.gd" id="23_tksfb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjp1q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_tsjk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eos6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cyp4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_kovg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sp1lv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_uaj3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_b42qh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fgkd4")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_1cwxb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1g6yj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hdmat")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_tfv4e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_06jxj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_oplic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_fw677")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_hdduu")
+}],
+"loop": false,
+"name": &"Munch",
+"speed": 16.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1000, 600)
+scale = Vector2(1.04167, 1.11111)
+texture = ExtResource("1_tukf1")
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_dya7i")
+
+[node name="Munch" type="Sprite2D" parent="GameManager"]
+position = Vector2(936, 624)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_nih1l")
+script = ExtResource("23_tksfb")
+
+[node name="Node2D" type="Node2D" parent="GameManager"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameManager/Node2D"]
+position = Vector2(1208, 640)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_bjp1q")
+animation = &"Munch"
+autoplay = "Idle"
+
+[node name="InstructionLabel" type="Label" parent="GameManager"]
+offset_left = 88.0
+offset_top = 888.0
+offset_right = 245.0
+offset_bottom = 1161.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.999999, 0.118942, 0.768699, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "Q"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="GameManager"]
+anchors_preset = -1
+anchor_left = 0.00173611
+anchor_right = 0.0173881
+anchor_bottom = 0.0125
+offset_left = 28.5278
+offset_top = -34.0
+offset_right = 938.224
+offset_bottom = 224.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.645296, 0.165613, 1, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "test score"
+metadata/_edit_use_anchors_ = true
+
+[node name="Health_Label" type="Label" parent="GameManager"]
+offset_left = 664.0
+offset_top = 424.0
+offset_right = 941.0
+offset_bottom = 629.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
+theme_override_constants/outline_size = 35
+theme_override_font_sizes/font_size = 150
+text = "test"
+
+[node name="GameTimer" type="Timer" parent="GameManager"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="TimerLabel" type="Label" parent="GameManager/GameTimer"]
+offset_left = 1744.0
+offset_top = -30.0
+offset_right = 1972.0
+offset_bottom = 243.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "60"
+horizontal_alignment = 2
+
+[node name="EndScreen" parent="GameManager" instance=ExtResource("22_0mdwp")]
+
+[connection signal="animation_finished" from="GameManager/Node2D/AnimatedSprite2D" to="GameManager" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="GameManager/GameTimer" to="GameManager" method="_on_game_timer_timeout"]

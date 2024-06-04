@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bf4flmh363ft" path="res://Art/Hotels.jpg" id="2_jg7dq"]
 [ext_resource type="Texture2D" uid="uid://batnscjojqbjp" path="res://Art/BackButtonHover.png" id="3_55fyq"]
 [ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="4_oh1k7"]
+[ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_p37tm"]
 [ext_resource type="PackedScene" uid="uid://t8ujyfxc0bj2" path="res://shop.tscn" id="6_h10t3"]
 [ext_resource type="Script" path="res://TEMPORARY_LOGIN.gd" id="7_3w7fa"]
 
@@ -69,6 +70,32 @@ item_count = 1
 item_0/text = ""
 item_0/icon = ExtResource("4_oh1k7")
 
+[node name="MinigamesButton" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = 149.0
+offset_top = 133.0
+offset_right = 352.0
+offset_bottom = 206.0
+texture_normal = ExtResource("5_p37tm")
+texture_pressed = ExtResource("5_p37tm")
+texture_hover = ExtResource("5_p37tm")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ShooterButton" type="TextureButton" parent="Camera2D/MinigamesButton"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_top = -65.0
+offset_right = 203.0
+offset_bottom = 8.0
+texture_normal = ExtResource("5_p37tm")
+texture_pressed = ExtResource("5_p37tm")
+texture_hover = ExtResource("5_p37tm")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="Hotels" type="Sprite2D" parent="."]
 position = Vector2(1000.11, 600)
 scale = Vector2(1.04155, 1.11111)
@@ -83,4 +110,6 @@ position = Vector2(0, 18)
 [connection signal="pressed" from="Camera2D/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Camera2D/AccessoryButton" to="." method="_on_accessory_button_pressed"]
 [connection signal="item_clicked" from="Camera2D/AccessoryButton/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="Camera2D/MinigamesButton" to="." method="_on_minigames_button_pressed"]
+[connection signal="pressed" from="Camera2D/MinigamesButton/ShooterButton" to="." method="_on_shooter_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

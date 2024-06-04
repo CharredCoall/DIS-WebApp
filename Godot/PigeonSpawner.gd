@@ -7,6 +7,8 @@ extends Node2D
 @onready var back_button = $Camera2D/BackButton
 @onready var accessory_button = $Camera2D/AccessoryButton
 @onready var accessory_area = $Camera2D/AccessoryButton/AccessoriesArea
+@onready var minigames_button = $Camera2D/MinigamesButton
+@onready var shooter_button = $Camera2D/MinigamesButton/ShooterButton
 @onready var shop = $Shop
 
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
@@ -172,8 +174,8 @@ func _on_pigeon_clicked():
 		GameVariables.visiting = true
 		back_button.visible = true
 		accessory_button.visible = true
+		minigames_button.visible = true
 		shop.visible = false
-		
 
 func _on_back_button_pressed():
 	camera.zoom = Vector2(1,1)
@@ -184,6 +186,8 @@ func _on_back_button_pressed():
 	back_button.visible = false
 	
 	accessory_button.visible = false
+	
+	minigames_button.visble = false
 	
 	accessory_area.visible = false
 	item_list.visible = false
@@ -271,6 +275,8 @@ func _start_request(route, method, data):
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
 	else:
+
+
 		request_queue.append({"route": route, "method": method, "data": data})
 
 #Handle response data from HTTP Request
@@ -305,4 +311,26 @@ func _gamepos_to_dbid(pos):
 			
 			
 			
-			
+
+		accessory_node.texture = load(GameVariables.items[index - 1])
+		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
+		
+		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
+		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+			GameVariables.items.remove_at(index - 1)
+			item_list.remove_item(index)
+			if previous_clothing != null:
+				GameVariables.items.append(previous_clothing)
+				item_list.add_icon_item(load(previous_clothing))
+	
+	print(GameVariables.pigeon_clothes)
+
+#åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
+func _on_minigames_button_pressed():
+	shooter_button.visible = !shooter_button.visible
+
+#To pigeon shooter!!
+func _on_shooter_button_pressed():
+	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
+
