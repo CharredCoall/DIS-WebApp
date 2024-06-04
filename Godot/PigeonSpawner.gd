@@ -34,14 +34,6 @@ var last_data
 var request_queue := []
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
-	_start_request("/user", HTTPClient.METHOD_GET, {})
 	
 	#TEMPORARY LOGIN
 	if GameVariables.current_user_id == -1:
