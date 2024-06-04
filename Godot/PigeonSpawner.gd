@@ -255,6 +255,33 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 					item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
 					
 	
+			
+			
+			
+
+		accessory_node.texture = load(GameVariables.items[index - 1])
+		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
+		
+		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
+		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
+			GameVariables.items.remove_at(index - 1)
+			item_list.remove_item(index)
+			if previous_clothing != null:
+				GameVariables.items.append(previous_clothing)
+				item_list.add_icon_item(load(previous_clothing))
+	
+	print(GameVariables.pigeon_clothes)
+
+#åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
+func _on_minigames_button_pressed():
+	shooter_button.visible = !shooter_button.visible
+
+#To pigeon shooter!!
+func _on_shooter_button_pressed():
+	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
+
+
 #Send HTTP Request to server
 func _start_request(route, method, data):
 	if http_ready :
@@ -308,29 +335,3 @@ func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
 			
-			
-			
-			
-
-		accessory_node.texture = load(GameVariables.items[index - 1])
-		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
-			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-		
-		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
-		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
-			GameVariables.items.remove_at(index - 1)
-			item_list.remove_item(index)
-			if previous_clothing != null:
-				GameVariables.items.append(previous_clothing)
-				item_list.add_icon_item(load(previous_clothing))
-	
-	print(GameVariables.pigeon_clothes)
-
-#åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
-func _on_minigames_button_pressed():
-	shooter_button.visible = !shooter_button.visible
-
-#To pigeon shooter!!
-func _on_shooter_button_pressed():
-	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
-

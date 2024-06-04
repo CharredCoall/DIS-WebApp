@@ -20,7 +20,7 @@ sql = '''
     INSERT INTO pigeonholes(player_id, position) VALUES(0,1);
     INSERT INTO pigeonholes(player_id, position) VALUES(0,2);
 
-    INSERT INTO pigeons VALUES(0,0,0,12,7,18);
+    INSERT INTO pigeons VALUES(0,0,1,12,7,18);
 
     INSERT INTO hats VALUES(0,25,'Hat');
     INSERT INTO hats VALUES(1,50,'SunHat');
