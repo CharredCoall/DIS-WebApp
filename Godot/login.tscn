@@ -1,0 +1,280 @@
+[gd_scene load_steps=18 format=3 uid="uid://cnwjaor4y88uj"]
+
+[ext_resource type="Script" path="res://GameManager.gd" id="1_u5bux"]
+[ext_resource type="VideoStream" path="res://Art/Videos/Dream_2.ogv" id="2_fsb6m"]
+[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="3_q3ffk"]
+[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="4_7uhwf"]
+[ext_resource type="Script" path="res://TextureButton.gd" id="5_215qw"]
+[ext_resource type="Script" path="res://Cancel.gd" id="6_goepl"]
+[ext_resource type="Script" path="res://LoginTab.gd" id="6_xnvtr"]
+[ext_resource type="Script" path="res://New user.gd" id="8_5r2uc"]
+[ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="8_d3mga"]
+[ext_resource type="Script" path="res://Notif.gd" id="9_eatfr"]
+
+[sub_resource type="Animation" id="Animation_a61jg"]
+resource_name = "Got_Notif"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notif:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 3.3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1933, 72), Vector2(1350, 72), Vector2(1350, 72), Vector2(1933, 72)]
+}
+
+[sub_resource type="Animation" id="Animation_pnkbe"]
+resource_name = "ZoomLoginTab"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoginTab:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(728, 1200), Vector2(728, 304)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8pvrd"]
+_data = {
+"Got_Notif": SubResource("Animation_a61jg"),
+"ZoomLoginTab": SubResource("Animation_pnkbe")
+}
+
+[sub_resource type="GDScript" id="GDScript_p6d1r"]
+script/source = "extends VideoStreamPlayer
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	play()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="Theme" id="Theme_b247d"]
+
+[sub_resource type="Animation" id="Animation_ws1rk"]
+resource_name = "ZoomLoginAs"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(589, -120), Vector2(589, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4j1i4"]
+_data = {
+"ZoomLoginAs": SubResource("Animation_ws1rk")
+}
+
+[node name="LoginScreen" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_u5bux")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameManager"]
+libraries = {
+"": SubResource("AnimationLibrary_8pvrd")
+}
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="GameManager"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -819.0
+offset_bottom = -497.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.74327, 1.85106)
+stream = ExtResource("2_fsb6m")
+autoplay = true
+expand = true
+loop = true
+script = SubResource("GDScript_p6d1r")
+
+[node name="TextureButton" type="TextureButton" parent="GameManager/VideoStreamPlayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.5
+offset_top = -37.0
+offset_right = 291.5
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.479999, 0.520001)
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_q3ffk")
+texture_pressed = ExtResource("4_7uhwf")
+texture_hover = ExtResource("3_q3ffk")
+script = ExtResource("5_215qw")
+
+[node name="LoginTab" type="Panel" parent="GameManager"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = 660.0
+offset_right = 27.0
+offset_bottom = 996.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.88966, 1.99421)
+theme = SubResource("Theme_b247d")
+script = ExtResource("6_xnvtr")
+
+[node name="UsernameField" type="LineEdit" parent="GameManager/LoginTab"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 56.0
+offset_right = 197.0
+offset_bottom = 98.0
+placeholder_text = "Username"
+
+[node name="PasswordField" type="LineEdit" parent="GameManager/LoginTab"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 142.0
+offset_right = 197.0
+offset_bottom = 184.0
+placeholder_text = "Password"
+secret = true
+
+[node name="New user" type="TextureButton" parent="GameManager/LoginTab"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 250.0
+offset_right = 405.0
+offset_bottom = 389.0
+scale = Vector2(0.249953, 0.274566)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_q3ffk")
+texture_pressed = ExtResource("4_7uhwf")
+texture_hover = ExtResource("3_q3ffk")
+script = ExtResource("8_5r2uc")
+
+[node name="Login" type="TextureButton" parent="GameManager/LoginTab"]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 250.0
+offset_right = 524.0
+offset_bottom = 389.0
+scale = Vector2(0.243864, 0.278389)
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_q3ffk")
+texture_pressed = ExtResource("4_7uhwf")
+texture_hover = ExtResource("3_q3ffk")
+
+[node name="Cancel" type="TextureButton" parent="GameManager/LoginTab"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_right = -1.0
+offset_bottom = 38.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("8_d3mga")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("6_goepl")
+
+[node name="RememberField" type="CheckButton" parent="GameManager/LoginTab"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 192.0
+offset_right = 197.0
+offset_bottom = 223.0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 10
+text = "Remember me:"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="GameManager"]
+
+[node name="Notif" type="Label" parent="GameManager"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 13.0
+offset_top = 72.0
+offset_right = 589.0
+offset_bottom = 175.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
+text = "Notification"
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("9_eatfr")
+
+[node name="LoginAs" type="Panel" parent="GameManager"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -371.0
+offset_top = -120.0
+offset_right = 376.0
+offset_bottom = -2.0
+grow_horizontal = 2
+
+[node name="Login" type="TextureButton" parent="GameManager/LoginAs"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 530.0
+offset_top = 17.0
+offset_right = -40.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_q3ffk")
+texture_pressed = ExtResource("4_7uhwf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="GameManager/LoginAs"]
+layout_mode = 0
+offset_left = 25.0
+offset_right = 482.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 30
+text = "Login as: \"username\""
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameManager/LoginAs"]
+libraries = {
+"": SubResource("AnimationLibrary_4j1i4")
+}
+
+[connection signal="error" from="GameManager" to="GameManager/Notif" method="_show_notif"]
+[connection signal="pressed" from="GameManager/LoginTab/New user" to="GameManager/LoginTab" method="_new_login"]
+[connection signal="pressed" from="GameManager/LoginTab/Login" to="GameManager/LoginTab" method="_login"]
+[connection signal="pressed" from="GameManager/LoginAs/Login" to="GameManager" method="_login_last_user"]

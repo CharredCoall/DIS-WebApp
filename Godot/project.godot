@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="PigeonHole"
-run/main_scene="res://hotel.tscn"
+run/main_scene="res://login.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/image="res://Art/LoadScreen.png"
+config/icon="res://PigeonHole.icon.png"
 
 [autoload]
 
@@ -21,9 +22,10 @@ GameVariables="*res://game_variables.gd"
 
 [display]
 
-window/size/viewport_width=2000
-window/size/viewport_height=1200
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/mode=2
+window/size/initial_screen=1
 window/stretch/mode="canvas_items"
 
 [input]
