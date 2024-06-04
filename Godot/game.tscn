@@ -91,8 +91,8 @@ animations = [{
 [node name="Game" type="Node2D"]
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(1000, 600)
-scale = Vector2(1.04167, 1.11111)
+position = Vector2(960, 540)
+scale = Vector2(1, 1)
 texture = ExtResource("1_tukf1")
 
 [node name="GameManager" type="Node" parent="."]
@@ -100,7 +100,7 @@ unique_name_in_owner = true
 script = ExtResource("1_dya7i")
 
 [node name="Munch" type="Sprite2D" parent="GameManager"]
-position = Vector2(936, 624)
+position = Vector2(832, 592)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_nih1l")
 script = ExtResource("23_tksfb")
@@ -108,17 +108,17 @@ script = ExtResource("23_tksfb")
 [node name="Node2D" type="Node2D" parent="GameManager"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GameManager/Node2D"]
-position = Vector2(1208, 640)
+position = Vector2(1120, 616)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_bjp1q")
 animation = &"Munch"
 autoplay = "Idle"
 
 [node name="InstructionLabel" type="Label" parent="GameManager"]
-offset_left = 88.0
-offset_top = 888.0
-offset_right = 245.0
-offset_bottom = 1161.0
+offset_left = 80.0
+offset_top = 760.0
+offset_right = 237.0
+offset_bottom = 1033.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.999999, 0.118942, 0.768699, 1)
 theme_override_constants/outline_size = 50
@@ -144,10 +144,10 @@ text = "test score"
 metadata/_edit_use_anchors_ = true
 
 [node name="Health_Label" type="Label" parent="GameManager"]
-offset_left = 664.0
-offset_top = 424.0
-offset_right = 941.0
-offset_bottom = 629.0
+offset_left = 568.0
+offset_top = 482.0
+offset_right = 845.0
+offset_bottom = 687.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
 theme_override_constants/outline_size = 35
@@ -160,10 +160,10 @@ one_shot = true
 autostart = true
 
 [node name="TimerLabel" type="Label" parent="GameManager/GameTimer"]
-offset_left = 1744.0
-offset_top = -30.0
-offset_right = 1972.0
-offset_bottom = 243.0
+offset_left = 1664.0
+offset_top = -24.0
+offset_right = 1892.0
+offset_bottom = 249.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200

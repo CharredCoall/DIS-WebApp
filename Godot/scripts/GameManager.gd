@@ -14,7 +14,7 @@ var end_manager = null
 var score = 10
 var characters = ["Q", "W", "E"]
 var random_char:String
-var positions = [Vector2(80,250), Vector2(1100,40), Vector2(1500,40), Vector2(1750,330), Vector2(1750,815), Vector2(88,888), Vector2(88,488)]
+var positions = [Vector2(80,250), Vector2(1100,40), Vector2(1500,40), Vector2(1650,330), Vector2(1650,760), Vector2(88, 760), Vector2(88,488)]
 var random_pos:Vector2
 var con:int = 89
 var chance:int = 21

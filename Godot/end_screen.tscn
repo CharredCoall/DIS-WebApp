@@ -51,18 +51,15 @@ animations = [{
 }]
 
 [node name="EndScene" type="Node2D"]
-visible = false
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(1000, 600)
-scale = Vector2(1.04167, 1.11111)
+position = Vector2(960, 540)
 texture = ExtResource("1_f8e3x")
 
 [node name="EndManager" type="Node" parent="."]
 script = ExtResource("2_g2lfl")
 
 [node name="AnnounceLabel" type="Label" parent="EndManager"]
-visible = false
 offset_left = 24.0
 offset_top = -64.0
 offset_right = 1976.0
@@ -74,54 +71,49 @@ text = "Announce"
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="EndManager"]
-visible = false
 offset_left = 48.0
-offset_top = 336.0
+offset_top = 296.0
 offset_right = 580.0
-offset_bottom = 609.0
+offset_bottom = 569.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "Score"
 
 [node name="LevelUpLabel" type="Label" parent="EndManager"]
-visible = false
 offset_left = 48.0
-offset_top = 592.0
+offset_top = 552.0
 offset_right = 874.0
-offset_bottom = 865.0
+offset_bottom = 825.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "Level Up"
 
 [node name="LevelsLabel" type="Label" parent="EndManager"]
-visible = false
-offset_left = 56.0
-offset_top = 848.0
-offset_right = 654.0
-offset_bottom = 1121.0
+offset_left = 48.0
+offset_top = 808.0
+offset_right = 646.0
+offset_bottom = 1081.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "Levels"
 
 [node name="GoBackToMenu" type="TextureButton" parent="EndManager"]
-visible = false
-offset_left = 1744.0
-offset_top = 952.0
-offset_right = 1896.0
-offset_bottom = 1098.0
-scale = Vector2(1.5, 1.5)
+offset_left = 1680.0
+offset_top = 848.0
+offset_right = 1832.0
+offset_bottom = 994.0
+scale = Vector2(1.4, 1.4)
 focus_mode = 1
 texture_normal = ExtResource("3_awavq")
 texture_hover = ExtResource("4_ulp6m")
 
 [node name="Goober" type="Sprite2D" parent="EndManager"]
-visible = false
 
 [node name="AnimatedGoober" type="AnimatedSprite2D" parent="EndManager/Goober"]
-position = Vector2(1312, 672)
+position = Vector2(1304, 640)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_xryh3")
 animation = &"Munch"
