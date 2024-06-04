@@ -1,0 +1,130 @@
+[gd_scene load_steps=14 format=3 uid="uid://bhjequvq22d0w"]
+
+[ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_f8e3x"]
+[ext_resource type="Script" path="res://scripts/EndManager.gd" id="2_g2lfl"]
+[ext_resource type="Texture2D" uid="uid://hmqd73spep07" path="res://assets/Sprites/End Screen/BackButton.png" id="3_awavq"]
+[ext_resource type="Texture2D" uid="uid://b1sqn80ahr4ed" path="res://assets/Sprites/End Screen/BackButtonHover.png" id="4_ulp6m"]
+[ext_resource type="Texture2D" uid="uid://b68i24d04v8l0" path="res://assets/Sprites/Goober Eat/Goober_Bite-1.png" id="6_6espx"]
+[ext_resource type="Texture2D" uid="uid://bxettilspslkb" path="res://assets/Sprites/Goober Eat/Goober_Bite-2.png" id="7_k1ooy"]
+[ext_resource type="Texture2D" uid="uid://drbqcuym7s7xe" path="res://assets/Sprites/Goober Eat/Goober_Bite-3.png" id="8_ypyur"]
+[ext_resource type="Texture2D" uid="uid://c7hh3sbbja8c2" path="res://assets/Sprites/Goober Eat/Goober_Bite-4.png" id="9_xfk5w"]
+[ext_resource type="Texture2D" uid="uid://kpn0dwbaj1g0" path="res://assets/Sprites/Goober Eat/Goober_Bite-5.png" id="10_00s7e"]
+[ext_resource type="Texture2D" uid="uid://rsibpoic1hbr" path="res://assets/Sprites/Goober Eat/Goober_Bite-6.png" id="11_nphjp"]
+[ext_resource type="Texture2D" uid="uid://c71oiq6jiolkr" path="res://assets/Sprites/Goober Eat/Goober_Bite-7.png" id="12_kfnol"]
+[ext_resource type="Texture2D" uid="uid://dimi38cisovmd" path="res://assets/Sprites/Goober Eat/Goober_Bite-8.png" id="13_jddfa"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xryh3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_6espx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_k1ooy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ypyur")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_xfk5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_00s7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nphjp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kfnol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_jddfa")
+}],
+"loop": true,
+"name": &"Munch",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="EndScene" type="Node2D"]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1000, 600)
+scale = Vector2(1.04167, 1.11111)
+texture = ExtResource("1_f8e3x")
+
+[node name="EndManager" type="Node" parent="."]
+script = ExtResource("2_g2lfl")
+
+[node name="AnnounceLabel" type="Label" parent="EndManager"]
+visible = false
+offset_left = 24.0
+offset_top = -64.0
+offset_right = 1976.0
+offset_bottom = 482.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 75
+theme_override_font_sizes/font_size = 350
+text = "Announce"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="EndManager"]
+visible = false
+offset_left = 48.0
+offset_top = 336.0
+offset_right = 580.0
+offset_bottom = 609.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "Score"
+
+[node name="LevelUpLabel" type="Label" parent="EndManager"]
+visible = false
+offset_left = 48.0
+offset_top = 592.0
+offset_right = 874.0
+offset_bottom = 865.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "Level Up"
+
+[node name="LevelsLabel" type="Label" parent="EndManager"]
+visible = false
+offset_left = 56.0
+offset_top = 848.0
+offset_right = 654.0
+offset_bottom = 1121.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_font_sizes/font_size = 200
+text = "Levels"
+
+[node name="GoBackToMenu" type="TextureButton" parent="EndManager"]
+visible = false
+offset_left = 1744.0
+offset_top = 952.0
+offset_right = 1896.0
+offset_bottom = 1098.0
+scale = Vector2(1.5, 1.5)
+focus_mode = 1
+texture_normal = ExtResource("3_awavq")
+texture_hover = ExtResource("4_ulp6m")
+
+[node name="Goober" type="Sprite2D" parent="EndManager"]
+visible = false
+
+[node name="AnimatedGoober" type="AnimatedSprite2D" parent="EndManager/Goober"]
+position = Vector2(1312, 672)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_xryh3")
+animation = &"Munch"
+frame_progress = 0.163534
+
+[connection signal="pressed" from="EndManager/GoBackToMenu" to="EndManager" method="_on_go_back_to_menu_pressed"]

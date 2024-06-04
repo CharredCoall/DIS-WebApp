@@ -76,6 +76,7 @@ stretch_mode = 0
 [node name="ShooterButton" type="TextureButton" parent="Camera2D/MinigamesButton"]
 visible = false
 z_index = 1
+layout_mode = 0
 offset_top = -65.0
 offset_right = 203.0
 offset_bottom = 8.0
