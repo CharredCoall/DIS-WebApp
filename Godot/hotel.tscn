@@ -7,11 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="4_oh1k7"]
 [ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_p37tm"]
 [ext_resource type="PackedScene" uid="uid://t8ujyfxc0bj2" path="res://shop.tscn" id="6_h10t3"]
+[ext_resource type="Script" path="res://TEMPORARY_LOGIN.gd" id="7_3w7fa"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_5u83m"]
 
-[node name="Node2D" type="Node2D"]
+[node name="PigeonSpawner" type="Node2D"]
 script = ExtResource("1_llwul")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="TEMPORARY_LOGIN" type="Node" parent="."]
+script = ExtResource("7_3w7fa")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="TEMPORARY_LOGIN"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(1001, 608)
@@ -23,6 +31,7 @@ offset_left = -354.0
 offset_top = 143.0
 offset_right = -291.0
 offset_bottom = 204.0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("2_bsngf")
 texture_pressed = ExtResource("3_55fyq")
 texture_hover = ExtResource("3_55fyq")
@@ -36,6 +45,7 @@ offset_left = -277.0
 offset_top = 143.0
 offset_right = -214.0
 offset_bottom = 204.0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("2_bsngf")
 texture_pressed = ExtResource("3_55fyq")
 texture_hover = ExtResource("3_55fyq")
@@ -96,7 +106,6 @@ z_index = 10
 position = Vector2(0, 18)
 
 [node name="Timer" type="Timer" parent="."]
-autostart = true
 
 [connection signal="pressed" from="Camera2D/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Camera2D/AccessoryButton" to="." method="_on_accessory_button_pressed"]
