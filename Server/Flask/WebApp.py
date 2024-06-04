@@ -5,6 +5,7 @@ from sys import path
 import os
 path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')))
 from DBInit import _user, password, host, port
+import numpy
 
 app = Flask(__name__)
 
@@ -103,7 +104,7 @@ def pigeon():
                 if request_result != None and "pigeon" in request_result and "chance" in request_result and "constitution" in request_result:
                     if type(request_result["pigeon"]) == int and type(request_result["chance"]) == int and type(request_result["constitution"]) == int:
 
-                        call_sql("update_pigeon",[request_result['pigeon'], request_result["chance"], request_result['constitution']], False)
+                        call_sql("update_pigeon",[request_result['pigeon'], numpy.clip(request_result["chance"], 0, 100), numpy.clip(request_result['constitution'],0,100)], False)
                         return jsonify("Success")
 
                 return jsonify("Input Error: {}".format(request_result)), 400  

@@ -92,7 +92,6 @@ animations = [{
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
-scale = Vector2(1, 1)
 texture = ExtResource("1_tukf1")
 
 [node name="GameManager" type="Node" parent="."]
