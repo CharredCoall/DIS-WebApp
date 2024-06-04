@@ -240,7 +240,7 @@ if __name__ == "__main__":
         AS $procedure$
             BEGIN
                 INSERT INTO players(username, password, money) VALUES(_username, crypt(_password, gen_salt('bf')), 500);
-                FOR hole in 1..20 LOOP
+                FOR hole in 0..2 LOOP
                     INSERT INTO pigeonholes(player_id,position) VALUES((SELECT id FROM get_user(_username)), hole);
                 END LOOP;
             END;
