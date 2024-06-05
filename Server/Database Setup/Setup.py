@@ -285,6 +285,13 @@ if __name__ == "__main__":
             UPDATE pigeons SET chance = _chance, constitution = _constitution WHERE id = _id 
         $procedure$;
 
+        CREATE PROCEDURE add_money(_id integer, _money integer)
+        LANGUAGE SQL
+        AS $procedure$
+            UPDATE players 
+            SET money = money + _money 
+            WHERE id = _id;
+        $procedure$
         
 
     '''
