@@ -33,9 +33,9 @@ var last_route := ""
 var last_method 
 var last_data
 var request_queue := []
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	#TEMPORARY LOGIN
 	if GameVariables.current_user_id == -1:
 		get_tree().change_scene_to_file("res://login.tscn")
@@ -143,7 +143,6 @@ func _on_timer_timeout():
 		room_pos = Vector2(x,y)
 	
 	GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
-	
 	standing_spot = room_pos
 	
 	get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
@@ -254,12 +253,6 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 				item_list.add_icon_item(load("res://Art/Cross.png"))
 				for item in GameVariables.items:
 					item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
-					
-	
-			
-			
-			
-
 		accessory_node.texture = load(GameVariables.items[index - 1])
 		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
 			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
@@ -307,8 +300,6 @@ func _start_request(route, method, data):
 			push_error("An error occurred in the HTTP request.")
 		http_ready = false
 	else:
-
-
 		request_queue.append({"route": route, "method": method, "data": data})
 
 #Handle response data from HTTP Request
@@ -334,6 +325,10 @@ func _on_request_completed(result, response_code, headers, body):
 			GameVariables.tenants.erase("newpig")
 			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[int(json[2])], "state": "idle", "con": int(json[5]), "int": int(json[4]), "cha": int(json[3])}
 			new_pig.name = str(json[0])
+		_:
+			var request = request_queue.pop_front()
+			if request != null :
+				_start_request(request["route"], request["method"], request["data"])
 			
 #Convert game pigeonhole position to database pigeonhole position
 func _gamepos_to_dbid(pos):
