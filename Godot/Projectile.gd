@@ -10,6 +10,9 @@ func _ready():
 		$PoopSprite.scale = Vector2(1.8,1.8)
 		$CollisionShape2D.shape.radius = 100.
 		set_meta("type","egg")
+	else:
+		$PoopSprite.scale = Vector2(1.5,1.5)
+		$CollisionShape2D.shape.radius = 33.
 	#depends on gamevariables.current_con
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

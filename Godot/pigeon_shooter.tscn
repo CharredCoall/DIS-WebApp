@@ -7,22 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="5_2mjg6"]
 [ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="6_pe4ej"]
 
-[sub_resource type="Animation" id="Animation_dar5d"]
-resource_name = "woman_throw"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Background/BackgroundFrame:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
 [sub_resource type="Animation" id="Animation_pl5h4"]
 resource_name = "game_done"
 length = 7.0
@@ -105,10 +89,10 @@ tracks/6/path = NodePath("CountDown:modulate")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(4, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.1, 0.9, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -133,6 +117,22 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dar5d"]
+resource_name = "woman_throw"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background/BackgroundFrame:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k2wnw"]
@@ -199,11 +199,12 @@ libraries = {
 autostart = true
 
 [node name="CountDown" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0.888889)
 z_index = 5
-offset_left = 40.0
-offset_top = 85.0
-offset_right = 1840.0
-offset_bottom = 1085.0
+offset_left = 424.0
+offset_top = 281.444
+offset_right = 1512.89
+offset_bottom = 946.333
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.517647)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 35
@@ -275,7 +276,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_mdg3s")
 show_percentage = false
 
 [node name="ReturnButton" type="TextureButton" parent="."]
-visible = false
+modulate = Color(1, 1, 1, 0)
 offset_left = 1514.58
 offset_top = 93.3048
 offset_right = 1899.58
