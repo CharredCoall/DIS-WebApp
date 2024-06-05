@@ -271,6 +271,23 @@ def quit():
         session.modified = True   
     return jsonify("done")
 
+@app.route("/money", methods=["PUT"])
+def money():
+    if not auth_conn():
+        return jsonify("Not logged In"), 401
+    if request.content_type == "application/json":
+        request_result = request.get_json()
+
+        if request_result != None and "user" in request_result and "money" in request_result :
+            if type(request_result["user"]) == int and type(request_result["money"]) == int:
+
+                call_sql("add_money",[request_result['user'], request_result["money"],], False)
+                return jsonify("Success")
+
+        return jsonify("Input Error: {}".format(request_result)), 400  
+    return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400    
+
+
 
 @app.after_request
 def add_header_home(response):

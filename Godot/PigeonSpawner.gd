@@ -9,6 +9,7 @@ extends Node2D
 @onready var accessory_area = $Camera2D/AccessoryButton/AccessoriesArea
 @onready var minigames_button = $Camera2D/MinigamesButton
 @onready var shooter_button = $Camera2D/MinigamesButton/ShooterButton
+@onready var clicker_button = $Camera2D/MinigamesButton/ClickerButton
 @onready var shop = $Shop
 
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
@@ -270,11 +271,15 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 #vi kan lave et signal til alle scene skifte knapper, sætte meta data også bare lave en match case hvis det vil være bedre :P
 func _on_minigames_button_pressed():
 	shooter_button.visible = !shooter_button.visible
+	clicker_button.visible = !clicker_button.visible
 
 #To pigeon shooter!!
 func _on_shooter_button_pressed():
 	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
 
+#To Pigeon Clicker!!
+func _on_clicker_button_pressed():
+	get_tree().change_scene_to_file("res://game.tscn")
 
 #Send HTTP Request to server
 func _start_request(route, method, data):
@@ -331,3 +336,4 @@ func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
 			
+

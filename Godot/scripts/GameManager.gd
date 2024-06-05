@@ -9,18 +9,27 @@ extends Node
 @onready var timer_label = $GameTimer/TimerLabel
 @onready var game = $".."
 @onready var end_screen = $EndScreen
+@onready var cd_timer = $StartTimer
+@onready var cd_timer_label = $StartTimer/StartTimerLabel
+@onready var hat_sprite = $Hat
 var end_manager = null
+
+#GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["con"] #GameVariable for stats "con"/"cha"/"int"
+var hat = GameVariables.pigeon_clothes[str(GameVariables.visited_pigeon.get_name())]
+
 
 var score = 10
 var characters = ["Q", "W", "E"]
 var random_char:String
 var positions = [Vector2(80,250), Vector2(1100,40), Vector2(1500,40), Vector2(1650,330), Vector2(1650,760), Vector2(88, 760), Vector2(88,488)]
 var random_pos:Vector2
-var con:int = 89
-var chance:int = 21
-var intelligence:int = 10
+var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["con"] #GameVariable for stats "con"/"cha"/"int"
+var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["cha"] #GameVariable for stats "con"/"cha"/"int"
+var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["int"] #GameVariable for stats "con"/"cha"/"int"
 var damage = 20+ceil(float(con**1.25/5))
-var time:int = 60
+var time:int = 5
+var count_down = 3
+var game_started = false
 
 func _ready():
 	game.visible = true
@@ -28,10 +37,29 @@ func _ready():
 	randomize()
 	munch.initialize_chance(chance)
 	munch._respawn()
+	hat_sprite.texture = hat
 	score_label.text = str(score) + " Points!"
+	cd_timer.connect("timeout", Callable(self, "_on_CdTimer_timeout"))
+	cd_timer.start(1)  # Start the countdown timer with 1 second intervals
+	cd_timer_label.text = str(count_down)  # Initialize the countdown label
+
+func _on_CdTimer_timeout():
+	if count_down > 0:
+		cd_timer_label.text = str(count_down)
+		count_down -= 1
+	elif count_down == 0:
+		cd_timer_label.text = "Go!"
+		count_down -= 1
+	else:
+		cd_timer_label.text = ""
+		cd_timer.stop()
+		start_game()
+
+func start_game():
 	game_timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 	game_timer.start(time)
 	change_label_randomly()
+	game_started = true
 
 func add_point():
 	score += 9+munch.munch_dict[munch.current_munch_type]
@@ -60,23 +88,24 @@ func handle_player_input():
 	munch.take_damage(damage)
 
 func _process(_delta):
-	timer_label.text = str(int(game_timer.time_left))
-	if Input.is_action_just_pressed("Random_Q") and random_char == "Q":
-		change_label_randomly()
-		handle_player_input()
-		goober.play("Munch")
-	elif Input.is_action_just_pressed("Random_W") and random_char == "W":
-		change_label_randomly()
-		handle_player_input()
-		goober.play("Munch")
-	elif Input.is_action_just_pressed("Random_E") and random_char == "E":
-		change_label_randomly()
-		handle_player_input()
-		goober.play("Munch")
-	elif Input.is_action_just_pressed("Random_Q") and random_char != "Q" or Input.is_action_just_pressed("Random_W") and random_char != "W" or Input.is_action_just_pressed("Random_E") and random_char != "E":
-		remove_point()
-	else:
-		pass
+	if game_started:
+		timer_label.text = str(int(game_timer.time_left))
+		if Input.is_action_just_pressed("Random_Q") and random_char == "Q":
+			change_label_randomly()
+			handle_player_input()
+			goober.play("Munch")
+		elif Input.is_action_just_pressed("Random_W") and random_char == "W":
+			change_label_randomly()
+			handle_player_input()
+			goober.play("Munch")
+		elif Input.is_action_just_pressed("Random_E") and random_char == "E":
+			change_label_randomly()
+			handle_player_input()
+			goober.play("Munch")
+		elif Input.is_action_just_pressed("Random_Q") and random_char != "Q" or Input.is_action_just_pressed("Random_W") and random_char != "W" or Input.is_action_just_pressed("Random_E") and random_char != "E":
+			remove_point()
+		else:
+			pass
 
 func _on_Timer_timeout():
 	change_scene()

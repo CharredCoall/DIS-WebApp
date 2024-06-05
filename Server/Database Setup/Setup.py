@@ -239,7 +239,7 @@ if __name__ == "__main__":
         LANGUAGE plpgsql
         AS $procedure$
             BEGIN
-                INSERT INTO players(username, password, money) VALUES(_username, crypt(_password, gen_salt('bf')), 500);
+                INSERT INTO players(username, password, money) VALUES(_username, crypt(_password, gen_salt('bf')), 0);
                 FOR hole in 0..2 LOOP
                     INSERT INTO pigeonholes(player_id,position) VALUES((SELECT id FROM get_user(_username)), hole);
                 END LOOP;
@@ -285,6 +285,13 @@ if __name__ == "__main__":
             UPDATE pigeons SET chance = _chance, constitution = _constitution WHERE id = _id 
         $procedure$;
 
+        CREATE PROCEDURE add_money(_id integer, _money integer)
+        LANGUAGE SQL
+        AS $procedure$
+            UPDATE players 
+            SET money = money + _money 
+            WHERE id = _id;
+        $procedure$
         
 
     '''
