@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dcne03gg2yltb"]
+[gd_scene load_steps=12 format=3 uid="uid://dcne03gg2yltb"]
 
 [ext_resource type="Script" path="res://PigeonSpawner.gd" id="1_llwul"]
 [ext_resource type="Texture2D" uid="uid://cn4rs31ep3b7d" path="res://Art/BackButton.png" id="2_bsngf"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_p37tm"]
 [ext_resource type="PackedScene" uid="uid://t8ujyfxc0bj2" path="res://shop.tscn" id="6_h10t3"]
 [ext_resource type="Script" path="res://TEMPORARY_LOGIN.gd" id="7_3w7fa"]
+[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="7_p60b8"]
+[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="8_labax"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_5u83m"]
 
@@ -96,6 +98,15 @@ texture_hover = ExtResource("5_p37tm")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="ClickerButton" type="TextureButton" parent="Camera2D/MinigamesButton"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("7_p60b8")
+texture_pressed = ExtResource("8_labax")
+texture_hover = ExtResource("7_p60b8")
+
 [node name="Hotels" type="Sprite2D" parent="."]
 position = Vector2(1000.11, 600)
 scale = Vector2(1.04155, 1.11111)
@@ -112,4 +123,5 @@ position = Vector2(0, 18)
 [connection signal="item_clicked" from="Camera2D/AccessoryButton/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="pressed" from="Camera2D/MinigamesButton" to="." method="_on_minigames_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton/ShooterButton" to="." method="_on_shooter_button_pressed"]
+[connection signal="pressed" from="Camera2D/MinigamesButton/ClickerButton" to="." method="_on_clicker_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bn4t1onfm65ar"]
+[gd_scene load_steps=24 format=3 uid="uid://bn4t1onfm65ar"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_dya7i"]
 [ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_tukf1"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://rsibpoic1hbr" path="res://assets/Sprites/Goober Eat/Goober_Bite-6.png" id="15_oplic"]
 [ext_resource type="Texture2D" uid="uid://c71oiq6jiolkr" path="res://assets/Sprites/Goober Eat/Goober_Bite-7.png" id="16_fw677"]
 [ext_resource type="Texture2D" uid="uid://dimi38cisovmd" path="res://assets/Sprites/Goober Eat/Goober_Bite-8.png" id="17_hdduu"]
+[ext_resource type="Texture2D" uid="uid://bc2gwoxrbx2pf" path="res://Art/Items/Cap.png" id="21_8s268"]
 [ext_resource type="PackedScene" uid="uid://bhjequvq22d0w" path="res://end_screen.tscn" id="22_0mdwp"]
 [ext_resource type="Script" path="res://scripts/Munch.gd" id="23_tksfb"]
 
@@ -113,6 +114,11 @@ sprite_frames = SubResource("SpriteFrames_bjp1q")
 animation = &"Munch"
 autoplay = "Idle"
 
+[node name="Hat" type="Sprite2D" parent="GameManager"]
+position = Vector2(1104, 344)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("21_8s268")
+
 [node name="InstructionLabel" type="Label" parent="GameManager"]
 offset_left = 80.0
 offset_top = 760.0
@@ -139,7 +145,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.645296, 0.165613, 1, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
-text = "test score"
+text = "0 Points!"
 metadata/_edit_use_anchors_ = true
 
 [node name="Health_Label" type="Label" parent="GameManager"]
@@ -151,12 +157,11 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
 theme_override_constants/outline_size = 35
 theme_override_font_sizes/font_size = 150
-text = "test"
+text = "100%"
 
 [node name="GameTimer" type="Timer" parent="GameManager"]
 wait_time = 5.0
 one_shot = true
-autostart = true
 
 [node name="TimerLabel" type="Label" parent="GameManager/GameTimer"]
 offset_left = 1664.0
@@ -168,6 +173,20 @@ theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
 text = "60"
 horizontal_alignment = 2
+
+[node name="StartTimer" type="Timer" parent="GameManager"]
+autostart = true
+
+[node name="StartTimerLabel" type="Label" parent="GameManager/StartTimer"]
+offset_left = 672.0
+offset_top = 264.0
+offset_right = 1227.0
+offset_bottom = 673.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 80
+theme_override_font_sizes/font_size = 300
+text = "3"
+horizontal_alignment = 1
 
 [node name="EndScreen" parent="GameManager" instance=ExtResource("22_0mdwp")]
 
