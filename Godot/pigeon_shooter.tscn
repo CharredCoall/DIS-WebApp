@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cm2onrku2rfc0"]
+[gd_scene load_steps=15 format=3 uid="uid://cm2onrku2rfc0"]
 
 [ext_resource type="Texture2D" uid="uid://fakixaw2howt" path="res://Art/Minigames/PigeonShooter/Background.png" id="1_81bxi"]
 [ext_resource type="Script" path="res://pigeon_shooter.gd" id="1_tesnd"]
 [ext_resource type="Texture2D" uid="uid://dtkoylrpu1mei" path="res://Art/Minigames/PigeonShooter/WomanThrow.png" id="2_lptqb"]
 [ext_resource type="Texture2D" uid="uid://i773s7xkau40" path="res://Art/Minigames/PigeonShooter/PigeonShooterSprite.png" id="4_4mdc2"]
+[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="5_2mjg6"]
+[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="6_pe4ej"]
 
 [sub_resource type="Animation" id="Animation_dar5d"]
 resource_name = "woman_throw"
@@ -21,15 +23,123 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_k2wnw"]
-_data = {
-"woman_throw": SubResource("Animation_dar5d")
+[sub_resource type="Animation" id="Animation_pl5h4"]
+resource_name = "game_done"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CountDown:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CountDown:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(472, 306), Vector2(40, 85)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TimeLeft:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Score:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ProgressBar:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CountDown:size")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1000, 623), Vector2(1800, 1000)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CountDown:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(4, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ReturnButton:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(4, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ReturnButton:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_a4df8"]
-top_radius = 21.787
-bottom_radius = 4.955
-height = 35.168
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k2wnw"]
+_data = {
+"game_done": SubResource("Animation_pl5h4"),
+"woman_throw": SubResource("Animation_dar5d")
+}
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_86sv1"]
 animations = [{
@@ -42,7 +152,31 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_r2q3l"]
+a = Vector2(-132.363, 347.181)
+b = Vector2(484.968, 468.694)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_7mokb"]
+a = Vector2(484.968, 468.694)
+b = Vector2(936.303, 506.667)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qotjs"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 15.0
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdg3s"]
+bg_color = Color(1, 1, 1, 1)
+
 [node name="PigeonShooter" type="Node2D"]
+position = Vector2(78, -2)
+scale = Vector2(0.92171, 0.92171)
 script = ExtResource("1_tesnd")
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -51,7 +185,6 @@ scale = Vector2(1.10926, 1.10926)
 texture = ExtResource("1_81bxi")
 
 [node name="BackgroundFrame" type="Sprite2D" parent="Background"]
-visible = false
 position = Vector2(744.19, 115.495)
 scale = Vector2(1.0014, 1.0014)
 texture = ExtResource("2_lptqb")
@@ -66,10 +199,11 @@ libraries = {
 autostart = true
 
 [node name="CountDown" type="RichTextLabel" parent="."]
-offset_left = 472.0
-offset_top = 306.0
-offset_right = 1472.0
-offset_bottom = 929.0
+z_index = 5
+offset_left = 40.0
+offset_top = 85.0
+offset_right = 1840.0
+offset_bottom = 1085.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.517647)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 35
@@ -79,6 +213,7 @@ bbcode_enabled = true
 text = "[center]Get ready!
 3"
 text_direction = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="GameTimer" type="Timer" parent="."]
 one_shot = true
@@ -115,18 +250,42 @@ text = " 0"
 autowrap_mode = 0
 text_direction = 2
 
-[node name="Tester" type="MeshInstance2D" parent="."]
-modulate = Color(0.907533, 0, 0.42548, 1)
-position = Vector2(400, 450)
-mesh = SubResource("CylinderMesh_a4df8")
-
 [node name="Player" type="AnimatedSprite2D" parent="."]
 position = Vector2(939, 1039)
 scale = Vector2(1.3, 1.3)
 sprite_frames = SubResource("SpriteFrames_86sv1")
 animation = &"Shooter_idle"
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="ClothingLineArea" type="Area2D" parent="."]
+
+[node name="Line1" type="CollisionShape2D" parent="ClothingLineArea"]
+shape = SubResource("SegmentShape2D_r2q3l")
+
+[node name="Line2" type="CollisionShape2D" parent="ClothingLineArea"]
+shape = SubResource("SegmentShape2D_7mokb")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = 37.9729
+offset_top = 1006.82
+offset_right = 366.973
+offset_bottom = 1075.82
+theme_override_styles/background = SubResource("StyleBoxFlat_qotjs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mdg3s")
+show_percentage = false
+
+[node name="ReturnButton" type="TextureButton" parent="."]
+visible = false
+offset_left = 1514.58
+offset_top = 93.3048
+offset_right = 1899.58
+offset_bottom = 232.305
+texture_normal = ExtResource("5_2mjg6")
+texture_pressed = ExtResource("6_pe4ej")
+texture_hover = ExtResource("5_2mjg6")
+stretch_mode = 0
 
 [connection signal="timeout" from="CountDownTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="body_entered" from="ClothingLineArea" to="." method="_on_clothing_line_area_body_entered"]
+[connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]

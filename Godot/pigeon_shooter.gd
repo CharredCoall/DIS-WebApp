@@ -6,6 +6,7 @@ extends Node2D
 @onready var score = $Score
 @onready var count_down_label = $CountDown
 @onready var animation_player = $Background/AnimationPlayer
+@onready var cooldown_progress_bar = $ProgressBar
 @onready var player = $Player
 
 @onready var clothing_scene = preload("res://clothing.tscn")
@@ -15,14 +16,14 @@ var count_down = 3
 var speed = 800
 var seconds = 0
 
-var http_ready = true
-var url = "http://127.0.0.1:5000/"
+var CON = (GameVariables.tenants[GameVariables.visited_pigeon])["con"]
+var cooldown_time = 0.0
+var cooldown_duration
 
 func _ready():
+	cooldown_duration = 1.0/(float(CON)/25.0)
+	cooldown_progress_bar.max_value = cooldown_duration
 	cd_timer.wait_time = 1
-	
-	$HTTPRequest.request_completed.connect(self._on_request_completed)
-	_start_request()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -30,10 +31,16 @@ func _process(delta):
 		player.position.x -= speed * delta
 	if Input.is_action_pressed("right") and player.position.x < 1300:
 		player.position.x += speed * delta
-	if Input.is_action_just_pressed("space"):
+	
+	cooldown_time -= delta
+	cooldown_progress_bar.value = cooldown_duration - cooldown_time
+	
+	#have a visual reload bar?
+	if Input.is_action_just_pressed("space") and cooldown_time <= 0.:
 		var projectile = projectile_scene.instantiate()
 		projectile.position = Vector2(player.position.x, player.position.y - 120)
 		add_child(projectile)
+		cooldown_time = cooldown_duration
 	
 	#måske skal der ikke opdateres hvert sekund?
 	score.text = " " + str(GameVariables.current_score)
@@ -47,11 +54,12 @@ func _on_timer_timeout():
 		count_down_label.text = "[center]Get ready!\nGo!"
 		
 		if count_down == 0:
-			count_down_label.queue_free()   #removed after use
+			count_down_label.visible = false   
 			cd_timer.wait_time = 2
 			game_timer.start()
 			time_left_label.visible = true
 			score.visible = true
+			cooldown_progress_bar.visible = true
 		
 		count_down -= 1
 	else:
@@ -71,24 +79,15 @@ func _on_game_timer_timeout():
 		time_left_label.text = "[center]" + str(int(time_left_label.text) - 1)
 	else: 
 		cd_timer.stop()
-		#play some sort of ending animation! (use animationplayer)
+		#just pretty stuff
+		count_down_label.add_theme_font_size_override("normal_font_size",160)
+		count_down_label.add_theme_constant_override("shadow_offset_y",30)
+		count_down_label.fit_content = true
+		count_down_label.text = " Well done!\n Score: " + str(GameVariables.current_score) + "\n High score: X" + "\n Lvl up!"
+		animation_player.play("game_done")
 
-#DATABASE STUFF
-func _start_request():  #henter pigeon 0's data
-	if http_ready :
-		var error = $HTTPRequest.request(url + "/pigeon", ["Content-Type: application/json"], HTTPClient.METHOD_GET, JSON.stringify({'pigeon': 0}))  #ændr f.eks. 'pigeon' i dict til GameVariables.visited_pigeon
-		if error != OK:
-			push_error("An error occurred in the HTTP request.")
-		http_ready = false
-	
-func _on_request_completed(result, response_code, headers, body):
-	http_ready = true
-	var body_string = body.get_string_from_utf8()
-	var json = JSON.parse_string(body_string)
-	
-	#Sætter current pigeons stats til game variables
-	GameVariables.current_chance = json[4]
-	GameVariables.current_int = json[5]
-	GameVariables.current_con = json[6]
-	print(json)
-	print("Chance score: " + str(GameVariables.current_chance))
+func _on_clothing_line_area_body_entered(body):  #checks if clothing lands on line
+	body.landed = true
+
+func _on_return_button_pressed():
+	get_tree().change_scene_to_file("res://hotel.tscn")

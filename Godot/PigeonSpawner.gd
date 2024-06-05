@@ -186,7 +186,7 @@ func _on_back_button_pressed():
 	
 	accessory_button.visible = false
 	
-	minigames_button.visble = false
+	minigames_button.visible = false
 	
 	accessory_area.visible = false
 	item_list.visible = false
@@ -267,6 +267,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	print(GameVariables.pigeon_clothes)
 
 #åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
+#vi kan lave et signal til alle scene skifte knapper, sætte meta data også bare lave en match case hvis det vil være bedre :P
 func _on_minigames_button_pressed():
 	shooter_button.visible = !shooter_button.visible
 

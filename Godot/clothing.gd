@@ -1,47 +1,65 @@
 extends RigidBody2D
 
-var landing_pos = Vector2(400, 450)
+var line_end = Vector2(-132,347)
+var landed = false
 var gravity = 980   #this just matches godot's default gravity
+var direction
 var v0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_child(randi_range(0,2)).visible = true
 	
-	var rnd_time = randf_range(1.5,2.5)
+	var vx = float(randi_range(1000,1250))
+	var angle = randf_range(30.,60.)
 	
-	v0 = calculate_v0(rnd_time)
+	v0 = calculate_v0(vx,deg_to_rad(angle))
 	
 	#play animation
 	#randomize the vector
-	#if clothing collides with hanging line (metadata?) then make it run along the line and disappear
 	
 	apply_impulse(v0)
 
-func _process(_delta):
-	if position.distance_to(landing_pos) < 10:
-		print("HERE")
-		visible = false
+func _process(delta):
+	if landed == true:  #when landed follow line
+		freeze = true
+		if has_node("CollisionShape2D"):
+			$CollisionShape2D.queue_free()
+			direction = (line_end - position).normalized()
+		
+		position += direction * 150 * delta
+		
+	if position <= line_end:
+		queue_free()
 
-func calculate_v0(dt):    #time it takes to travel
-	var x_distance = landing_pos.x - global_position.x
-	var y_distance = landing_pos.y - global_position.y
-	
-	var v0_x = x_distance / dt
-	var v0_y = (y_distance + 0.5 * gravity * dt ** 2) / dt
-	
-	var dist_max = (v0_x**2+v0_y**2)/abs(gravity)
+func calculate_v0(vx,angle):    #velocity along x axis, angle in radians
+	var v0_x = -vx * cos(angle) #negativ da til venstre
+	var v0_y = vx * sin(angle)
 	
 	return Vector2(v0_x, -v0_y)  #y op er negativ, da godot op er negativ
 
-func _on_body_entered(body):
+func _on_body_entered(body):    #if hit by a projectile, add points
 	if body.get_name() == "Projectile" or "StaticBody2D" in body.get_name():
 		queue_free()
-		GameVariables.current_score += 10
 		body.speed = 500
 		
-		body.get_node("CollisionShape2D").queue_free()
-		body.get_node("PoopSprite").texture = load("res://Art/Minigames/PigeonShooter/PoopSplatter.png")
+		var sprite = body.get_node("PoopSprite")
 		
-		print(body.speed)
+		if body.get_meta("type") == "poop":
+			GameVariables.current_score += 100
+			body.get_node("CollisionShape2D").queue_free()
+			sprite.texture = load("res://Art/Minigames/PigeonShooter/PoopSplatter.png")
+		elif body.get_meta("type") == "egg":
+			#egg can destroy more clothes in its path
+			GameVariables.current_score += 100
+			sprite.texture = load("res://Art/Minigames/PigeonShooter/EggSplatter.png")
+			sprite.scale = Vector2(1.8,1.8)
+		else:
+			#explosion
+			#dissapear after
+			if GameVariables.current_score > 74:
+				GameVariables.current_score -= 75
+			else:
+				GameVariables.current_score = 0
+			pass #bomb
 
