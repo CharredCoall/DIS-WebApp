@@ -199,12 +199,11 @@ libraries = {
 autostart = true
 
 [node name="CountDown" type="RichTextLabel" parent="."]
-modulate = Color(1, 1, 1, 0.888889)
 z_index = 5
-offset_left = 424.0
-offset_top = 281.444
-offset_right = 1512.89
-offset_bottom = 946.333
+offset_left = 472.0
+offset_top = 306.0
+offset_right = 1472.0
+offset_bottom = 929.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.517647)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 35

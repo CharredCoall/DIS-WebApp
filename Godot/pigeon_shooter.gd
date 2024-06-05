@@ -21,7 +21,7 @@ var cooldown_time = 0.0
 var cooldown_duration
 
 func _ready():
-	cooldown_duration = 1.0/(float(CON)/25.0)
+	cooldown_duration = 1.0*(float(CON)/25.0)
 	cooldown_progress_bar.max_value = cooldown_duration
 	cd_timer.wait_time = 1
 
@@ -85,6 +85,7 @@ func _on_game_timer_timeout():
 		count_down_label.fit_content = true
 		count_down_label.text = " Well done!\n Score: " + str(GameVariables.current_score) + "\n High score: X" + "\n Lvl up!"
 		animation_player.play("game_done")
+		#add to CON depending on INT
 
 func _on_clothing_line_area_body_entered(body):  #checks if clothing lands on line
 	body.landed = true

@@ -72,6 +72,43 @@ item_count = 1
 item_0/text = ""
 item_0/icon = ExtResource("4_oh1k7")
 
+[node name="StatsButton" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = -201.0
+offset_top = 145.0
+offset_right = -141.0
+offset_bottom = 205.0
+texture_normal = ExtResource("2_bsngf")
+texture_pressed = ExtResource("3_55fyq")
+texture_hover = ExtResource("2_bsngf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StatsArea" type="MeshInstance2D" parent="Camera2D/StatsButton"]
+visible = false
+modulate = Color(0.623529, 0.792157, 0.509804, 1)
+position = Vector2(-60, -185)
+scale = Vector2(181, 296.5)
+mesh = SubResource("QuadMesh_5u83m")
+
+[node name="StatsText" type="RichTextLabel" parent="Camera2D/StatsButton"]
+visible = false
+layout_mode = 0
+offset_left = -129.0
+offset_top = -286.0
+offset_right = 10.0
+offset_bottom = -81.0
+theme_override_colors/font_outline_color = Color(0.30149, 0.489073, 0.23141, 1)
+theme_override_constants/outline_size = 19
+theme_override_font_sizes/normal_font_size = 29
+bbcode_enabled = true
+text = "[center] Stats:
+
+CON: 15
+CHA: 30
+"
+
 [node name="MinigamesButton" type="TextureButton" parent="Camera2D"]
 visible = false
 z_index = 1
@@ -121,6 +158,7 @@ position = Vector2(0, 18)
 [connection signal="pressed" from="Camera2D/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Camera2D/AccessoryButton" to="." method="_on_accessory_button_pressed"]
 [connection signal="item_clicked" from="Camera2D/AccessoryButton/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="Camera2D/StatsButton" to="." method="_on_stats_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton" to="." method="_on_minigames_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton/ShooterButton" to="." method="_on_shooter_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton/ClickerButton" to="." method="_on_clicker_button_pressed"]

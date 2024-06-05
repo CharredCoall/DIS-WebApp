@@ -10,6 +10,9 @@ extends Node2D
 @onready var minigames_button = $Camera2D/MinigamesButton
 @onready var shooter_button = $Camera2D/MinigamesButton/ShooterButton
 @onready var clicker_button = $Camera2D/MinigamesButton/ClickerButton
+@onready var stats_button = $Camera2D/StatsButton
+@onready var stats_area = $Camera2D/StatsButton/StatsArea
+@onready var stats_text = $Camera2D/StatsButton/StatsText
 @onready var shop = $Shop
 
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
@@ -175,6 +178,7 @@ func _on_pigeon_clicked():
 		back_button.visible = true
 		accessory_button.visible = true
 		minigames_button.visible = true
+		stats_button.visible = true
 		shop.visible = false
 
 func _on_back_button_pressed():
@@ -186,6 +190,10 @@ func _on_back_button_pressed():
 	back_button.visible = false
 	
 	accessory_button.visible = false
+	
+	stats_button.visible = false
+	stats_area.visible = false
+	stats_text.visible = false
 	
 	minigames_button.visible = false
 	
@@ -335,5 +343,9 @@ func _on_request_completed(result, response_code, headers, body):
 func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
-			
 
+func _on_stats_button_pressed():
+	stats_area.visible = !stats_area.visible
+	stats_text.visible = !stats_text.visible
+	
+	stats_text.text = "[center] Stats:\n" + "CHA: " + str((GameVariables.tenants[GameVariables.visited_pigeon])["cha"]) + "\nCON: " + str((GameVariables.tenants[GameVariables.visited_pigeon])["con"])
