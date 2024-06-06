@@ -84,7 +84,7 @@ func _on_request_completed(result, response_code, headers, body):
 			if pigeon[5] != null:
 				pigeon[5] = int(pigeon[5])
 				GameVariables.pigeon_clothes[str(pigeon[0])] = GameVariables.store_items[int(pigeon[5])][0]
-			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "pigeon_idle", "con": pigeon[2], "int": pigeon[3], "cha": pigeon[4], "hat": pigeon[5]} 
+			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "idle", "con": pigeon[4], "int": pigeon[3], "cha": pigeon[2], "hat": pigeon[5]} 
 			GameVariables.pigeon_state[str(pigeon[0])] = "pigeon_idle"
 		GameVariables.money = json["userData"][2]
 		GameVariables.items = {}

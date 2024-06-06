@@ -139,8 +139,10 @@ stretch_mode = 0
 [node name="ClickerButton" type="TextureButton" parent="Camera2D/MinigamesButton"]
 visible = false
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = -133.0
+offset_right = 385.0
+offset_bottom = 6.0
+scale = Vector2(0.525263, 0.525263)
 texture_normal = ExtResource("7_p60b8")
 texture_pressed = ExtResource("8_labax")
 texture_hover = ExtResource("7_p60b8")

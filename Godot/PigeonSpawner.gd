@@ -19,6 +19,7 @@ extends Node2D
 
 @export var speed = 5
 
+#fix
 var rooms = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 var full_rooms = []
 
@@ -65,12 +66,10 @@ func _place_pigeons():
 		add_child(the_pig)
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
-		if GameVariables.tenants[saved_pig]["hat"] != null:
-			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0])
-		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
-		
-		
-		
+		if GameVariables.tenants[saved_pig].has("hat"):
+			if GameVariables.tenants[saved_pig]["hat"] != null:
+				the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0]) 
+			the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 
 func _process(_delta):
 	if get_child(-1) != timer and !landed:
@@ -207,6 +206,9 @@ func _on_accessory_button_pressed():
 	accessory_area.visible = !accessory_area.visible
 	item_list.visible = !item_list.visible
 	
+	stats_area.visible = false
+	stats_text.visible = false
+	
 	item_list.clear()
 	item_list.add_icon_item(load("res://Art/Cross.png"))
 	for item in GameVariables.items:
@@ -342,5 +344,8 @@ func _gamepos_to_dbid(pos):
 func _on_stats_button_pressed():
 	stats_area.visible = !stats_area.visible
 	stats_text.visible = !stats_text.visible
+	
+	accessory_area.visible = false
+	item_list.visible = false
 	
 	stats_text.text = "[center] Stats:\n" + "CHA: " + str((GameVariables.tenants[GameVariables.visited_pigeon])["cha"]) + "\nCON: " + str((GameVariables.tenants[GameVariables.visited_pigeon])["con"])
