@@ -15,23 +15,25 @@ extends Node
 var end_manager = null
 
 #GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["con"] #GameVariable for stats "con"/"cha"/"int"
-var hat = GameVariables.pigeon_clothes[str(GameVariables.visited_pigeon.get_name())]
+var hat
 
-
-var score = 10
+@onready var score = 10
 var characters = ["Q", "W", "E"]
 var random_char:String
 var positions = [Vector2(80,250), Vector2(1100,40), Vector2(1500,40), Vector2(1650,330), Vector2(1650,760), Vector2(88, 760), Vector2(88,488)]
 var random_pos:Vector2
-var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["con"] #GameVariable for stats "con"/"cha"/"int"
-var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["cha"] #GameVariable for stats "con"/"cha"/"int"
-var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["int"] #GameVariable for stats "con"/"cha"/"int"
+var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["con"] #GameVariable for stats "con"/"cha"/"int"
+var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["cha"] #GameVariable for stats "con"/"cha"/"int"
+var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["int"] #GameVariable for stats "con"/"cha"/"int"
 var damage = 20+ceil(float(con**1.25/5))
-var time:int = 5
+var time:int = 60
 var count_down = 3
 var game_started = false
 
 func _ready():
+	if str(GameVariables.visited_pigeon) in GameVariables.pigeon_clothes:
+		hat = GameVariables.pigeon_clothes[str(GameVariables.visited_pigeon)]
+	GameVariables.visiting = false
 	game.visible = true
 	set_end_scene_visibility(false)
 	randomize()

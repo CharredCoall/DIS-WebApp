@@ -261,8 +261,8 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 }());
 
-window.onbeforeunload = function (e) {
-	fetch(window.location.href + "/quit");
+window.onbeforeunload = async function (e) {
+	await fetch(window.location.href + "/quit");
 }
 		</script>
 	</body>

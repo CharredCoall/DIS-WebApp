@@ -67,7 +67,6 @@ offset_bottom = 482.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 75
 theme_override_font_sizes/font_size = 350
-text = "Announce"
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="EndManager"]
@@ -78,7 +77,6 @@ offset_bottom = 569.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
 theme_override_font_sizes/font_size = 100
-text = "Score"
 
 [node name="LevelUpLabel" type="Label" parent="EndManager"]
 offset_left = 48.0
@@ -88,7 +86,6 @@ offset_bottom = 825.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
 theme_override_font_sizes/font_size = 100
-text = "Level Up"
 
 [node name="MoneyLabel" type="Label" parent="EndManager"]
 offset_left = 64.0
@@ -98,7 +95,6 @@ offset_bottom = 962.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
 theme_override_font_sizes/font_size = 100
-text = "money"
 
 [node name="GoBackToMenu" type="TextureButton" parent="EndManager"]
 offset_left = 1680.0
@@ -113,10 +109,12 @@ texture_hover = ExtResource("4_ulp6m")
 [node name="Goober" type="Sprite2D" parent="EndManager"]
 
 [node name="AnimatedGoober" type="AnimatedSprite2D" parent="EndManager/Goober"]
-position = Vector2(1304, 640)
-scale = Vector2(0.75, 0.75)
+position = Vector2(1424, 640)
+scale = Vector2(0.65, 0.65)
 sprite_frames = SubResource("SpriteFrames_xryh3")
 animation = &"Munch"
 frame_progress = 0.163534
+
+[node name="HTTPRequest" type="HTTPRequest" parent="EndManager"]
 
 [connection signal="pressed" from="EndManager/GoBackToMenu" to="EndManager" method="_on_go_back_to_menu_pressed"]

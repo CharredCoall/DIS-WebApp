@@ -261,10 +261,9 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 				item_list.add_icon_item(load("res://Art/Cross.png"))
 				for item in GameVariables.items:
 					item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
-		accessory_node.texture = load(GameVariables.items[index - 1])
+		accessory_node.texture = load(GameVariables.store_items[GameVariables.items[index]][0])
 		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
 			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-		
 		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
 		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
 			GameVariables.items.remove_at(index - 1)
