@@ -39,7 +39,7 @@ func _ready():
 	randomize()
 	munch.initialize_chance(chance)
 	munch._respawn()
-	hat_sprite.texture = hat
+	hat_sprite.texture = load(hat)
 	score_label.text = str(score) + " Points!"
 	cd_timer.connect("timeout", Callable(self, "_on_CdTimer_timeout"))
 	cd_timer.start(1)  # Start the countdown timer with 1 second intervals

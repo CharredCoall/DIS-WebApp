@@ -66,19 +66,10 @@ func _place_pigeons():
 		add_child(the_pig)
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
-<<<<<<< HEAD
 		if GameVariables.tenants[saved_pig].has("hat"):
 			if GameVariables.tenants[saved_pig]["hat"] != null:
 				the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0]) 
 			the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
-=======
-		if GameVariables.tenants[saved_pig]["hat"] != null:
-			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0])
-		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
-		
-		
-		
->>>>>>> 364546f4f242faedda08543ce1bffab2f81d2d27
 
 func _process(_delta):
 	if get_child(-1) != timer and !landed:
