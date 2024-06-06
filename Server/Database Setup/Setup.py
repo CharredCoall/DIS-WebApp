@@ -269,11 +269,11 @@ if __name__ == "__main__":
         BEGIN
             IF EXISTS( SELECT * FROM highscore WHERE game = _game AND user_id = _id) THEN
                 UPDATE highscore 
-                SET score = _score 
+                SET score = GREATEST(_score, score) 
                 WHERE game = _game AND user_id = _id;
             ELSE
-                INSERT INTO highscore (user_id, game, score, created_at) 
-                VALUES (_id, _game, _score, current_timestamp);
+                INSERT INTO highscore (user_id, game, score, score_time) 
+                VALUES (_id, _game, _score, NOW()::TIMESTAMP);
             END IF;
         END;
         $procedure$;
