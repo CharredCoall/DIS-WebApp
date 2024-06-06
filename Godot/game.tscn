@@ -128,7 +128,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.999999, 0.118942, 0.768699, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
-text = "Q"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -145,7 +144,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.645296, 0.165613, 1, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
-text = "0 Points!"
 metadata/_edit_use_anchors_ = true
 
 [node name="Health_Label" type="Label" parent="GameManager"]
@@ -157,7 +155,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
 theme_override_constants/outline_size = 35
 theme_override_font_sizes/font_size = 150
-text = "100%"
 
 [node name="GameTimer" type="Timer" parent="GameManager"]
 wait_time = 5.0
@@ -171,7 +168,6 @@ offset_bottom = 249.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 50
 theme_override_font_sizes/font_size = 200
-text = "60"
 horizontal_alignment = 2
 
 [node name="StartTimer" type="Timer" parent="GameManager"]

@@ -8,17 +8,19 @@ extends Node
 
 var score:int
 var con:int
-var chance:int
 var money:int
+var user = GameVariables.current_user
 var user_id = GameVariables.current_user_id
 var http_ready = true
 var last_route = ""
 var last_method
 var last_data
-var request_queue
+var request_queue = []
 
 #_start_request("/score", HTTPClient.METHOD_PUT,{"game":"clicker","user":user_id,"score":score}) #Update Score
 #_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon.get_name())), "chance":chance,"constitution":con}) #Update Stats
+func _ready():
+	$HTTPRequest.request_completed.connect(self._on_request_completed)
 
 func set_score(new_score):
 	score = new_score
@@ -30,18 +32,18 @@ func level_up(oldcon:int, intelligence:int):
 func display_stuff(oldcon:int):
 	announce_label.text = "Times Up!"
 	score_label.text = "You got " + str(score) + " Points!"
-	level_up_label.text = "You leveled up! Con:"  + str(oldcon) + "+" + str(con-oldcon)
-	money_label.text = "You gained " + str(money) + "coins!"
+	level_up_label.text = "You leveled up! Con: "  + str(oldcon) + " + " + str(con-oldcon)
+	money_label.text = "You gained " + str(money) + "g"
 	goober.play("Munch")
 
 func _on_go_back_to_menu_pressed():
 	make_requests()
-	get_tree().change_scene_to_file("res://hotel.tscn")
+	_start_request("/load_game", HTTPClient.METHOD_GET,{"user":user})
 
 func make_requests():
 	_start_request("/score", HTTPClient.METHOD_PUT,{"game":"clicker","user":user_id,"score":score}) #Update Score
-	_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon.get_name())), "chance":chance,"constitution":con}) #Update Stats
-	#_start_request({}) #Update Money!!
+	_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon)), "chance":GameVariables.tenants[str(GameVariables.visited_pigeon)]["cha"],"constitution":con}) #Update Stats
+	_start_request("/money", HTTPClient.METHOD_PUT,{"user":user_id,"money":money}) #Update Money!!
 
 #Send HTTP Request to server
 func _start_request(route, method, data):
@@ -79,7 +81,34 @@ func _on_request_completed(result, response_code, headers, body):
 	if 'Set-Cookie' in header_dict :
 		GameVariables.cookie = header_dict['Set-Cookie']
 	http_ready = true
-	var request = request_queue.pop_front()
-	if request != null :
-		_start_request(request["route"], request["method"], request["data"])
+	var body_string = body.get_string_from_utf8()
+	var json = JSON.parse_string(body_string)
+	match last_route: 
+		"/load_game":
+			GameVariables.current_user = json["userData"][1]
+			GameVariables.current_user_id = json["userData"][0]
+			GameVariables.data = json
+			GameVariables.visited_pigeon = null
+			var pigeonholes := {}
+			for pigeonhole in json['pigeonholes']:
+				pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[1])
+			GameVariables.pigeonholes = pigeonholes
+			for pigeon in json['pigeons']:
+				if pigeon[5] != null:
+					pigeon[5] = int(pigeon[5])
+					GameVariables.pigeon_clothes[str(pigeon[0])] = GameVariables.store_items[int(pigeon[5])][0]
+				GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "idle", "con": pigeon[4], "int": pigeon[3], "cha": pigeon[2], "hat": pigeon[5]} 
+			GameVariables.money = json["userData"][2]
+			GameVariables.items = {}
+			for hat in json['hats']:
+				if hat[1] > 0:
+					GameVariables.items[int(hat[0])] = hat[1]
+			get_tree().change_scene_to_file("res://hotel.tscn")
+		_:
+			var request = request_queue.pop_front()
+			if request != null :
+				_start_request(request["route"], request["method"], request["data"])
 
+func _dbpos_to_gamepos(pos):
+	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+	return translate_list[pos]

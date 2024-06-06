@@ -26,24 +26,33 @@ def call_sql(function, input, returns):
 
     cursor = conn.cursor()
 
-    if not type(input) == list :
-        if type(input) == str :
-            input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% " , input)) + "'"
-        input_string = str(input)
-    else:
-        first_input = input.pop(0)
-        if type(first_input) == str :
-            first_input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(first_input))) + "'"
-        input_string = str(first_input)
-        for v in input :
-            if type(v) == str :
-                v = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(v))) + "'"
-            input_string += ", " + str(v)
+    input_string = None
+
+    if input != None:
+        if not type(input) == list :
+            if type(input) == str :
+                input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% " , input)) + "'"
+            input_string = str(input)
+        else:
+            first_input = input.pop(0)
+            if type(first_input) == str :
+                first_input = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(first_input))) + "'"
+            input_string = str(first_input)
+            for v in input :
+                if type(v) == str :
+                    v = "'" + re.sub(r"\"", r" %22% ", re.sub(r"'", r" %27% ", str(v))) + "'"
+                input_string += ", " + str(v)
 
     if (returns):
-        cursor.execute("SELECT * FROM {}({});".format(function, input_string))
+        if input_string == None :
+            cursor.execute("SELECT * FROM {}();".format(function))
+        else:
+            cursor.execute("SELECT * FROM {}({});".format(function, input_string))
     else:
-        cursor.execute("CALL {}({});".format(function, input_string))
+        if input_string == None : 
+            cursor.execute("CALL {}();".format(function))
+        else :
+            cursor.execute("CALL {}({});".format(function, input_string))
 
     if returns :
         result = cursor.fetchall()
@@ -139,7 +148,7 @@ def score():
                         return jsonify(None)
                     return jsonify(result)
 
-            result = call_sql("get_all_scores", "", True)
+            result = call_sql("get_all_scores", None, True)
 
             if result[0][0] == None:
                 return jsonify(None)
