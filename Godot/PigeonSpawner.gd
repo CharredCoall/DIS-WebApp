@@ -66,7 +66,7 @@ func _place_pigeons():
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
 		if GameVariables.tenants[saved_pig]["hat"] != null:
-			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0]) 
+			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0])
 		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 		
 		
@@ -92,77 +92,78 @@ func _process(_delta):
 
 #Creates a new pigeon
 func _on_timer_timeout():
-	landed = false
-	var pigeon = pigeon_scene.instantiate()
-	
-	#1/10 chance for different colored pigeons:
-	if randi_range(1,10) == 2:
-		pigeon.get_child(1).self_modulate = [Color8(225,0,randi_range(100,225)),Color8(225,randi_range(100,225),0),Color8(225,randi_range(100,225),randi_range(100,225))].pick_random() 
-	
-	var spawn_points = [Vector2(-85,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220), Vector2(2030,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220)]
-	
-	pigeon.position = spawn_points.pick_random()
-	add_child(pigeon)
-	pigeon.name = "newpig"
-	
-	if not rooms.is_empty():
-		room_pos = rooms.pick_random()
-		GameVariables.tenants[str(pigeon.get_name())] = room_pos
-		if not GameVariables.room_occupancy.has(str(room_pos)):
-			GameVariables.room_occupancy[str(room_pos)] = 1
+	if find_child("newpig") == null :
+		landed = false
+		var pigeon = pigeon_scene.instantiate()
+		
+		#1/10 chance for different colored pigeons:
+		if randi_range(1,10) == 2:
+			pigeon.get_child(1).self_modulate = [Color8(225,0,randi_range(100,225)),Color8(225,randi_range(100,225),0),Color8(225,randi_range(100,225),randi_range(100,225))].pick_random() 
+		
+		var spawn_points = [Vector2(-85,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220), Vector2(2030,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220)]
+		
+		pigeon.position = spawn_points.pick_random()
+		add_child(pigeon)
+		pigeon.name = "newpig"
+		
+		if not rooms.is_empty():
+			room_pos = rooms.pick_random()
+			GameVariables.tenants[str(pigeon.get_name())] = room_pos
+			if not GameVariables.room_occupancy.has(str(room_pos)):
+				GameVariables.room_occupancy[str(room_pos)] = 1
+			else:
+				GameVariables.room_occupancy[str(room_pos)] += 1
 		else:
-			GameVariables.room_occupancy[str(room_pos)] += 1
-	else:
-		var x 
-		var y 
-		match spawn_points.find(pigeon.position) :
-			-1:
-				x = 2030
-				y = 1220
-				print("wrong?")
-			0:
-				x = 2030
-				y = randi_range(-50, 610)
-				if pigeon.position.y < 610:
-					y = randi_range(610, 1220)
-			1: 
-				x = randi_range(-20, 1000)
-				if pigeon.position.x < 1000 :
-					x = randi_range(1000, 2030)
-				y = -50
-			2: 
-				x = -85
-				y = randi_range(-50, 610)
-				if pigeon.position.y < 610:
-					y = randi_range(610, 1220)
-			3:
-				x = randi_range(-20, 1000)
-				if pigeon.position.x < 1000 :
-					x = randi_range(1000, 2030)
-				y = -50 
-		print("Positions:")
-		print(pigeon.position)
-		print(str(x) + ", " + str(y))
-		room_pos = Vector2(x,y)
-	
-	GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
-	standing_spot = room_pos
-	
-	get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
-	
-	if (room_pos.x - pigeon.position.x) > 0:
-		pigeon.scale.x = -1
-	
-	#Remove room 
-	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
-		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
-		rooms.erase(room_pos)
-		full_rooms.append(room_pos)
-	
-	print('BIRB')
-	print(GameVariables.tenants)
-	print(GameVariables.room_occupancy)
-	print(rooms)
+			var x 
+			var y 
+			match spawn_points.find(pigeon.position) :
+				-1:
+					x = 2030
+					y = 1220
+					print("wrong?")
+				0:
+					x = 2030
+					y = randi_range(-50, 610)
+					if pigeon.position.y < 610:
+						y = randi_range(610, 1220)
+				1: 
+					x = randi_range(-20, 1000)
+					if pigeon.position.x < 1000 :
+						x = randi_range(1000, 2030)
+					y = -50
+				2: 
+					x = -85
+					y = randi_range(-50, 610)
+					if pigeon.position.y < 610:
+						y = randi_range(610, 1220)
+				3:
+					x = randi_range(-20, 1000)
+					if pigeon.position.x < 1000 :
+						x = randi_range(1000, 2030)
+					y = -50 
+			print("Positions:")
+			print(pigeon.position)
+			print(str(x) + ", " + str(y))
+			room_pos = Vector2(x,y)
+		
+		GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
+		standing_spot = room_pos
+		
+		get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
+		
+		if (room_pos.x - pigeon.position.x) > 0:
+			pigeon.scale.x = -1
+		
+		#Remove room 
+		if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
+			_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
+			rooms.erase(room_pos)
+			full_rooms.append(room_pos)
+		
+		print('BIRB')
+		print(GameVariables.tenants)
+		print(GameVariables.room_occupancy)
+		print(rooms)
 
 func _on_pigeon_clicked():
 	print(GameVariables.visiting)
@@ -261,16 +262,11 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 				item_list.add_icon_item(load("res://Art/Cross.png"))
 				for item in GameVariables.items:
 					item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
-		accessory_node.texture = load(GameVariables.store_items[GameVariables.items[index]][0])
+					
 		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
 			previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-		GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = GameVariables.items[index - 1]
-		if GameVariables.pigeon_clothes.has(clicked_pig.get_name()) and GameVariables.pigeon_clothes[clicked_pig.get_name()] != "res://Art/Items/placeholder_texture_2d.tres":
-			GameVariables.items.remove_at(index - 1)
-			item_list.remove_item(index)
-			if previous_clothing != null:
-				GameVariables.items.append(previous_clothing)
-				item_list.add_icon_item(load(previous_clothing))
+		
+
 	
 	print(GameVariables.pigeon_clothes)
 
