@@ -66,7 +66,7 @@ func _place_pigeons():
 		move_child(the_pig,-2)
 		the_pig.name = saved_pig
 		if GameVariables.tenants[saved_pig]["hat"] != null:
-			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0]) 
+			the_pig.get_node("AnimatedSprite2D/Accessory").texture = load(GameVariables.store_items[GameVariables.tenants[saved_pig]["hat"]][0])
 		the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 		
 		
