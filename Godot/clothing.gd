@@ -49,17 +49,8 @@ func _on_body_entered(body):    #if hit by a projectile, add points
 			GameVariables.current_score += 100
 			body.get_node("CollisionShape2D").queue_free()
 			sprite.texture = load("res://Art/Minigames/PigeonShooter/PoopSplatter.png")
-		elif body.get_meta("type") == "egg":
+		else:
 			#egg can destroy more clothes in its path
 			GameVariables.current_score += 100
 			sprite.texture = load("res://Art/Minigames/PigeonShooter/EggSplatter.png")
 			sprite.scale = Vector2(1.8,1.8)
-		else:
-			#explosion
-			#dissapear after
-			if GameVariables.current_score > 74:
-				GameVariables.current_score -= 75
-			else:
-				GameVariables.current_score = 0
-			pass #bomb
-

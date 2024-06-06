@@ -16,12 +16,26 @@ var count_down = 3
 var speed = 800
 var seconds = 0
 
+var user_id = GameVariables.current_user_id
+var http_ready = true
+var last_route = ""
+var last_method
+var last_data
+var request_queue
+var last_user = ""
+var last_user_id = -1
+
 var CON = (GameVariables.tenants[GameVariables.visited_pigeon])["con"]
 var cooldown_time = 0.0
 var cooldown_duration
 
 func _ready():
-	cooldown_duration = 1.0*(float(CON)/25.0)
+	$HTTPRequest.request_completed.connect(self._on_request_completed)
+	
+	if CON < 30:
+		cooldown_duration = 0.5+float(CON)/100*1.10
+	else:
+		cooldown_duration = 1.0+float(CON)/100*1.10
 	cooldown_progress_bar.max_value = cooldown_duration
 	cd_timer.wait_time = 1
 
@@ -83,8 +97,22 @@ func _on_game_timer_timeout():
 		count_down_label.add_theme_font_size_override("normal_font_size",160)
 		count_down_label.add_theme_constant_override("shadow_offset_y",30)
 		count_down_label.fit_content = true
-		count_down_label.text = " Well done!\n Score: " + str(GameVariables.current_score) + "\n High score: X" + "\n Lvl up!"
+		
+		var old_CHA = (GameVariables.tenants[GameVariables.visited_pigeon])["cha"]
+		
+		var INT = (GameVariables.tenants[GameVariables.visited_pigeon])["int"]
+		
+		var added_CHA = ceil((INT/20.)*GameVariables.current_score**0.05)
+		var new_CHA = old_CHA + added_CHA
+		var money_earned = int(ceil(float((GameVariables.current_score)**0.75)/8. + 1.002**(GameVariables.current_score)))
+		
+		count_down_label.text = " Times up!\n[font_size=140] Score: " + str(GameVariables.current_score) + "\n Lvl up! CHA: " + str(old_CHA) + " + " + str(added_CHA) + " = " + str(new_CHA) + "\n Earned " + str(money_earned) + "g" 
 		animation_player.play("game_done")
+		
+		_start_request("/score", HTTPClient.METHOD_PUT,{"game":"shooter","user":user_id,"score":GameVariables.current_score})
+		_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":GameVariables.visited_pigeon, "chance": new_CHA, "constitution": CON})
+		_start_request("/money", HTTPClient.METHOD_PUT,{"user":user_id, "money": money_earned})
+		
 		#add to CON depending on INT
 
 func _on_clothing_line_area_body_entered(body):  #checks if clothing lands on line
@@ -92,3 +120,74 @@ func _on_clothing_line_area_body_entered(body):  #checks if clothing lands on li
 
 func _on_return_button_pressed():
 	get_tree().change_scene_to_file("res://hotel.tscn")
+
+#database stuff
+func _start_request(route, method, data):
+	if http_ready :
+		last_route = route
+		last_method = method
+		var error
+		if method == HTTPClient.METHOD_GET :
+			var query_string = "?"
+			for i in range(len(data)):
+				if i != 0:
+					query_string += "&"
+				query_string += data.keys()[i] + "=" + data[data.keys()[i]] 
+			error = $HTTPRequest.request(GameVariables.url + route + query_string, ["Content-Type: application/json", "Cookie: " + GameVariables.cookie], method)
+		else:
+			error = $HTTPRequest.request(GameVariables.url + route, ["Content-Type: application/json", "Cookie: " + GameVariables.cookie], method, JSON.stringify(data))
+		if error != OK:
+			push_error("An error occurred in the HTTP request.")
+		http_ready = false
+	
+func _on_request_completed(result, response_code, headers, body):
+	http_ready = true
+	if response_code != 200:
+		print(body.get_string_from_utf8())
+		emit_signal("error",body.get_string_from_utf8())
+		return
+	var header_dict = {}
+	var regex = RegEx.new()
+	regex.compile(r"(\b[^:]*\b): ?(.*)")
+	print(headers)
+	for header in headers:
+		result = regex.search(header)
+		header_dict[result.get_string(1)] = result.get_string(2) 
+	if 'Set-Cookie' in header_dict :
+		GameVariables.cookie = header_dict['Set-Cookie']
+	var body_string = body.get_string_from_utf8()
+	var json = JSON.parse_string(body_string)
+	if last_route == "/user" && last_method == HTTPClient.METHOD_PUT:
+		if json :
+			_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+	elif last_route == "/load_game" :
+		GameVariables.current_user = json["userData"][1]
+		GameVariables.current_user_id = json["userData"][0]
+		GameVariables.data = json
+		var pigeonholes := {}
+		for pigeonhole in json['pigeonholes']:
+			pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[1])
+		GameVariables.pigeonholes = pigeonholes
+		for pigeon in json['pigeons']:
+			if pigeon[5] != null:
+				pigeon[5] = int(pigeon[5])
+				GameVariables.pigeon_clothes[str(pigeon[0])] = GameVariables.store_items[int(pigeon[5])][0]
+			GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "idle", "con": pigeon[4], "int": pigeon[3], "cha": pigeon[2], "hat": pigeon[5]} 
+		GameVariables.money = json["userData"][2]
+		GameVariables.items = {}
+		for hat in json['hats']:
+			if hat[1] > 0:
+				GameVariables.items[int(hat[0])] = hat[1]
+		get_tree().change_scene_to_file("res://hotel.tscn")
+	elif last_route == "/user" && last_method == HTTPClient.METHOD_POST:
+		_start_request("/load_game",HTTPClient.METHOD_GET, {"user": $LoginTab/UsernameField.text})
+	elif last_route == "/user" && last_method == HTTPClient.METHOD_GET:
+		if typeof(json) == TYPE_ARRAY:
+			last_user_id = json[0]
+			last_user = json[1]
+			$LoginAs/Label.text = "Login as: \"" + last_user + "\""
+			$LoginAs/AnimationPlayer.play("ZoomLoginAs")
+
+func _dbpos_to_gamepos(pos):
+	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+	return translate_list[pos]
