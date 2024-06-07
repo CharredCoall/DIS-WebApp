@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cm2onrku2rfc0"]
+[gd_scene load_steps=17 format=3 uid="uid://cm2onrku2rfc0"]
 
 [ext_resource type="Texture2D" uid="uid://fakixaw2howt" path="res://Art/Minigames/PigeonShooter/Background.png" id="1_81bxi"]
 [ext_resource type="Script" path="res://pigeon_shooter.gd" id="1_tesnd"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ngrxtkgei2nc" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Norm.PNG" id="5_2gouh"]
 [ext_resource type="Texture2D" uid="uid://bsbncxf1cw13" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Click.PNG" id="6_rmgtn"]
 [ext_resource type="Texture2D" uid="uid://cknkbquh0w1hu" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Hover.PNG" id="7_8q8u0"]
+[ext_resource type="AudioStream" uid="uid://wgq317tx1cwg" path="res://Art/Music/shooter music.mp3" id="8_op2ap"]
 
 [sub_resource type="Animation" id="Animation_pl5h4"]
 resource_name = "game_done"
@@ -287,6 +288,9 @@ texture_normal = ExtResource("5_2gouh")
 texture_pressed = ExtResource("6_rmgtn")
 texture_hover = ExtResource("7_8q8u0")
 stretch_mode = 3
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_op2ap")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
