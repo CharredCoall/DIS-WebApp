@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://t8ujyfxc0bj2"]
+[gd_scene load_steps=9 format=3 uid="uid://t8ujyfxc0bj2"]
 
 [ext_resource type="Script" path="res://shop.gd" id="1_mc7t8"]
 [ext_resource type="Texture2D" uid="uid://da04w2qa7wc2p" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Norm.PNG" id="2_5cnxo"]
 [ext_resource type="Texture2D" uid="uid://c5aw2llhhkygm" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Click.PNG" id="3_n677m"]
 [ext_resource type="Texture2D" uid="uid://cl1ydth7da8o0" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Hover.PNG" id="4_hlboj"]
-[ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_naglo"]
+[ext_resource type="Texture2D" uid="uid://bfc166i7ttmj8" path="res://Art/Buttons/BigButtons/BigButtons/buy/Buy/Buy Norm.PNG" id="5_0on6p"]
+[ext_resource type="Texture2D" uid="uid://bsqd7u0rbpj2l" path="res://Art/Buttons/BigButtons/BigButtons/buy/Buy/Buy Click.PNG" id="6_dpa88"]
+[ext_resource type="Texture2D" uid="uid://dllj7u0ou81f5" path="res://Art/Buttons/BigButtons/BigButtons/buy/Buy/But Hover.PNG" id="7_maq5y"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_0fh1w"]
 
@@ -56,12 +58,14 @@ icon_scale = 2.0
 [node name="BuyButton" type="TextureButton" parent="ShopButton"]
 visible = false
 layout_mode = 0
-offset_left = -749.625
+offset_left = -741.625
 offset_top = -196.688
-offset_right = -519.625
+offset_right = -511.625
 offset_bottom = -113.688
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("5_naglo")
+texture_normal = ExtResource("5_0on6p")
+texture_pressed = ExtResource("6_dpa88")
+texture_hover = ExtResource("7_maq5y")
 ignore_texture_size = true
 stretch_mode = 0
 
