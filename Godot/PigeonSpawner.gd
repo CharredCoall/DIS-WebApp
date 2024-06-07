@@ -40,6 +40,8 @@ var last_data
 var request_queue := []
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	
 	#TEMPORARY LOGIN
 	if GameVariables.current_user_id == -1:
@@ -73,6 +75,10 @@ func _place_pigeons():
 			the_pig.pigeon_clicked.connect(self._on_pigeon_clicked)
 
 func _process(_delta):
+	if Input.is_action_just_pressed("Mouse_Left") :
+		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
+	if Input.is_action_just_released("Mouse_Left"):
+		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	if get_child(-1) != timer and !landed:
 		new_pig = get_child(-1)
 		var pig_pos = new_pig.position 

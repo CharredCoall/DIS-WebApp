@@ -10,19 +10,25 @@ signal error
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	var window = JavaScriptBridge.get_interface("window")
 	
 	if window != null :
 		var this_url = window.location.href
 		GameVariables.url = this_url
-	
+
+
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
 	_start_request("/user",HTTPClient.METHOD_GET,{})
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("Mouse_Left") :
+		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
+	if Input.is_action_just_released("Mouse_Left"):
+		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 
 func _open_logintab():
 	$AnimationPlayer.play("ZoomLoginTab")

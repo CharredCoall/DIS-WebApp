@@ -30,6 +30,8 @@ var cooldown_time = 0.0
 var cooldown_duration
 
 func _ready():
+	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
 	GameVariables.current_score = 0
 	
@@ -42,6 +44,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Input.is_action_just_pressed("Mouse_Left") :
+		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
+	if Input.is_action_just_released("Mouse_Left"):
+		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
+		
 	if Input.is_action_pressed("left") and player.position.x > 600:
 		player.position.x -= speed * delta
 	if Input.is_action_pressed("right") and player.position.x < 1300:
