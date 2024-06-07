@@ -81,7 +81,7 @@ def auth_conn():
 def show_game():
     return render_template("Game.html")
 
-@app.route("/pigeon", methods=["GET","PUT","POST"])
+@app.route("/pigeon", methods=["GET","PUT","POST","DELETE"])
 def pigeon():
     if not auth_conn():
         return jsonify("Not logged In"), 401
@@ -134,6 +134,19 @@ def pigeon():
 
                 return jsonify("Input Error: {}".format(request_result)), 400  
             return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
+        case "DELETE":
+            if request.content_type == "application/json":
+                request_result = request.get_json()
+        
+                if request_result != None and "pigeon" in request_result :
+                    if type(request_result["pigeon"]) == int:
+
+                        call_sql("delete_pigeon",request_result['pigeon'], False)
+                        return jsonify("Success")
+
+                return jsonify("Input Error: {}".format(request_result)), 400  
+            return jsonify("Format Error \n Expected : json Got {}".format(request.content_type)), 400  
+
 
 @app.route("/score", methods=["GET","PUT"])
 def score():
@@ -303,7 +316,7 @@ def add_header_home(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
-    response.headers['Access-Control-Allow-Methods'] = "GET, PUT, POST"
+    response.headers['Access-Control-Allow-Methods'] = "GET, PUT, POST, DELETE"
     response.headers['Access-Control-Allow-Headers'] = "Content-type"
     response.headers['Access-Control-Allow-Credentials'] = "true"
     return response
