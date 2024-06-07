@@ -3,6 +3,7 @@ extends Node2D
 @onready var shop_button = $ShopButton
 @onready var item_list = $ShopButton/ItemList
 @onready var money_label = $ShopButton/MoneyLabel
+@onready var sfx = $SFXs
 
 var item_to_buy = null
 
@@ -17,6 +18,8 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	item_to_buy = index
 
 func _on_buy_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	if item_to_buy != null:
 		if GameVariables.money >= GameVariables.store_items[item_to_buy][1]:
 			$".."._start_request("/buy_hat", HTTPClient.METHOD_PUT, {"user": GameVariables.current_user_id, "hat": item_to_buy})
@@ -29,6 +32,8 @@ func _on_buy_button_pressed():
 			money_label.text = "Money: " + str(GameVariables.money) + "g"
 
 func _on_shop_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	money_label.text = "Money: " + str(GameVariables.money) + "g"
 	for child in shop_button.get_children():
 		child.visible = !child.visible

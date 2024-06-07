@@ -9,6 +9,8 @@ extends Node2D
 @onready var cooldown_progress_bar = $ProgressBar
 @onready var player = $Player
 
+@onready var sfx = $SFXs
+
 @onready var clothing_scene = preload("res://clothing.tscn")
 @onready var projectile_scene = preload("res://projectile.tscn")
 
@@ -29,7 +31,13 @@ var CON = (GameVariables.tenants[GameVariables.visited_pigeon])["con"]
 var cooldown_time = 0.0
 var cooldown_duration
 
+@export var game_ended = false
+
 func _ready():
+	sfx.stream = load("res://Art/SFX/count_downSFX.mp3")
+	sfx.volume_db = -20
+	sfx.play()
+	
 	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
@@ -44,6 +52,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	print(game_ended)
+	
 	if Input.is_action_just_pressed("Mouse_Left") :
 		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
 	if Input.is_action_just_released("Mouse_Left"):
@@ -58,7 +68,10 @@ func _process(delta):
 	cooldown_progress_bar.value = cooldown_duration - cooldown_time
 	
 	#have a visual reload bar?
-	if Input.is_action_just_pressed("space") and cooldown_time <= 0.:
+	if Input.is_action_just_pressed("space") and cooldown_time <= 0.0 and game_ended == false:
+		sfx.stream = load("res://Art/SFX/shootSFX.wav")
+		sfx.volume_db = 0
+		sfx.play()
 		var projectile = projectile_scene.instantiate()
 		projectile.position = Vector2(player.position.x, player.position.y - 120)
 		add_child(projectile)
@@ -93,13 +106,19 @@ func _on_timer_timeout():
 		add_child(clothing)
 		
 		animation_player.play("woman_throw")
+		sfx.stream = load("res://Art/SFX/Cloth_Thrown.wav")
+		sfx.volume_db = 0
+		sfx.play()
 
 func _on_game_timer_timeout():
 	if seconds != 30:
 		seconds += 1
 		game_timer.start()
 		time_left_label.text = "[center]" + str(int(time_left_label.text) - 1)
-	else: 
+	else: #game ended
+		sfx.stream = load("res://Art/SFX/winSFX.mp3")
+		sfx.volume_db = -15
+		
 		cd_timer.stop()
 		#just pretty stuff
 		count_down_label.add_theme_font_size_override("normal_font_size",160)
