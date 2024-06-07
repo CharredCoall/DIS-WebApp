@@ -6,6 +6,7 @@ var current_user_id := -1
 
 var visiting = false
 var shop_opened = false
+var highscore_opened = false
 var visited_pigeon
 
 var money = 500

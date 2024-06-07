@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw5qmr7hag3qs"]
+[gd_scene load_steps=5 format=3 uid="uid://b2711ioqoy2qw"]
 
 [ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="1_jcksw"]
 [ext_resource type="Script" path="res://ShowScores.gd" id="2_05imo"]
@@ -18,35 +18,33 @@ texture_normal = ExtResource("1_jcksw")
 script = ExtResource("2_05imo")
 
 [node name="Area" type="MeshInstance2D" parent="ShowScores"]
-visible = false
 self_modulate = Color(0.623529, 0.792157, 0.509804, 1)
 position = Vector2(911.375, -455.688)
 scale = Vector2(1550.75, 852.625)
 mesh = SubResource("QuadMesh_d31i1")
 
 [node name="Label" type="Label" parent="ShowScores"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 3.77662
-anchor_top = -0.870504
-anchor_right = 3.77662
-anchor_bottom = -0.870504
+anchor_left = 3.63279
+anchor_top = -0.901525
+anchor_right = 3.63279
+anchor_bottom = -0.901525
 offset_left = -751.625
 offset_top = -724.688
 offset_right = -227.625
 offset_bottom = -616.688
 theme_override_font_sizes/font_size = 50
 text = "CLICKER HIGSCORES:"
+horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Header" type="Label" parent="ShowScores"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.303114
-anchor_top = 5.81576
+anchor_top = 5.3913
 anchor_right = 1.19039
 anchor_bottom = 5.3913
 offset_left = 469.699
@@ -59,13 +57,12 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureButton" type="TextureButton" parent="ShowScores"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 3.77662
-anchor_top = -0.870504
-anchor_right = 3.77662
-anchor_bottom = -0.870504
+anchor_left = 4.87177
+anchor_top = 4.10567
+anchor_right = 4.87177
+anchor_bottom = 4.10567
 offset_left = -1100.63
 offset_top = -724.688
 offset_right = -832.625
@@ -77,7 +74,6 @@ stretch_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="ItemList" type="ItemList" parent="ShowScores"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 4.27662
@@ -104,7 +100,6 @@ item_3/text = "9"
 metadata/_edit_use_anchors_ = true
 
 [node name="Exit" type="TextureButton" parent="ShowScores"]
-visible = false
 layout_mode = 0
 offset_left = 1595.0
 offset_top = -882.0

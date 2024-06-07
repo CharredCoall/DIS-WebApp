@@ -166,7 +166,7 @@ func _on_timer_timeout():
 
 func _on_pigeon_clicked():
 	print(GameVariables.visiting)
-	if GameVariables.visiting == false and not GameVariables.shop_opened and not typeof(GameVariables.tenants[str(GameVariables.visited_pigeon)]) == TYPE_VECTOR2:
+	if GameVariables.visiting == false and not GameVariables.shop_opened and not GameVariables.highscore_opened and not typeof(GameVariables.tenants[str(GameVariables.visited_pigeon)]) == TYPE_VECTOR2:
 		print(str(GameVariables.visited_pigeon))
 		clicked_pig = get_node(str(GameVariables.visited_pigeon))
 		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] 

@@ -118,7 +118,7 @@ if __name__ == "__main__":
         LANGUAGE sql
         AS $function$
             SELECT username, game, score, score_time FROM highscore INNER JOIN players ON user_id = id;
-        $function$
+        $function$;
 
         
         CREATE OR REPLACE FUNCTION public.get_pigeon_by_id(_id integer)

@@ -33,13 +33,13 @@ var game_started = false
 func _ready():
 	if str(GameVariables.visited_pigeon) in GameVariables.pigeon_clothes:
 		hat = GameVariables.pigeon_clothes[str(GameVariables.visited_pigeon)]
+		hat_sprite.texture = load(hat)
 	GameVariables.visiting = false
 	game.visible = true
 	set_end_scene_visibility(false)
 	randomize()
 	munch.initialize_chance(chance)
 	munch._respawn()
-	hat_sprite.texture = load(hat)
 	score_label.text = str(score) + " Points!"
 	cd_timer.connect("timeout", Callable(self, "_on_CdTimer_timeout"))
 	cd_timer.start(1)  # Start the countdown timer with 1 second intervals
