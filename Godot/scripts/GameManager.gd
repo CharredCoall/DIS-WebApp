@@ -25,7 +25,7 @@ var random_pos:Vector2
 var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["con"] #GameVariable for stats "con"/"cha"/"int"
 var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["cha"] #GameVariable for stats "con"/"cha"/"int"
 var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["int"] #GameVariable for stats "con"/"cha"/"int"
-var damage = 20+ceil(float(con**1.25/5))
+var damage = 20+ceil(float(con**1.35/5))
 var time:int = 60
 var count_down = 3
 var game_started = false
@@ -39,7 +39,7 @@ func _ready():
 	randomize()
 	munch.initialize_chance(chance)
 	munch._respawn()
-	hat_sprite.texture = hat
+	hat_sprite.texture = load(hat)
 	score_label.text = str(score) + " Points!"
 	cd_timer.connect("timeout", Callable(self, "_on_CdTimer_timeout"))
 	cd_timer.start(1)  # Start the countdown timer with 1 second intervals
