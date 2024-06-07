@@ -118,7 +118,7 @@ func _on_game_timer_timeout():
 		animation_player.play("game_done")
 		
 		_start_request("/score", HTTPClient.METHOD_PUT,{"game":"shooter","user":user_id,"score":GameVariables.current_score})
-		_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":GameVariables.visited_pigeon, "chance": new_CHA, "constitution": CON})
+		_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon)), "chance": new_CHA, "constitution": CON})
 		_start_request("/money", HTTPClient.METHOD_PUT,{"user":user_id, "money": money_earned})
 
 
@@ -157,6 +157,7 @@ func _start_request(route, method, data):
 
 #Handle response data from HTTP Request
 func _on_request_completed(result, response_code, headers, body):
+	http_ready = true
 	if response_code != 200:
 		print(body.get_string_from_utf8())
 		return
@@ -168,7 +169,6 @@ func _on_request_completed(result, response_code, headers, body):
 		header_dict[result.get_string(1)] = result.get_string(2) 
 	if 'Set-Cookie' in header_dict :
 		GameVariables.cookie = header_dict['Set-Cookie']
-	http_ready = true
 	var body_string = body.get_string_from_utf8()
 	var json = JSON.parse_string(body_string)
 	match last_route: 
