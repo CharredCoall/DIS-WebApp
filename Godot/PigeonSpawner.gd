@@ -16,6 +16,8 @@ extends Node2D
 @onready var delete = $Camera2D/Delete
 @onready var shop = $Shop
 
+@onready var sfx = $SFXs
+
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
 
 @export var speed = 5
@@ -174,6 +176,8 @@ func _on_timer_timeout():
 	print(rooms)
 
 func _on_pigeon_clicked():
+	sfx.stream = load("res://Art/SFX/Pigeon_Clicked.wav")
+	sfx.play()
 	print(GameVariables.visiting)
 	if GameVariables.visiting == false and not GameVariables.shop_opened and not GameVariables.highscore_opened and not typeof(GameVariables.tenants[str(GameVariables.visited_pigeon)]) == TYPE_VECTOR2:
 		print(str(GameVariables.visited_pigeon))
@@ -192,6 +196,8 @@ func _on_pigeon_clicked():
 		shop.visible = false
 
 func _on_back_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	camera.zoom = Vector2(1,1)
 	camera.position = Vector2(1000,600)
 		
@@ -214,6 +220,8 @@ func _on_back_button_pressed():
 	shop.visible = true
 
 func _on_accessory_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	accessory_area.visible = !accessory_area.visible
 	item_list.visible = !item_list.visible
 	
@@ -226,6 +234,8 @@ func _on_accessory_button_pressed():
 		item_list.add_item(str(GameVariables.items[item]), load(GameVariables.store_items[int(item)][0]))
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
+	sfx.stream = load("res://Art/SFX/hat_onSFX.wav")
+	sfx.play()
 	if mouse_button_index == 1 :
 		var accessory_node = clicked_pig.get_node("AnimatedSprite2D/Accessory")
 		var previous_clothing
@@ -284,20 +294,28 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	print(GameVariables.pigeon_clothes)
 
 func  _on_delete_pressed():
+	sfx.stream = load("res://Art/SFX/Dead_Bird.wav")
+	sfx.play()
 	_start_request("/pigeon", HTTPClient.METHOD_DELETE, {"pigeon": int(str(clicked_pig.get_name()))})
 
 #åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
 #vi kan lave et signal til alle scene skifte knapper, sætte meta data også bare lave en match case hvis det vil være bedre :P
 func _on_minigames_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	shooter_button.visible = !shooter_button.visible
 	clicker_button.visible = !clicker_button.visible
 
 #To pigeon shooter!!
 func _on_shooter_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	get_tree().change_scene_to_file("res://pigeon_shooter.tscn")
 
 #To Pigeon Clicker!!
 func _on_clicker_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	get_tree().change_scene_to_file("res://game.tscn")
 
 #Send HTTP Request to server
@@ -385,6 +403,8 @@ func _dbpos_to_gamepos(pos):
 	return translate_list[pos]
 
 func _on_stats_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	stats_area.visible = !stats_area.visible
 	stats_text.visible = !stats_text.visible
 	
