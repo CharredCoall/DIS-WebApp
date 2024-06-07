@@ -20,7 +20,16 @@ var request_queue : = []
 #_start_request("/score", HTTPClient.METHOD_PUT,{"game":"clicker","user":user_id,"score":score}) #Update Score
 #_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon.get_name())), "chance":chance,"constitution":con}) #Update Stats
 func _ready():
+	
+	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
+
+func _process(delta):
+	if Input.is_action_just_pressed("Mouse_Left") :
+		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
+	if Input.is_action_just_released("Mouse_Left"):
+		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 
 func set_score(new_score):
 	score = new_score

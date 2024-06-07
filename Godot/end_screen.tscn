@@ -104,9 +104,9 @@ offset_right = 1825.0
 offset_bottom = 985.0
 scale = Vector2(1.4, 1.4)
 focus_mode = 1
-texture_normal = ExtResource("3_1kh8g")
-texture_pressed = ExtResource("4_jlg8v")
-texture_hover = ExtResource("5_n3yj5")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_awavq")
+texture_hover = ExtResource("4_ulp6m")
 
 [node name="Goober" type="Sprite2D" parent="EndManager"]
 

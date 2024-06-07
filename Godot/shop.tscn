@@ -47,6 +47,7 @@ offset_left = -1313.63
 offset_top = -729.688
 offset_right = 68.375
 offset_bottom = -239.688
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 50
 select_mode = 1
 max_columns = 6
