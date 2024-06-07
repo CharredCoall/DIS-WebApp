@@ -283,7 +283,7 @@ libraries = {
 "": SubResource("AnimationLibrary_4j1i4")
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_5wvli")
 autoplay = true
 

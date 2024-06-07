@@ -34,6 +34,7 @@ scale = Vector2(1550.75, 852.625)
 mesh = SubResource("QuadMesh_d31i1")
 
 [node name="Label" type="Label" parent="ShowScores"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 4.81492
@@ -51,12 +52,13 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Header" type="Label" parent="ShowScores"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.335735
-anchor_top = 7.56689
-anchor_right = 1.45808
-anchor_bottom = 7.56689
+anchor_left = -0.248131
+anchor_top = 7.56606
+anchor_right = 1.24537
+anchor_bottom = 7.56606
 offset_left = 469.699
 offset_top = -1486.39
 offset_right = 993.699
@@ -86,6 +88,7 @@ texture_hover = ExtResource("7_rbocd")
 metadata/_edit_use_anchors_ = true
 
 [node name="ItemList" type="ItemList" parent="ShowScores"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 5.72336

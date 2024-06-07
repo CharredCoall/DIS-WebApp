@@ -291,6 +291,7 @@ stretch_mode = 3
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_op2ap")
+autoplay = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
