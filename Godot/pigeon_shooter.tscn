@@ -285,6 +285,8 @@ texture_pressed = ExtResource("6_pe4ej")
 texture_hover = ExtResource("5_2mjg6")
 stretch_mode = 0
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="timeout" from="CountDownTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
 [connection signal="body_entered" from="ClothingLineArea" to="." method="_on_clothing_line_area_body_entered"]

@@ -114,11 +114,11 @@ if __name__ == "__main__":
         
 
         CREATE OR REPLACE FUNCTION public.get_all_scores()
-        RETURNS highscore
+        RETURNS TABLE(username text, game game, score integer, score_time TIMESTAMP)
         LANGUAGE sql
         AS $function$
-            SELECT * FROM highscore;
-        $function$;
+            SELECT username, game, score, score_time FROM highscore INNER JOIN players ON user_id = id;
+        $function$
 
         
         CREATE OR REPLACE FUNCTION public.get_pigeon_by_id(_id integer)
@@ -271,6 +271,9 @@ if __name__ == "__main__":
                 UPDATE highscore 
                 SET score = GREATEST(_score, score) 
                 WHERE game = _game AND user_id = _id;
+                UPDATE highscore
+                SET score_time = NOW()::TIMESTAMP
+                WHERE game = _game AND user_id = _id AND score = _score;
             ELSE
                 INSERT INTO highscore (user_id, game, score, score_time) 
                 VALUES (_id, _game, _score, NOW()::TIMESTAMP);

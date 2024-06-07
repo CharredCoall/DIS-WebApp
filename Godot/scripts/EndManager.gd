@@ -15,7 +15,7 @@ var http_ready = true
 var last_route = ""
 var last_method
 var last_data
-var request_queue = []
+var request_queue : = []
 
 #_start_request("/score", HTTPClient.METHOD_PUT,{"game":"clicker","user":user_id,"score":score}) #Update Score
 #_start_request("/pigeon", HTTPClient.METHOD_PUT,{"pigeon":int(str(GameVariables.visited_pigeon.get_name())), "chance":chance,"constitution":con}) #Update Stats
