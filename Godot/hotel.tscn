@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dcne03gg2yltb"]
+[gd_scene load_steps=30 format=3 uid="uid://dcne03gg2yltb"]
 
 [ext_resource type="Script" path="res://PigeonSpawner.gd" id="1_llwul"]
 [ext_resource type="Texture2D" uid="uid://bf4flmh363ft" path="res://Art/Hotels.jpg" id="2_jg7dq"]
@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://daoxqm67o62t0" path="res://Art/Buttons/SmallButtons/SmallButtons/Hats/Hats Click.PNG" id="7_l1vqu"]
 [ext_resource type="Texture2D" uid="uid://38bbtip240je" path="res://Art/Buttons/SmallButtons/SmallButtons/Hats/Hats Hover.PNG" id="8_fdnof"]
 [ext_resource type="Texture2D" uid="uid://de6hdarhddxlg" path="res://Art/Buttons/SmallButtons/SmallButtons/stats/Stats Norm.PNG" id="10_p3lsv"]
-[ext_resource type="PackedScene" uid="uid://dw5qmr7hag3qs" path="res://highscores.tscn" id="11_0wkqi"]
+[ext_resource type="PackedScene" uid="uid://b2711ioqoy2qw" path="res://highscores.tscn" id="11_0wkqi"]
 [ext_resource type="Texture2D" uid="uid://c663rfibeo7nq" path="res://Art/Buttons/SmallButtons/SmallButtons/stats/Stats Click.PNG" id="11_5ir5g"]
 [ext_resource type="Texture2D" uid="uid://bmarwtpbgos14" path="res://Art/Buttons/SmallButtons/SmallButtons/stats/Stats Hover.PNG" id="12_qf3kc"]
 [ext_resource type="Texture2D" uid="uid://7mkvjcpyxcot" path="res://Art/Buttons/BigButtons/BigButtons/Play/Play Norm.PNG" id="13_leiwq"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://dytyx2a5k6y4s" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Norm.PNG" id="22_pxkns"]
 [ext_resource type="Texture2D" uid="uid://7018bf78hfm4" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Click.PNG" id="23_e8oi7"]
 [ext_resource type="Texture2D" uid="uid://cnm4x4ijbb2by" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Hover.PNG" id="24_6fr6s"]
+[ext_resource type="AudioStream" uid="uid://d32ubys6q85k" path="res://Art/Music/hotel music.mp3" id="28_d2cc1"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_5u83m"]
 
@@ -193,6 +194,14 @@ position = Vector2(0, 18)
 
 [node name="Highscores" parent="." instance=ExtResource("11_0wkqi")]
 z_index = 5
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_d2cc1")
+volume_db = -30.0
+autoplay = true
+
+[node name="SFXs" type="AudioStreamPlayer" parent="."]
+volume_db = 5.0
 
 [node name="Timer" type="Timer" parent="."]
 

@@ -5,6 +5,7 @@ extends Node
 @onready var level_up_label = $LevelUpLabel
 @onready var money_label = $MoneyLabel
 @onready var goober = $Goober/AnimatedGoober
+@onready var sfx = $"../SFXs"
 
 var score:int
 var con:int
@@ -46,6 +47,8 @@ func display_stuff(oldcon:int):
 	goober.play("Munch")
 
 func _on_go_back_to_menu_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	make_requests()
 	_start_request("/load_game", HTTPClient.METHOD_GET,{"user":user})
 

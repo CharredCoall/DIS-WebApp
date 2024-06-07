@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://bn4t1onfm65ar"]
+[gd_scene load_steps=24 format=3 uid="uid://bn4t1onfm65ar"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_dya7i"]
 [ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_tukf1"]
+[ext_resource type="AudioStream" uid="uid://c2bl1mhhesfth" path="res://Art/Music/clicker music.mp3" id="2_yh6mw"]
 [ext_resource type="Texture2D" uid="uid://bovaoq7alcrt1" path="res://assets/Sprites/Munch/banana1.png" id="3_nih1l"]
 [ext_resource type="Texture2D" uid="uid://bnmul0wm236e0" path="res://assets/Sprites/Goober Idle/Eat_Idle-1.png" id="5_tsjk4"]
 [ext_resource type="Texture2D" uid="uid://dqxmlg0ud3dab" path="res://assets/Sprites/Goober Idle/Eat_Idle-2.png" id="6_eos6e"]
@@ -93,6 +94,13 @@ animations = [{
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
 texture = ExtResource("1_tukf1")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_yh6mw")
+volume_db = -30.0
+autoplay = true
+
+[node name="SFXs" type="AudioStreamPlayer2D" parent="."]
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true

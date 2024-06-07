@@ -12,6 +12,8 @@ extends Node
 @onready var cd_timer = $StartTimer
 @onready var cd_timer_label = $StartTimer/StartTimerLabel
 @onready var hat_sprite = $Hat
+@onready var sfx = $"../SFXs"
+@onready var background_music = $"../BackgroundMusic"
 var end_manager = null
 
 #GameVariables.tenants[str(GameVariables.visited_pigeon.get_name())]["con"] #GameVariable for stats "con"/"cha"/"int"
@@ -26,7 +28,7 @@ var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["con"] #G
 var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["cha"] #GameVariable for stats "con"/"cha"/"int"
 var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["int"] #GameVariable for stats "con"/"cha"/"int"
 var damage = 20+ceil(float(con**1.35/5))
-var time:int = 60
+var time:int = 10
 var count_down = 3
 var game_started = false
 
@@ -97,26 +99,34 @@ func handle_player_input():
 	munch.take_damage(damage)
 
 func _process(_delta):
-	if game_started:
+	if game_started and game.visible:
 		timer_label.text = str(int(game_timer.time_left))
 		if Input.is_action_just_pressed("Random_Q") and random_char == "Q":
 			change_label_randomly()
 			handle_player_input()
 			goober.play("Munch")
+			sfx.stream = load("res://Art/SFX/Chomp.wav")
+			sfx.play()
 		elif Input.is_action_just_pressed("Random_W") and random_char == "W":
 			change_label_randomly()
 			handle_player_input()
 			goober.play("Munch")
+			sfx.stream = load("res://Art/SFX/Chomp.wav")
+			sfx.play()
 		elif Input.is_action_just_pressed("Random_E") and random_char == "E":
 			change_label_randomly()
 			handle_player_input()
 			goober.play("Munch")
+			sfx.stream = load("res://Art/SFX/Chomp.wav")
+			sfx.play()
 		elif Input.is_action_just_pressed("Random_Q") and random_char != "Q" or Input.is_action_just_pressed("Random_W") and random_char != "W" or Input.is_action_just_pressed("Random_E") and random_char != "E":
 			remove_point()
 		else:
 			pass
 
 func _on_Timer_timeout():
+	background_music.stream = load("res://Art/SFX/winSFX.mp3")
+	background_music.play()
 	change_scene()
 
 func change_scene():
