@@ -147,9 +147,9 @@ stretch_mode = 0
 visible = false
 z_index = 1
 layout_mode = 0
-offset_top = -65.0
+offset_top = -67.0
 offset_right = 203.0
-offset_bottom = 8.0
+offset_bottom = 6.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("16_r7an8")
 texture_pressed = ExtResource("17_3iir3")
@@ -160,14 +160,15 @@ stretch_mode = 0
 [node name="ClickerButton" type="TextureButton" parent="Camera2D/MinigamesButton"]
 visible = false
 layout_mode = 0
-offset_top = -133.0
-offset_right = 385.0
-offset_bottom = 6.0
+offset_top = -131.0
+offset_right = 388.0
+offset_bottom = 4.0
 scale = Vector2(0.525263, 0.525263)
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("19_jsrpp")
 texture_pressed = ExtResource("20_8tgw7")
 texture_hover = ExtResource("21_acw61")
+stretch_mode = 0
 
 [node name="Delete" type="TextureButton" parent="Camera2D"]
 visible = false
