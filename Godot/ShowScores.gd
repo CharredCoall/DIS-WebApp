@@ -30,11 +30,13 @@ func _process(delta):
 
 func _pressed():
 	if !visibility :
+		GameVariables.highscore_opened = !GameVariables.highscore_opened
 		_start_request("/score", HTTPClient.METHOD_GET, {})
 
 func _exit_pressed():
 	if visibility :
 		visibility = false
+		GameVariables.highscore_opened = !GameVariables.highscore_opened
 		for child in get_children(true):
 			if child != $HTTPRequest:
 				child.visible = visibility

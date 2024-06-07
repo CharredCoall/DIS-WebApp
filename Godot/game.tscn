@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bn4t1onfm65ar"]
+[gd_scene load_steps=23 format=3 uid="uid://bn4t1onfm65ar"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_dya7i"]
 [ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_tukf1"]
@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://rsibpoic1hbr" path="res://assets/Sprites/Goober Eat/Goober_Bite-6.png" id="15_oplic"]
 [ext_resource type="Texture2D" uid="uid://c71oiq6jiolkr" path="res://assets/Sprites/Goober Eat/Goober_Bite-7.png" id="16_fw677"]
 [ext_resource type="Texture2D" uid="uid://dimi38cisovmd" path="res://assets/Sprites/Goober Eat/Goober_Bite-8.png" id="17_hdduu"]
-[ext_resource type="Texture2D" uid="uid://bc2gwoxrbx2pf" path="res://Art/Items/Cap.png" id="21_8s268"]
 [ext_resource type="PackedScene" uid="uid://bhjequvq22d0w" path="res://end_screen.tscn" id="22_0mdwp"]
 [ext_resource type="Script" path="res://scripts/Munch.gd" id="23_tksfb"]
 
@@ -117,7 +116,6 @@ autoplay = "Idle"
 [node name="Hat" type="Sprite2D" parent="GameManager"]
 position = Vector2(1104, 344)
 scale = Vector2(3.5, 3.5)
-texture = ExtResource("21_8s268")
 
 [node name="InstructionLabel" type="Label" parent="GameManager"]
 offset_left = 80.0

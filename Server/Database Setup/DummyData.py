@@ -22,30 +22,30 @@ sql = '''
 
     INSERT INTO pigeons VALUES(0,0,1,12,7,18);
 
-    INSERT INTO hats VALUES(0,25,'Hat');
-    INSERT INTO hats VALUES(1,50,'SunHat');
-    INSERT INTO hats VALUES(2,150,'Cowboy');
-    INSERT INTO hats VALUES(3,100,'Crown');
-    INSERT INTO hats VALUES(4,75,'Flower');
+    INSERT INTO hats VALUES(0,50,'Hat');
+    INSERT INTO hats VALUES(1,100,'SunHat');
+    INSERT INTO hats VALUES(2,300,'Cowboy');
+    INSERT INTO hats VALUES(3,1500,'Crown');
+    INSERT INTO hats VALUES(4,100,'Flower');
     INSERT INTO hats VALUES(5,25,'Tinfoil');
-    INSERT INTO hats VALUES(6,1,'Baret');
-    INSERT INTO hats VALUES(7,2,'Cap');
-    INSERT INTO hats VALUES(8,3,'ClownHair');
-    INSERT INTO hats VALUES(9,1,'DevilHorns');
-    INSERT INTO hats VALUES(10,10,'Fedora');
-    INSERT INTO hats VALUES(11,2,'GreenHat');
-    INSERT INTO hats VALUES(12,3,'Luigi');
-    INSERT INTO hats VALUES(13,3,'Mario');
-    INSERT INTO hats VALUES(14,1,'PinkHat');
-    INSERT INTO hats VALUES(15,2,'Shroom');
-    INSERT INTO hats VALUES(16,3,'SillyHat');
-    INSERT INTO hats VALUES(17,4,'VikingHat');
-    INSERT INTO hats VALUES(18,1,'AnimeHair');
-    INSERT INTO hats VALUES(19,10,'Baby');
-    INSERT INTO hats VALUES(20,3,'BunnyEars');
-    INSERT INTO hats VALUES(21,5,'Sombrero');
-    INSERT INTO hats VALUES(23,50,'FancyHat');
-    INSERT INTO hats VALUES(24,10,'FrogHat');
+    INSERT INTO hats VALUES(6,50,'Baret');
+    INSERT INTO hats VALUES(7,50,'Cap');
+    INSERT INTO hats VALUES(8,150,'ClownHair');
+    INSERT INTO hats VALUES(9,300,'DevilHorns');
+    INSERT INTO hats VALUES(10,700,'Fedora');
+    INSERT INTO hats VALUES(11,1000,'GreenHat');
+    INSERT INTO hats VALUES(12,1000,'Luigi');
+    INSERT INTO hats VALUES(13,1000,'Mario');
+    INSERT INTO hats VALUES(14,600,'PinkHat');
+    INSERT INTO hats VALUES(15,500,'Shroom');
+    INSERT INTO hats VALUES(16,400,'SillyHat');
+    INSERT INTO hats VALUES(17,600,'VikingHat');
+    INSERT INTO hats VALUES(18,1200,'AnimeHair');
+    INSERT INTO hats VALUES(19,3000,'Baby');
+    INSERT INTO hats VALUES(20,400,'BunnyEars');
+    INSERT INTO hats VALUES(21,500,'Sombrero');
+    INSERT INTO hats VALUES(23,1000,'FancyHat');
+    INSERT INTO hats VALUES(24,10000,'FrogHat');
 '''
 
 cursor.execute(sql)

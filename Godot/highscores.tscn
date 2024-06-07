@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw5qmr7hag3qs"]
+[gd_scene load_steps=5 format=3 uid="uid://b2711ioqoy2qw"]
 
 [ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="1_jcksw"]
 [ext_resource type="Script" path="res://ShowScores.gd" id="2_05imo"]
@@ -28,16 +28,17 @@ mesh = SubResource("QuadMesh_d31i1")
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 3.77662
-anchor_top = -0.870504
-anchor_right = 3.77662
-anchor_bottom = -0.870504
+anchor_left = 3.63279
+anchor_top = -0.901525
+anchor_right = 3.63279
+anchor_bottom = -0.901525
 offset_left = -751.625
 offset_top = -724.688
 offset_right = -227.625
 offset_bottom = -616.688
 theme_override_font_sizes/font_size = 50
 text = "CLICKER HIGSCORES:"
+horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -62,10 +63,10 @@ metadata/_edit_use_anchors_ = true
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 3.77662
-anchor_top = -0.870504
-anchor_right = 3.77662
-anchor_bottom = -0.870504
+anchor_left = 4.87177
+anchor_top = 4.10567
+anchor_right = 4.87177
+anchor_bottom = 4.10567
 offset_left = -1100.63
 offset_top = -724.688
 offset_right = -832.625
