@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+@onready var sfx = $SFXs
+
 var line_end = Vector2(-132,347)
 var landed = false
 var gravity = 980   #this just matches godot's default gravity
@@ -42,6 +44,8 @@ func _on_body_entered(body):    #if hit by a projectile, add points
 	if body.get_name() == "Projectile" or "StaticBody2D" in body.get_name():
 		queue_free()
 		body.speed = 500
+		
+		sfx.play() #virker ikke?
 		
 		var sprite = body.get_node("PoopSprite")
 		

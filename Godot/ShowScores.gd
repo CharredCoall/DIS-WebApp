@@ -1,5 +1,7 @@
 extends TextureButton
 
+@onready var sfx = get_parent().get_node("SFXs")
+
 var visibility = false
 var http_ready = true
 var last_route
@@ -29,11 +31,15 @@ func _process(delta):
 
 
 func _pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	if !visibility :
 		GameVariables.highscore_opened = !GameVariables.highscore_opened
 		_start_request("/score", HTTPClient.METHOD_GET, {})
 
 func _exit_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	if visibility :
 		visibility = false
 		GameVariables.highscore_opened = !GameVariables.highscore_opened
@@ -42,6 +48,8 @@ func _exit_pressed():
 				child.visible = visibility
 				
 func _change_game():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	if game == "clicker":
 		game = "shooter"
 	else:
