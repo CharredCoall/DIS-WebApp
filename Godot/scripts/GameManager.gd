@@ -70,7 +70,14 @@ func add_point():
 
 func remove_point():
 	if score > 2:
-		score -= 3
+		if con < 21:
+			score -= 3
+		elif con > 20 and con < 51:
+			score -= 4
+		elif con > 50:
+			score -= 5
+		else:
+			print("Illegal con value")
 	score_label.text = str(score) + " Points!"
 
 func _on_animated_sprite_2d_animation_finished():

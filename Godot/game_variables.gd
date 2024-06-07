@@ -18,10 +18,10 @@ var pigeonholes = {}
 
 var items = {0: 1, 1: 1,2: 1}
 
-var store_items = {0: ["res://Art/Items/Hat.png", 25], 1: ["res://Art/Items/SunHat.png", 50], 2: ["res://Art/Items/Cowboy.png",150], 3: ["res://Art/Items/Crown.png", 100], 4: ["res://Art/Items/Flower.png", 75], 5: ["res://Art/Items/Tinfoil.png", 25], 6:
-	["res://Art/Items/Baret.png", 1], 7: ["res://Art/Items/Cap.png", 2], 8: ["res://Art/Items/ClownHair.png", 3], 9: ["res://Art/Items/DevilHorns.png", 1], 10: ["res://Art/Items/Fedora.png", 10], 11: ["res://Art/Items/GreenHat.png",2], 12: ["res://Art/Items/Luigi.png", 3],
-	13: ["res://Art/Items/Mario.png", 3], 14: ["res://Art/Items/PinkHat.png", 1], 15: ["res://Art/Items/Shroom.png", 2], 16: ["res://Art/Items/SillyHat.png", 3], 17: ["res://Art/Items/VikingHat.png", 4], 18: ["res://Art/Items/AnimeHair.png", 1], 19: ["res://Art/Items/Baby.png", 10],
-	20: ["res://Art/Items/BunnyEars.png", 3], 21: ["res://Art/Items/Sombrero.png", 5], 22: ["res://Art/Items/FancyHat.png", 50], 23: ["res://Art/Items/FrogHat.png",10]}
+var store_items = {0: ["res://Art/Items/Hat.png", 50], 1: ["res://Art/Items/SunHat.png", 100], 2: ["res://Art/Items/Cowboy.png",300], 3: ["res://Art/Items/Crown.png", 1500], 4: ["res://Art/Items/Flower.png", 100], 5: ["res://Art/Items/Tinfoil.png", 25], 6:
+	["res://Art/Items/Baret.png", 50], 7: ["res://Art/Items/Cap.png", 50], 8: ["res://Art/Items/ClownHair.png", 150], 9: ["res://Art/Items/DevilHorns.png", 300], 10: ["res://Art/Items/Fedora.png", 700], 11: ["res://Art/Items/GreenHat.png",1000], 12: ["res://Art/Items/Luigi.png", 1000],
+	13: ["res://Art/Items/Mario.png", 1000], 14: ["res://Art/Items/PinkHat.png", 600], 15: ["res://Art/Items/Shroom.png", 500], 16: ["res://Art/Items/SillyHat.png", 400], 17: ["res://Art/Items/VikingHat.png", 600], 18: ["res://Art/Items/AnimeHair.png", 1200], 19: ["res://Art/Items/Baby.png", 3000],
+	20: ["res://Art/Items/BunnyEars.png", 400], 21: ["res://Art/Items/Sombrero.png", 500], 22: ["res://Art/Items/FancyHat.png", 1000], 23: ["res://Art/Items/FrogHat.png",10000]}
 var pigeon_clothes = {} #Clothes pigeons are wearing
 
 var pigeon_stats = {} #pigeon ID : [3,4,6]
