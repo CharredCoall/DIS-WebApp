@@ -163,7 +163,7 @@ def score():
 
             result = call_sql("get_all_scores", None, True)
 
-            if result[0][0] == None:
+            if result == [] or result[0] == None or result[0][0] == None:
                 return jsonify(None)
             return jsonify(result)
         

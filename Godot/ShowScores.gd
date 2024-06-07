@@ -86,11 +86,12 @@ func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body_string)
 	if last_route == "/score":
 		$ItemList.clear()
-		for score in json :
-			if score[1] == game :
-				for i in range(3) :
-					$ItemList.add_item(str(score[i]))
-				$ItemList.add_item(date_regex.search(str(score[3])).get_string(0))
+		if json != null :
+			for score in json :
+				if score[1] == game :
+					for i in range(3) :
+						$ItemList.add_item(str(score[i]))
+					$ItemList.add_item(date_regex.search(str(score[3])).get_string(0))
 		visibility = true
 		for child in get_children(true):
 			if child != $HTTPRequest:

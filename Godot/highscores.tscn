@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2711ioqoy2qw"]
+[gd_scene load_steps=8 format=3 uid="uid://dw5qmr7hag3qs"]
 
 [ext_resource type="Texture2D" uid="uid://dwravo5ou75l4" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Norm.PNG" id="1_2jvd4"]
 [ext_resource type="Texture2D" uid="uid://cnq25mahbs8rv" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Click.PNG" id="2_1a7wj"]
