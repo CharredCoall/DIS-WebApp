@@ -1,10 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhjequvq22d0w"]
+[gd_scene load_steps=14 format=3 uid="uid://bhjequvq22d0w"]
 
 [ext_resource type="Texture2D" uid="uid://bv4ts6m54f4ba" path="res://assets/Sprites/Background/Street.png" id="1_f8e3x"]
 [ext_resource type="Script" path="res://scripts/EndManager.gd" id="2_g2lfl"]
-[ext_resource type="Texture2D" uid="uid://ngrxtkgei2nc" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Norm.PNG" id="3_1kh8g"]
-[ext_resource type="Texture2D" uid="uid://bsbncxf1cw13" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Click.PNG" id="4_jlg8v"]
-[ext_resource type="Texture2D" uid="uid://cknkbquh0w1hu" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Hover.PNG" id="5_n3yj5"]
+[ext_resource type="Texture2D" uid="uid://hmqd73spep07" path="res://assets/Sprites/End Screen/BackButton.png" id="3_awavq"]
+[ext_resource type="Texture2D" uid="uid://b1sqn80ahr4ed" path="res://assets/Sprites/End Screen/BackButtonHover.png" id="4_ulp6m"]
 [ext_resource type="Texture2D" uid="uid://b68i24d04v8l0" path="res://assets/Sprites/Goober Eat/Goober_Bite-1.png" id="6_6espx"]
 [ext_resource type="Texture2D" uid="uid://bxettilspslkb" path="res://assets/Sprites/Goober Eat/Goober_Bite-2.png" id="7_k1ooy"]
 [ext_resource type="Texture2D" uid="uid://drbqcuym7s7xe" path="res://assets/Sprites/Goober Eat/Goober_Bite-3.png" id="8_ypyur"]
@@ -98,13 +97,12 @@ theme_override_constants/outline_size = 25
 theme_override_font_sizes/font_size = 100
 
 [node name="GoBackToMenu" type="TextureButton" parent="EndManager"]
-offset_left = 1673.0
-offset_top = 839.0
-offset_right = 1825.0
-offset_bottom = 985.0
+offset_left = 1680.0
+offset_top = 848.0
+offset_right = 1832.0
+offset_bottom = 994.0
 scale = Vector2(1.4, 1.4)
 focus_mode = 1
-mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_awavq")
 texture_hover = ExtResource("4_ulp6m")
 
