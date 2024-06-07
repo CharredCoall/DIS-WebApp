@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://cm2onrku2rfc0"]
+[gd_scene load_steps=16 format=3 uid="uid://cm2onrku2rfc0"]
 
 [ext_resource type="Texture2D" uid="uid://fakixaw2howt" path="res://Art/Minigames/PigeonShooter/Background.png" id="1_81bxi"]
 [ext_resource type="Script" path="res://pigeon_shooter.gd" id="1_tesnd"]
 [ext_resource type="Texture2D" uid="uid://dtkoylrpu1mei" path="res://Art/Minigames/PigeonShooter/WomanThrow.png" id="2_lptqb"]
 [ext_resource type="Texture2D" uid="uid://i773s7xkau40" path="res://Art/Minigames/PigeonShooter/PigeonShooterSprite.png" id="4_4mdc2"]
-[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="5_2mjg6"]
-[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="6_pe4ej"]
+[ext_resource type="Texture2D" uid="uid://ngrxtkgei2nc" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Norm.PNG" id="5_2gouh"]
+[ext_resource type="Texture2D" uid="uid://bsbncxf1cw13" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Click.PNG" id="6_rmgtn"]
+[ext_resource type="Texture2D" uid="uid://cknkbquh0w1hu" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Hover.PNG" id="7_8q8u0"]
 
 [sub_resource type="Animation" id="Animation_pl5h4"]
 resource_name = "game_done"
@@ -275,16 +276,17 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_mdg3s")
 show_percentage = false
 
 [node name="ReturnButton" type="TextureButton" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0)
-offset_left = 1514.58
-offset_top = 93.3048
-offset_right = 1899.58
-offset_bottom = 232.305
+offset_left = 1754.35
+offset_top = 90.05
+offset_right = 1902.35
+offset_bottom = 233.05
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("5_2mjg6")
-texture_pressed = ExtResource("6_pe4ej")
-texture_hover = ExtResource("5_2mjg6")
-stretch_mode = 0
+texture_normal = ExtResource("5_2gouh")
+texture_pressed = ExtResource("6_rmgtn")
+texture_hover = ExtResource("7_8q8u0")
+stretch_mode = 3
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

@@ -1,15 +1,22 @@
-[gd_scene load_steps=18 format=3 uid="uid://cnwjaor4y88uj"]
+[gd_scene load_steps=25 format=3 uid="uid://cnwjaor4y88uj"]
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_u5bux"]
 [ext_resource type="VideoStream" path="res://Art/Videos/Dream_2.ogv" id="2_fsb6m"]
-[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="3_q3ffk"]
-[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="4_7uhwf"]
+[ext_resource type="Texture2D" uid="uid://7mkvjcpyxcot" path="res://Art/Buttons/BigButtons/BigButtons/Play/Play Norm.PNG" id="3_6cmgo"]
+[ext_resource type="Texture2D" uid="uid://drxujpv2vssln" path="res://Art/Buttons/BigButtons/BigButtons/Play/Play Click.PNG" id="4_h2fau"]
 [ext_resource type="Script" path="res://TextureButton.gd" id="5_215qw"]
+[ext_resource type="Texture2D" uid="uid://dxsgleiim5207" path="res://Art/Buttons/BigButtons/BigButtons/Play/Play Hover.PNG" id="5_avs1n"]
 [ext_resource type="Script" path="res://Cancel.gd" id="6_goepl"]
 [ext_resource type="Script" path="res://LoginTab.gd" id="6_xnvtr"]
 [ext_resource type="Script" path="res://New user.gd" id="8_5r2uc"]
+[ext_resource type="Texture2D" uid="uid://ctlheb5pirse3" path="res://Art/Buttons/BigButtons/BigButtons/Sign up/SignUp Norm.PNG" id="8_awkku"]
 [ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="8_d3mga"]
 [ext_resource type="Script" path="res://Notif.gd" id="9_eatfr"]
+[ext_resource type="Texture2D" uid="uid://bklgf2vc7chmh" path="res://Art/Buttons/BigButtons/BigButtons/Sign up/SignUp Click.PNG" id="9_vfc6k"]
+[ext_resource type="Texture2D" uid="uid://47pyfbg2cvgd" path="res://Art/Buttons/BigButtons/BigButtons/Sign up/SignUp Hover.PNG" id="10_01jka"]
+[ext_resource type="Texture2D" uid="uid://dhum2327loq8u" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Norm.PNG" id="12_1uhga"]
+[ext_resource type="Texture2D" uid="uid://cxspam047f8d" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Click.PNG" id="13_1w7ba"]
+[ext_resource type="Texture2D" uid="uid://xq7rkwhjmg2h" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Hover.PNG" id="14_abcrj"]
 
 [sub_resource type="Animation" id="Animation_a61jg"]
 resource_name = "Got_Notif"
@@ -127,9 +134,9 @@ grow_vertical = 2
 scale = Vector2(0.479999, 0.520001)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_q3ffk")
-texture_pressed = ExtResource("4_7uhwf")
-texture_hover = ExtResource("3_q3ffk")
+texture_normal = ExtResource("3_6cmgo")
+texture_pressed = ExtResource("4_h2fau")
+texture_hover = ExtResource("5_avs1n")
 script = ExtResource("5_215qw")
 
 [node name="LoginTab" type="Panel" parent="GameManager"]
@@ -167,28 +174,28 @@ secret = true
 
 [node name="New user" type="TextureButton" parent="GameManager/LoginTab"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 250.0
-offset_right = 405.0
-offset_bottom = 389.0
+offset_left = 24.2334
+offset_top = 250.501
+offset_right = 409.233
+offset_bottom = 389.501
 scale = Vector2(0.249953, 0.274566)
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_q3ffk")
-texture_pressed = ExtResource("4_7uhwf")
-texture_hover = ExtResource("3_q3ffk")
+texture_normal = ExtResource("8_awkku")
+texture_pressed = ExtResource("9_vfc6k")
+texture_hover = ExtResource("10_01jka")
 script = ExtResource("8_5r2uc")
 
 [node name="Login" type="TextureButton" parent="GameManager/LoginTab"]
 layout_mode = 0
-offset_left = 139.0
-offset_top = 250.0
-offset_right = 524.0
-offset_bottom = 389.0
+offset_left = 143.233
+offset_top = 250.501
+offset_right = 528.233
+offset_bottom = 389.501
 scale = Vector2(0.243864, 0.278389)
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_q3ffk")
-texture_pressed = ExtResource("4_7uhwf")
-texture_hover = ExtResource("3_q3ffk")
+texture_normal = ExtResource("12_1uhga")
+texture_pressed = ExtResource("13_1w7ba")
+texture_hover = ExtResource("14_abcrj")
 
 [node name="Cancel" type="TextureButton" parent="GameManager/LoginTab"]
 layout_mode = 1
@@ -248,14 +255,15 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 530.0
-offset_top = 17.0
+offset_top = 19.0
 offset_right = -40.0
-offset_bottom = -24.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("3_q3ffk")
-texture_pressed = ExtResource("4_7uhwf")
+texture_normal = ExtResource("3_6cmgo")
+texture_pressed = ExtResource("4_h2fau")
+texture_hover = ExtResource("5_avs1n")
 ignore_texture_size = true
 stretch_mode = 0
 

@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://t8ujyfxc0bj2"]
+[gd_scene load_steps=7 format=3 uid="uid://t8ujyfxc0bj2"]
 
 [ext_resource type="Script" path="res://shop.gd" id="1_mc7t8"]
+[ext_resource type="Texture2D" uid="uid://da04w2qa7wc2p" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Norm.PNG" id="2_5cnxo"]
+[ext_resource type="Texture2D" uid="uid://c5aw2llhhkygm" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Click.PNG" id="3_n677m"]
+[ext_resource type="Texture2D" uid="uid://cl1ydth7da8o0" path="res://Art/Buttons/BigButtons/BigButtons/store/Store Hover.PNG" id="4_hlboj"]
 [ext_resource type="Texture2D" uid="uid://c8e6jspci0ldi" path="res://Art/SendOffButton.png" id="5_naglo"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_0fh1w"]
@@ -10,11 +13,13 @@ script = ExtResource("1_mc7t8")
 
 [node name="ShopButton" type="TextureButton" parent="."]
 offset_left = 1638.0
-offset_top = 1016.0
+offset_top = 1005.0
 offset_right = 1932.0
-offset_bottom = 1122.0
+offset_bottom = 1111.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("5_naglo")
+texture_normal = ExtResource("2_5cnxo")
+texture_pressed = ExtResource("3_n677m")
+texture_hover = ExtResource("4_hlboj")
 ignore_texture_size = true
 stretch_mode = 0
 

@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2711ioqoy2qw"]
+[gd_scene load_steps=8 format=3 uid="uid://b2711ioqoy2qw"]
 
+[ext_resource type="Texture2D" uid="uid://dwravo5ou75l4" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Norm.PNG" id="1_2jvd4"]
 [ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="1_jcksw"]
+[ext_resource type="Texture2D" uid="uid://cnq25mahbs8rv" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Click.PNG" id="2_1a7wj"]
 [ext_resource type="Script" path="res://ShowScores.gd" id="2_05imo"]
+[ext_resource type="Texture2D" uid="uid://gow2i6ojmx5t" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Hover.PNG" id="3_0u4cu"]
 [ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="3_je3rc"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_d31i1"]
@@ -9,12 +12,16 @@
 [node name="Highscores" type="Node2D"]
 
 [node name="ShowScores" type="TextureButton" parent="."]
-offset_left = 89.0
-offset_top = 1018.0
-offset_right = 474.0
-offset_bottom = 1157.0
+offset_left = 73.0
+offset_top = 1027.0
+offset_right = 364.0
+offset_bottom = 1130.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("1_jcksw")
+texture_normal = ExtResource("1_2jvd4")
+texture_pressed = ExtResource("2_1a7wj")
+texture_hover = ExtResource("3_0u4cu")
+ignore_texture_size = true
+stretch_mode = 0
 script = ExtResource("2_05imo")
 
 [node name="Area" type="MeshInstance2D" parent="ShowScores"]
