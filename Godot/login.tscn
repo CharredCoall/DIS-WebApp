@@ -285,7 +285,11 @@ libraries = {
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_5wvli")
+volume_db = -30.0
 autoplay = true
+
+[node name="SFXs" type="AudioStreamPlayer" parent="."]
+volume_db = 5.0
 
 [connection signal="error" from="GameManager" to="GameManager/Notif" method="_show_notif"]
 [connection signal="pressed" from="GameManager/LoginTab/New user" to="GameManager/LoginTab" method="_new_login"]
