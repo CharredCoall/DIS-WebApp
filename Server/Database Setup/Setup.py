@@ -247,6 +247,14 @@ if __name__ == "__main__":
         $procedure$;
 
         
+        CREATE OR REPLACE PROCEDURE public.delete_pigeon(IN _id integer)
+        LANGUAGE sql
+        AS $procedure$   
+                UPDATE pigeons SET intelligence = GREATEST(intelligence - 1, 0)  WHERE owner_id in (SELECT owner_id FROM pigeons WHERE id = _id);
+                DELETE FROM pigeons WHERE id = _id;
+        $procedure$;
+
+
         CREATE OR REPLACE PROCEDURE public.equip_hat(IN _id integer, IN _hat integer)
         LANGUAGE plpgsql
         AS $procedure$

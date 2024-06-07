@@ -147,6 +147,20 @@ texture_normal = ExtResource("7_p60b8")
 texture_pressed = ExtResource("8_labax")
 texture_hover = ExtResource("7_p60b8")
 
+[node name="Delete" type="TextureButton" parent="Camera2D"]
+visible = false
+z_index = 1
+offset_left = 70.0
+offset_top = 140.0
+offset_right = 133.0
+offset_bottom = 201.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("2_bsngf")
+texture_pressed = ExtResource("3_55fyq")
+texture_hover = ExtResource("3_55fyq")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="Hotels" type="Sprite2D" parent="."]
 position = Vector2(1000.11, 600)
 scale = Vector2(1.04155, 1.11111)
@@ -168,4 +182,5 @@ z_index = 5
 [connection signal="pressed" from="Camera2D/MinigamesButton" to="." method="_on_minigames_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton/ShooterButton" to="." method="_on_shooter_button_pressed"]
 [connection signal="pressed" from="Camera2D/MinigamesButton/ClickerButton" to="." method="_on_clicker_button_pressed"]
+[connection signal="pressed" from="Camera2D/Delete" to="." method="_on_delete_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

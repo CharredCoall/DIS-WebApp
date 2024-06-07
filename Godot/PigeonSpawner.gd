@@ -13,6 +13,7 @@ extends Node2D
 @onready var stats_button = $Camera2D/StatsButton
 @onready var stats_area = $Camera2D/StatsButton/StatsArea
 @onready var stats_text = $Camera2D/StatsButton/StatsText
+@onready var delete = $Camera2D/Delete
 @onready var shop = $Shop
 
 @onready var item_list = $Camera2D/AccessoryButton/ItemList
@@ -86,83 +87,85 @@ func _process(_delta):
 			if str(new_pig.get_name()) not in GameVariables.tenants:
 				get_child(-1).queue_free()
 			print(get_children(true))
-			timer.wait_time = randi_range(5,20) + 2
+			timer.wait_time = randi_range(7,22)
 			timer.start()
 
 #Creates a new pigeon
 func _on_timer_timeout():
-	if find_child("newpig") == null :
-		landed = false
-		var pigeon = pigeon_scene.instantiate()
-		
-		#1/10 chance for different colored pigeons:
-		if randi_range(1,10) == 2:
-			pigeon.get_child(1).self_modulate = [Color8(225,0,randi_range(100,225)),Color8(225,randi_range(100,225),0),Color8(225,randi_range(100,225),randi_range(100,225))].pick_random() 
-		
-		var spawn_points = [Vector2(-85,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220), Vector2(2030,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220)]
-		
-		pigeon.position = spawn_points.pick_random()
-		add_child(pigeon)
-		pigeon.name = "newpig"
-		
-		if not rooms.is_empty():
-			room_pos = rooms.pick_random()
-			GameVariables.tenants[str(pigeon.get_name())] = room_pos
-			if not GameVariables.room_occupancy.has(str(room_pos)):
-				GameVariables.room_occupancy[str(room_pos)] = 1
-			else:
-				GameVariables.room_occupancy[str(room_pos)] += 1
+	for child in get_children():
+		if "newpig" in str(child.get_name()):
+			return
+	landed = false
+	var pigeon = pigeon_scene.instantiate()
+	
+	#1/10 chance for different colored pigeons:
+	if randi_range(1,10) == 2:
+		pigeon.get_child(1).self_modulate = [Color8(225,0,randi_range(100,225)),Color8(225,randi_range(100,225),0),Color8(225,randi_range(100,225),randi_range(100,225))].pick_random() 
+	
+	var spawn_points = [Vector2(-85,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220), Vector2(2030,randi_range(-50, 1220)), Vector2(randi_range(-20,2030),1220)]
+	
+	pigeon.position = spawn_points.pick_random()
+	add_child(pigeon)
+	pigeon.name = "newpig"
+	
+	if not rooms.is_empty():
+		room_pos = rooms.pick_random()
+		GameVariables.tenants[str(pigeon.get_name())] = room_pos
+		if not GameVariables.room_occupancy.has(str(room_pos)):
+			GameVariables.room_occupancy[str(room_pos)] = 1
 		else:
-			var x 
-			var y 
-			match spawn_points.find(pigeon.position) :
-				-1:
-					x = 2030
-					y = 1220
-					print("wrong?")
-				0:
-					x = 2030
-					y = randi_range(-50, 610)
-					if pigeon.position.y < 610:
-						y = randi_range(610, 1220)
-				1: 
-					x = randi_range(-20, 1000)
-					if pigeon.position.x < 1000 :
-						x = randi_range(1000, 2030)
-					y = -50
-				2: 
-					x = -85
-					y = randi_range(-50, 610)
-					if pigeon.position.y < 610:
-						y = randi_range(610, 1220)
-				3:
-					x = randi_range(-20, 1000)
-					if pigeon.position.x < 1000 :
-						x = randi_range(1000, 2030)
-					y = -50 
-			print("Positions:")
-			print(pigeon.position)
-			print(str(x) + ", " + str(y))
-			room_pos = Vector2(x,y)
-		
-		GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
-		standing_spot = room_pos
-		
-		get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
-		
-		if (room_pos.x - pigeon.position.x) > 0:
-			pigeon.scale.x = -1
-		
-		#Remove room 
-		if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
-			_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
-			rooms.erase(room_pos)
-			full_rooms.append(room_pos)
-		
-		print('BIRB')
-		print(GameVariables.tenants)
-		print(GameVariables.room_occupancy)
-		print(rooms)
+			GameVariables.room_occupancy[str(room_pos)] += 1
+	else:
+		var x 
+		var y 
+		match spawn_points.find(pigeon.position) :
+			-1:
+				x = 2030
+				y = 1220
+				print("wrong?")
+			0:
+				x = 2030
+				y = randi_range(-50, 610)
+				if pigeon.position.y < 610:
+					y = randi_range(610, 1220)
+			1: 
+				x = randi_range(-20, 1000)
+				if pigeon.position.x < 1000 :
+					x = randi_range(1000, 2030)
+				y = -50
+			2: 
+				x = -85
+				y = randi_range(-50, 610)
+				if pigeon.position.y < 610:
+					y = randi_range(610, 1220)
+			3:
+				x = randi_range(-20, 1000)
+				if pigeon.position.x < 1000 :
+					x = randi_range(1000, 2030)
+				y = -50 
+		print("Positions:")
+		print(pigeon.position)
+		print(str(x) + ", " + str(y))
+		room_pos = Vector2(x,y)
+	
+	GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
+	standing_spot = room_pos
+	
+	get_child(-1).pigeon_clicked.connect(self._on_pigeon_clicked)
+	
+	if (room_pos.x - pigeon.position.x) > 0:
+		pigeon.scale.x = -1
+	
+	#Remove room 
+	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
+		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
+		rooms.erase(room_pos)
+		full_rooms.append(room_pos)
+	
+	print('BIRB')
+	print(GameVariables.tenants)
+	print(GameVariables.room_occupancy)
+	print(rooms)
 
 func _on_pigeon_clicked():
 	print(GameVariables.visiting)
@@ -179,6 +182,7 @@ func _on_pigeon_clicked():
 		accessory_button.visible = true
 		minigames_button.visible = true
 		stats_button.visible = true
+		delete.visible = true
 		shop.visible = false
 
 func _on_back_button_pressed():
@@ -199,6 +203,7 @@ func _on_back_button_pressed():
 	
 	accessory_area.visible = false
 	item_list.visible = false
+	delete.visible = false
 	
 	shop.visible = true
 
@@ -272,6 +277,9 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	
 	print(GameVariables.pigeon_clothes)
 
+func  _on_delete_pressed():
+	_start_request("/pigeon", HTTPClient.METHOD_DELETE, {"pigeon": int(str(clicked_pig.get_name()))})
+
 #åbner minigames to choose from (kan man undgå en hel funktion til denne ene ting?)
 #vi kan lave et signal til alle scene skifte knapper, sætte meta data også bare lave en match case hvis det vil være bedre :P
 func _on_minigames_button_pressed():
@@ -331,6 +339,31 @@ func _on_request_completed(result, response_code, headers, body):
 			GameVariables.tenants.erase("newpig")
 			GameVariables.tenants[str(json[0])] = {"pos": GameVariables.pigeonholes[int(json[2])], "state": "idle", "con": int(json[5]), "int": int(json[4]), "cha": int(json[3])}
 			new_pig.name = str(json[0])
+		"/pigeon" when last_method == HTTPClient.METHOD_DELETE :
+			_start_request("/load_game", HTTPClient.METHOD_GET, {"user": GameVariables.current_user})
+		"/load_game" :
+			full_rooms.erase(GameVariables.tenants[str(clicked_pig.get_name())]["pos"])
+			rooms.append(GameVariables.tenants[str(clicked_pig.get_name())]["pos"])
+			clicked_pig.queue_free()
+			GameVariables.current_user = json["userData"][1]
+			GameVariables.current_user_id = json["userData"][0]
+			GameVariables.data = json
+			var pigeonholes := {}
+			for pigeonhole in json['pigeonholes']:
+				pigeonholes[int(pigeonhole[0])] = _dbpos_to_gamepos(pigeonhole[1])
+			GameVariables.pigeonholes = pigeonholes
+			for pigeon in json['pigeons']:
+				if pigeon[5] != null:
+					pigeon[5] = int(pigeon[5])
+					GameVariables.pigeon_clothes[str(pigeon[0])] = GameVariables.store_items[int(pigeon[5])][0]
+				GameVariables.tenants[str(pigeon[0])] = {"pos": pigeonholes[int(pigeon[1])], "state": "idle", "con": pigeon[4], "int": pigeon[3], "cha": pigeon[2], "hat": pigeon[5]} 
+				GameVariables.pigeon_state[str(pigeon[0])] = "pigeon_idle"
+			GameVariables.money = json["userData"][2]
+			GameVariables.items = {}
+			for hat in json['hats']:
+				if hat[1] > 0:
+					GameVariables.items[int(hat[0])] = hat[1]
+			_on_back_button_pressed()
 		_:
 			var request = request_queue.pop_front()
 			if request != null :
@@ -340,6 +373,10 @@ func _on_request_completed(result, response_code, headers, body):
 func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
+				
+func _dbpos_to_gamepos(pos):
+	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+	return translate_list[pos]
 
 func _on_stats_button_pressed():
 	stats_area.visible = !stats_area.visible
