@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dw5qmr7hag3qs"]
+[gd_scene load_steps=10 format=3 uid="uid://dw5qmr7hag3qs"]
 
 [ext_resource type="Texture2D" uid="uid://dwravo5ou75l4" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Norm.PNG" id="1_2jvd4"]
-[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="1_jcksw"]
 [ext_resource type="Texture2D" uid="uid://cnq25mahbs8rv" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Click.PNG" id="2_1a7wj"]
 [ext_resource type="Script" path="res://ShowScores.gd" id="2_05imo"]
 [ext_resource type="Texture2D" uid="uid://gow2i6ojmx5t" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Hover.PNG" id="3_0u4cu"]
 [ext_resource type="Texture2D" uid="uid://dal8cg5xciq7g" path="res://Art/Cross.png" id="3_je3rc"]
+[ext_resource type="Texture2D" uid="uid://cy2a3a8cstnf8" path="res://Art/Buttons/SmallButtons/SmallButtons/swap/Swap Norm.PNG" id="5_b85tk"]
+[ext_resource type="Texture2D" uid="uid://cl126ycgrf2f1" path="res://Art/Buttons/SmallButtons/SmallButtons/swap/Swap Click.PNG" id="6_uscbn"]
+[ext_resource type="Texture2D" uid="uid://b53gsgcq2hdce" path="res://Art/Buttons/SmallButtons/SmallButtons/swap/Swap Hover.PNG" id="7_rbocd"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_d31i1"]
 
@@ -27,7 +29,7 @@ script = ExtResource("2_05imo")
 [node name="Area" type="MeshInstance2D" parent="ShowScores"]
 visible = false
 self_modulate = Color(0.623529, 0.792157, 0.509804, 1)
-position = Vector2(911.375, -455.688)
+position = Vector2(911.375, -476.688)
 scale = Vector2(1550.75, 852.625)
 mesh = SubResource("QuadMesh_d31i1")
 
@@ -35,14 +37,14 @@ mesh = SubResource("QuadMesh_d31i1")
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 3.63279
+anchor_left = 4.81492
 anchor_top = -0.901525
-anchor_right = 3.63279
+anchor_right = 4.81492
 anchor_bottom = -0.901525
 offset_left = -751.625
-offset_top = -724.688
+offset_top = -745.688
 offset_right = -227.625
-offset_bottom = -616.688
+offset_bottom = -637.688
 theme_override_font_sizes/font_size = 50
 text = "CLICKER HIGSCORES:"
 horizontal_alignment = 1
@@ -53,14 +55,14 @@ metadata/_edit_use_anchors_ = true
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.303114
-anchor_top = 5.3913
-anchor_right = 1.19039
-anchor_bottom = 5.3913
+anchor_left = -0.248131
+anchor_top = 7.56606
+anchor_right = 1.24537
+anchor_bottom = 7.56606
 offset_left = 469.699
-offset_top = -1465.39
+offset_top = -1486.39
 offset_right = 993.699
-offset_bottom = -1357.39
+offset_bottom = -1378.39
 theme_override_font_sizes/font_size = 30
 text = "Username                Game                        Score                        Time"
 vertical_alignment = 1
@@ -70,32 +72,33 @@ metadata/_edit_use_anchors_ = true
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 4.87177
-anchor_top = 4.10567
-anchor_right = 4.87177
-anchor_bottom = 4.10567
+anchor_left = 4.91625
+anchor_top = -0.799146
+anchor_right = 4.50387
+anchor_bottom = -0.45934
 offset_left = -1100.63
-offset_top = -724.688
+offset_top = -745.688
 offset_right = -832.625
-offset_bottom = -616.688
+offset_bottom = -637.688
+scale = Vector2(0.76, 0.76)
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("1_jcksw")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("5_b85tk")
+texture_pressed = ExtResource("6_uscbn")
+texture_hover = ExtResource("7_rbocd")
 metadata/_edit_use_anchors_ = true
 
 [node name="ItemList" type="ItemList" parent="ShowScores"]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 4.27662
+anchor_left = 5.72336
 anchor_top = -0.370504
-anchor_right = 4.27662
+anchor_right = 5.72336
 anchor_bottom = -0.370504
 offset_left = -1293.5
-offset_top = -557.5
+offset_top = -578.5
 offset_right = -193.5
-offset_bottom = -108.5
+offset_bottom = -129.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -114,9 +117,9 @@ metadata/_edit_use_anchors_ = true
 [node name="Exit" type="TextureButton" parent="ShowScores"]
 visible = false
 layout_mode = 0
-offset_left = 1595.0
+offset_left = 1588.0
 offset_top = -882.0
-offset_right = 1686.0
+offset_right = 1679.0
 offset_bottom = -825.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_je3rc")
