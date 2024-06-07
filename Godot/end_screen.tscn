@@ -56,6 +56,8 @@ animations = [{
 position = Vector2(960, 540)
 texture = ExtResource("1_f8e3x")
 
+[node name="SFXs" type="AudioStreamPlayer2D" parent="."]
+
 [node name="EndManager" type="Node" parent="."]
 script = ExtResource("2_g2lfl")
 

@@ -97,7 +97,10 @@ texture = ExtResource("1_tukf1")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_yh6mw")
+volume_db = -30.0
 autoplay = true
+
+[node name="SFXs" type="AudioStreamPlayer2D" parent="."]
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
