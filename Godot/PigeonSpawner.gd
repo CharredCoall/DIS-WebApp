@@ -397,7 +397,7 @@ func _on_request_completed(result, response_code, headers, body):
 func _gamepos_to_dbid(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return GameVariables.pigeonholes.keys()[translate_list.find(pos)]
-				
+
 func _dbpos_to_gamepos(pos):
 	var translate_list = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 	return translate_list[pos]
