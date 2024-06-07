@@ -39,19 +39,22 @@ func _ready():
 	GameVariables.visiting = false
 	game.visible = true
 	set_end_scene_visibility(false)
-	randomize()
-	munch.initialize_chance(chance)
-	munch._respawn()
-	score_label.text = str(score) + " Points!"
 	cd_timer.connect("timeout", Callable(self, "_on_CdTimer_timeout"))
 	cd_timer.start(1)  # Start the countdown timer with 1 second intervals
-	cd_timer_label.text = str(count_down)  # Initialize the countdown label
+	cd_timer_label.text = str(count_down)
+	randomize()
+	background_music.stream = load("res://Art/SFX/count_downSFX.mp3")
+	background_music.play()
+	munch.initialize_chance(chance)
+	munch._respawn()
+	score_label.text = str(score) + " Points!"  # Initialize the countdown label
 
 func _on_CdTimer_timeout():
-	if count_down > 0:
-		cd_timer_label.text = str(count_down)
+	print(str(count_down))
+	if count_down > 1:
+		cd_timer_label.text = str(count_down-1)
 		count_down -= 1
-	elif count_down == 0:
+	elif count_down == 1:
 		cd_timer_label.text = "Go!"
 		count_down -= 1
 	else:
@@ -60,6 +63,8 @@ func _on_CdTimer_timeout():
 		start_game()
 
 func start_game():
+	background_music.stream = load("res://Art/Music/clicker music.mp3")
+	background_music.play()
 	game_timer.connect("timeout", Callable(self, "_on_Timer_timeout"))
 	game_timer.start(time)
 	change_label_randomly()
