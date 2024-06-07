@@ -138,7 +138,7 @@ func _on_game_timer_timeout():
 		
 		var INT = (GameVariables.tenants[GameVariables.visited_pigeon])["int"]
 		
-		var added_CHA = ceil((INT/20.)*GameVariables.current_score**0.08)
+		var added_CHA = ceil(0.5+(float(INT)/20.)*1.001**float(GameVariables.current_score))
 		var new_CHA = old_CHA + added_CHA
 		var money_earned = int(ceil(float((GameVariables.current_score)**0.75)/8. + 1.002**(GameVariables.current_score)))
 		
