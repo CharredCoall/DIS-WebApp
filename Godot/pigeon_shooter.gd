@@ -129,8 +129,6 @@ func _on_return_button_pressed():
 	GameVariables.visiting = false
 	GameVariables.visited_pigeon = null
 	
-	print("CLICK")
-	
 	_start_request("/load_game", HTTPClient.METHOD_GET, {"user":GameVariables.current_user}) #doesn't work :(
 
 #database stuff

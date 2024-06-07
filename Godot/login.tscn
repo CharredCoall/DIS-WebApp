@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cnwjaor4y88uj"]
+[gd_scene load_steps=26 format=3 uid="uid://cnwjaor4y88uj"]
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_u5bux"]
 [ext_resource type="VideoStream" path="res://Art/Videos/Dream_2.ogv" id="2_fsb6m"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dhum2327loq8u" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Norm.PNG" id="12_1uhga"]
 [ext_resource type="Texture2D" uid="uid://cxspam047f8d" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Click.PNG" id="13_1w7ba"]
 [ext_resource type="Texture2D" uid="uid://xq7rkwhjmg2h" path="res://Art/Buttons/BigButtons/BigButtons/Log In/LogIn Hover.PNG" id="14_abcrj"]
+[ext_resource type="AudioStream" uid="uid://c7ns1bkjm4ccy" path="res://Art/Music/Intro music.mp3" id="18_5wvli"]
 
 [sub_resource type="Animation" id="Animation_a61jg"]
 resource_name = "Got_Notif"
@@ -281,6 +282,10 @@ autowrap_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_4j1i4")
 }
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_5wvli")
+autoplay = true
 
 [connection signal="error" from="GameManager" to="GameManager/Notif" method="_show_notif"]
 [connection signal="pressed" from="GameManager/LoginTab/New user" to="GameManager/LoginTab" method="_new_login"]

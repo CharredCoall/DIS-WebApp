@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7ns1bkjm4ccy"
+path="res://.godot/imported/Intro music.mp3-539cee1f128400e44b49ffc777d46eee.mp3str"
+
+[deps]
+
+source_file="res://Art/Music/Intro music.mp3"
+dest_files=["res://.godot/imported/Intro music.mp3-539cee1f128400e44b49ffc777d46eee.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

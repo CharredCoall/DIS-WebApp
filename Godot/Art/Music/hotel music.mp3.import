@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d32ubys6q85k"
+path="res://.godot/imported/hotel music.mp3-c108e7a8c48315837f12365897f6de93.mp3str"
+
+[deps]
+
+source_file="res://Art/Music/hotel music.mp3"
+dest_files=["res://.godot/imported/hotel music.mp3-c108e7a8c48315837f12365897f6de93.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
