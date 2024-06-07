@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2711ioqoy2qw"]
+[gd_scene load_steps=5 format=3 uid="uid://dw5qmr7hag3qs"]
 
 [ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="1_jcksw"]
 [ext_resource type="Script" path="res://ShowScores.gd" id="2_05imo"]
