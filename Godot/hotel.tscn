@@ -27,9 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://dytyx2a5k6y4s" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Norm.PNG" id="22_pxkns"]
 [ext_resource type="Texture2D" uid="uid://7018bf78hfm4" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Click.PNG" id="23_e8oi7"]
 [ext_resource type="Texture2D" uid="uid://cnm4x4ijbb2by" path="res://Art/Buttons/SmallButtons/SmallButtons/delete/Delete Hover.PNG" id="24_6fr6s"]
-[ext_resource type="Texture2D" uid="uid://dg6a4ote08135" path="res://Art/PlayButton.png" id="7_p60b8"]
-[ext_resource type="Texture2D" uid="uid://kwv2opb4nhcf" path="res://Art/PlayButtonHover.png" id="8_labax"]
-[ext_resource type="PackedScene" uid="uid://dw5qmr7hag3qs" path="res://highscores.tscn" id="11_0wkqi"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_5u83m"]
 
