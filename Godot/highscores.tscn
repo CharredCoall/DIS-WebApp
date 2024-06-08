@@ -126,5 +126,7 @@ texture_normal = ExtResource("3_je3rc")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="ShowScores"]
 
+[node name="SFXs" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="ShowScores/TextureButton" to="ShowScores" method="_change_game"]
 [connection signal="pressed" from="ShowScores/Exit" to="ShowScores" method="_exit_pressed"]

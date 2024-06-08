@@ -1,6 +1,6 @@
 extends TextureButton
 
-@onready var sfx = get_parent().get_node("SFXs")
+@onready var sfx = $"../SFXs"
 
 var visibility = false
 var http_ready = true
