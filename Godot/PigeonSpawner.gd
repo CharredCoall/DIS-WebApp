@@ -45,15 +45,12 @@ func _ready():
 	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
 	
-	#TEMPORARY LOGIN
 	if GameVariables.current_user_id == -1:
 		get_tree().change_scene_to_file("res://login.tscn")
 		return
-		#$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
 	else:
 		rooms = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
 		full_rooms = []
-		
 		$HTTPRequest.request_completed.connect(self._on_request_completed)
 		timer.wait_time = randi_range(5,20)
 		timer.start()
