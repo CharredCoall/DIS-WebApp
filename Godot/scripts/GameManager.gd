@@ -28,7 +28,7 @@ var con:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["con"] #G
 var chance:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["cha"] #GameVariable for stats "con"/"cha"/"int"
 var intelligence:int = GameVariables.tenants[str(GameVariables.visited_pigeon)]["int"] #GameVariable for stats "con"/"cha"/"int"
 var damage = 20+ceil(float(con**1.35/5))
-var time:int = 10
+var time:int = 60
 var count_down = 3
 var game_started = false
 
