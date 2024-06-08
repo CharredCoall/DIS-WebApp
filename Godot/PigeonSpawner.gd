@@ -93,7 +93,6 @@ func _process(_delta):
 			
 			if str(new_pig.get_name()) not in GameVariables.tenants:
 				get_child(-1).queue_free()
-			print(get_children(true))
 			timer.wait_time = randi_range(7,22)
 			timer.start()
 
@@ -120,6 +119,7 @@ func _on_timer_timeout():
 		GameVariables.tenants[str(pigeon.get_name())] = room_pos
 		rooms.erase(room_pos)
 		full_rooms.append(room_pos)
+		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
 		
 	else:
 		var x 
@@ -128,7 +128,6 @@ func _on_timer_timeout():
 			-1:
 				x = 2030
 				y = 1220
-				print("wrong?")
 			0:
 				x = 2030
 				y = randi_range(-50, 610)
@@ -149,9 +148,6 @@ func _on_timer_timeout():
 				if pigeon.position.x < 1000 :
 					x = randi_range(1000, 2030)
 				y = -50 
-		print("Positions:")
-		print(pigeon.position)
-		print(str(x) + ", " + str(y))
 		room_pos = Vector2(x,y)
 	
 	GameVariables.pigeon_state[str(pigeon.get_name())] = "pigeon_fly"
@@ -162,19 +158,13 @@ func _on_timer_timeout():
 	if (room_pos.x - pigeon.position.x) > 0:
 		pigeon.scale.x = -1
 	
-	#Remove room 
-		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
 	
-	print('BIRB')
-	print(GameVariables.tenants)
-	print(rooms)
+	
 
 func _on_pigeon_clicked():
 	sfx.stream = load("res://Art/SFX/Pigeon_Clicked.wav")
 	sfx.play()
-	print(GameVariables.visiting)
 	if GameVariables.visiting == false and not GameVariables.shop_opened and not GameVariables.highscore_opened and not typeof(GameVariables.tenants[str(GameVariables.visited_pigeon)]) == TYPE_VECTOR2:
-		print(str(GameVariables.visited_pigeon))
 		clicked_pig = get_node(str(GameVariables.visited_pigeon))
 		var clicked_pos = GameVariables.tenants[str(GameVariables.visited_pigeon)]["pos"] 
 		
@@ -239,7 +229,6 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 			accessory_node.texture = load("res://Art/Items/placeholder_texture_2d.tres")
 			if clicked_pig.get_name() in GameVariables.pigeon_clothes:
 				previous_clothing = GameVariables.pigeon_clothes[clicked_pig.get_name()]
-				print(previous_clothing)
 			#could also just remove entry?
 			GameVariables.pigeon_clothes[str(clicked_pig.get_name())] = "res://Art/Items/placeholder_texture_2d.tres"
 			if previous_clothing != null and previous_clothing != "res://Art/Items/placeholder_texture_2d.tres":
@@ -285,7 +274,6 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 		
 
 	
-	print(GameVariables.pigeon_clothes)
 
 func  _on_delete_pressed():
 	sfx.stream = load("res://Art/SFX/Dead_Bird.wav")
@@ -363,6 +351,7 @@ func _on_request_completed(result, response_code, headers, body):
 			full_rooms.erase(GameVariables.tenants[str(clicked_pig.get_name())]["pos"])
 			rooms.append(GameVariables.tenants[str(clicked_pig.get_name())]["pos"])
 			clicked_pig.queue_free()
+			GameVariables.tenants = {}
 			GameVariables.current_user = json["userData"][1]
 			GameVariables.current_user_id = json["userData"][0]
 			GameVariables.data = json

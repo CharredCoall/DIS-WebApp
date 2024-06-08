@@ -8,6 +8,7 @@ extends Node2D
 @onready var animation_player = $Background/AnimationPlayer
 @onready var cooldown_progress_bar = $ProgressBar
 @onready var player = $Player
+@onready var bg_music = $BackgroundMusic
 
 @onready var sfx = $SFXs
 
@@ -35,7 +36,7 @@ var cooldown_duration
 
 func _ready():
 	sfx.stream = load("res://Art/SFX/count_downSFX.mp3")
-	sfx.volume_db = -20
+	sfx.volume_db = -25
 	sfx.play()
 	
 	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
@@ -52,8 +53,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(game_ended)
-	
 	if Input.is_action_just_pressed("Mouse_Left") :
 		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
 	if Input.is_action_just_released("Mouse_Left"):
@@ -61,8 +60,10 @@ func _process(delta):
 		
 	if Input.is_action_pressed("left") and player.position.x > 600:
 		player.position.x -= speed * delta
+		player.play("Shooter_run")
 	if Input.is_action_pressed("right") and player.position.x < 1300:
 		player.position.x += speed * delta
+		player.play("Shooter_run")
 	
 	cooldown_time -= delta
 	cooldown_progress_bar.value = cooldown_duration - cooldown_time
@@ -77,7 +78,7 @@ func _process(delta):
 		add_child(projectile)
 		cooldown_time = cooldown_duration
 	
-	#måske skal der ikke opdateres hvert sekund?
+	#mÃ¥ske skal der ikke opdateres hvert sekund?
 	score.text = " " + str(GameVariables.current_score)
 
 func _on_timer_timeout():
@@ -98,6 +99,10 @@ func _on_timer_timeout():
 		
 		count_down -= 1
 	else:
+		if bg_music.playing == false:
+			bg_music.play()
+			bg_music.volume_db = -35
+		
 		if cd_timer.wait_time > 0.8:
 			cd_timer.wait_time -= 0.1
 		
@@ -111,15 +116,19 @@ func _on_timer_timeout():
 		sfx.play()
 
 func _on_game_timer_timeout():
-	if seconds != 30:
+	if seconds < 30:
 		seconds += 1
 		game_timer.start()
 		time_left_label.text = "[center]" + str(int(time_left_label.text) - 1)
-	else: #game ended
-		sfx.stream = load("res://Art/SFX/winSFX.mp3")
-		sfx.volume_db = -15
+	if seconds > 29 and seconds < 34:  #buffer for game end
+		seconds += 1
+		game_timer.start()
+		time_left_label.text = "[center]0"
 		
+		game_ended = true
 		cd_timer.stop()
+	if seconds == 34: #game ended
+		
 		#just pretty stuff
 		count_down_label.add_theme_font_size_override("normal_font_size",160)
 		count_down_label.add_theme_constant_override("shadow_offset_y",30)
@@ -130,7 +139,8 @@ func _on_game_timer_timeout():
 		var INT = (GameVariables.tenants[GameVariables.visited_pigeon])["int"]
 		
 		var added_CHA = ceil((INT/20.)*GameVariables.current_score**0.08)
-		var new_CHA = old_CHA + added_CHA
+		var new_CHA = clamp(old_CHA + added_CHA, 0, 100)
+		added_CHA = new_CHA - old_CHA
 		var money_earned = int(ceil(float((GameVariables.current_score)**0.75)/8. + 1.002**(GameVariables.current_score)))
 		
 		count_down_label.text = " Times up!\n[font_size=140] Score: " + str(GameVariables.current_score) + "\n Lvl up! CHA: " + str(old_CHA) + " + " + str(added_CHA) + " = " + str(new_CHA) + "\n Earned " + str(money_earned) + "g" 
@@ -144,7 +154,12 @@ func _on_game_timer_timeout():
 func _on_clothing_line_area_body_entered(body):  #checks if clothing lands on line
 	body.landed = true
 
+func _on_player_animation_finished():
+	player.play("Shooter_idle")
+
 func _on_return_button_pressed():
+	sfx.stream = load("res://Art/SFX/clickSFX.wav")
+	sfx.play()
 	GameVariables.visiting = false
 	GameVariables.visited_pigeon = null
 	
