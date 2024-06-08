@@ -21,6 +21,11 @@ Run the code below to install the necessary modules.
  - Open your browser on Localhost:5000
  - Play the game!
 
+## Regex Usage
+ - WebApp.py, in the call_sql function, to substitute " and ' for the codes %22% and %27%, to protect the server from any sql injection attacks.
+ - In our gd scripts, the function _on_request_completed, used in different scripts to get headers.
+ - In showscores.gd, used to change the format of dates from how it looks in the server to how we want it to look.
+
 ## Gameplay Description
 The Pigeonhole Principle is a game about owning and improving pigeons to get better scores in the two minigames.
 This is done by playing the minigames and improving the individual pigeon's stats - constitution and chance.
