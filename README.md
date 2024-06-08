@@ -57,4 +57,11 @@ We have used a bunch of artwork, music, sound effects to make our game feel more
 We have made all the assets ourselved, except the music, which is copyright free music.
 All the sprites are digitally drawn, the sound effects we have recorded ourselves.
 
+### Links for the music we used
+ - Login Screen Music: https://www.youtube.com/watch?v=oOPRvxV3n0k&ab_channel=TomatoTune
+ - Main Menu Music: https://www.youtube.com/watch?v=IC5ps3qgSFs&ab_channel=bdProductions%7CMusicForVideos
+ - Clicker Game Music: https://pixabay.com/music/synthwave-lady-of-the-80x27s-128379/
+ - Shooter Game Music: https://pixabay.com/music/scary-childrens-tunes-creepy-devil-dance-166764/
+ - 3,2,1,Go! Sound effect: https://pixabay.com/sound-effects/321-go-8-bit-video-game-sound-version-1-145007/
+ - Victory Sound effetc: https://pixabay.com/sound-effects/goodresult-82807/
 
