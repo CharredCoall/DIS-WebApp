@@ -26,6 +26,10 @@ Run the code below to install the necessary modules.
  - In our gd scripts, the function _on_request_completed, used in different scripts to get headers.
  - In showscores.gd, used to change the format of dates from how it looks in the server to how we want it to look.
 
+## Stored Procedures and Functions
+All SQL calls are made with either stored procedures or functions.
+The stored procedures and function are in the database.
+
 ## Gameplay Description
 The Pigeonhole Principle is a game about owning and improving pigeons to get better scores in the two minigames.
 This is done by playing the minigames and improving the individual pigeon's stats - constitution and chance.
