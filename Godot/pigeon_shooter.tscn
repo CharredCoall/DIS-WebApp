@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://cm2onrku2rfc0"]
+[gd_scene load_steps=23 format=3 uid="uid://bn4t1onfm65ar"]
 
 [ext_resource type="Texture2D" uid="uid://fakixaw2howt" path="res://Art/Minigames/PigeonShooter/Background.png" id="1_81bxi"]
 [ext_resource type="Script" path="res://pigeon_shooter.gd" id="1_tesnd"]
 [ext_resource type="Texture2D" uid="uid://dtkoylrpu1mei" path="res://Art/Minigames/PigeonShooter/WomanThrow.png" id="2_lptqb"]
+[ext_resource type="AudioStream" uid="uid://c2bl1mhhesfth" path="res://Art/Music/clicker music.mp3" id="2_yh6mw"]
 [ext_resource type="Texture2D" uid="uid://i773s7xkau40" path="res://Art/Minigames/PigeonShooter/PigeonShooterSprite.png" id="4_4mdc2"]
 [ext_resource type="Texture2D" uid="uid://ngrxtkgei2nc" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Norm.PNG" id="5_2gouh"]
 [ext_resource type="Texture2D" uid="uid://bsbncxf1cw13" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Click.PNG" id="6_rmgtn"]
@@ -123,8 +124,6 @@ tracks/8/keys = {
 "update": 1,
 "values": [false, true]
 }
-<<<<<<< HEAD
-=======
 tracks/9/type = "audio"
 tracks/9/imported = false
 tracks/9/enabled = true
@@ -140,7 +139,6 @@ tracks/9/keys = {
 "times": PackedFloat32Array(0.5)
 }
 tracks/9/use_blend = true
->>>>>>> ea48cc873546ba1cd096ffe34ea640951237f0f7
 
 [sub_resource type="Animation" id="Animation_dar5d"]
 resource_name = "woman_throw"
@@ -326,13 +324,10 @@ stretch_mode = 3
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_op2ap")
-<<<<<<< HEAD
-=======
 volume_db = -30.0
 
 [node name="SFXs" type="AudioStreamPlayer" parent="."]
 volume_db = -15.0
->>>>>>> ea48cc873546ba1cd096ffe34ea640951237f0f7
 autoplay = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
