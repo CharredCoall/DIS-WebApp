@@ -45,7 +45,7 @@ func _on_body_entered(body):    #if hit by a projectile, add points
 		queue_free()
 		body.speed = 500
 		
-		sfx.play() #virker ikke?
+		sfx.play(0.31) #virker ikke?
 		
 		var sprite = body.get_node("PoopSprite")
 		

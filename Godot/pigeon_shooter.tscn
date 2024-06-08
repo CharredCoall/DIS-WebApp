@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cm2onrku2rfc0"]
+[gd_scene load_steps=21 format=3 uid="uid://cm2onrku2rfc0"]
 
 [ext_resource type="Texture2D" uid="uid://fakixaw2howt" path="res://Art/Minigames/PigeonShooter/Background.png" id="1_81bxi"]
 [ext_resource type="Script" path="res://pigeon_shooter.gd" id="1_tesnd"]
@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://i773s7xkau40" path="res://Art/Minigames/PigeonShooter/PigeonShooterSprite.png" id="4_4mdc2"]
 [ext_resource type="Texture2D" uid="uid://ngrxtkgei2nc" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Norm.PNG" id="5_2gouh"]
 [ext_resource type="Texture2D" uid="uid://bsbncxf1cw13" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Click.PNG" id="6_rmgtn"]
+[ext_resource type="Texture2D" uid="uid://by0egnbyigyju" path="res://Art/Minigames/PigeonShooter/animations/run/run1.png" id="6_uqk74"]
 [ext_resource type="Texture2D" uid="uid://cknkbquh0w1hu" path="res://Art/Buttons/SmallButtons/SmallButtons/Back/Back Hover.PNG" id="7_8q8u0"]
+[ext_resource type="Texture2D" uid="uid://b881ll4bqxrpm" path="res://Art/Minigames/PigeonShooter/animations/run/run2.png" id="7_cpe02"]
+[ext_resource type="Texture2D" uid="uid://biwx3skkd4v3h" path="res://Art/Minigames/PigeonShooter/animations/run/run3.png" id="8_h2bf3"]
 [ext_resource type="AudioStream" uid="uid://wgq317tx1cwg" path="res://Art/Music/shooter music.mp3" id="8_op2ap"]
 
 [sub_resource type="Animation" id="Animation_pl5h4"]
@@ -19,7 +22,7 @@ tracks/0/path = NodePath("CountDown:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -31,7 +34,7 @@ tracks/1/path = NodePath("CountDown:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.9),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(472, 306), Vector2(40, 85)]
@@ -43,7 +46,7 @@ tracks/2/path = NodePath("TimeLeft:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -55,7 +58,7 @@ tracks/3/path = NodePath("Score:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -67,7 +70,7 @@ tracks/4/path = NodePath("ProgressBar:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -79,7 +82,7 @@ tracks/5/path = NodePath("CountDown:size")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.9),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1000, 623), Vector2(1800, 1000)]
@@ -91,7 +94,7 @@ tracks/6/path = NodePath("CountDown:modulate")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.1, 0.9, 4, 5),
+"times": PackedFloat32Array(0, 0.3, 0.5, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -103,7 +106,7 @@ tracks/7/path = NodePath("ReturnButton:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(4, 5),
+"times": PackedFloat32Array(0.5, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
@@ -115,11 +118,29 @@ tracks/8/path = NodePath("ReturnButton:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(4),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true]
+"values": [false, true]
 }
+<<<<<<< HEAD
+=======
+tracks/9/type = "audio"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("BackgroundMusic")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0561,
+"stream": ExtResource("4_hgljp")
+}],
+"times": PackedFloat32Array(0.5)
+}
+tracks/9/use_blend = true
+>>>>>>> ea48cc873546ba1cd096ffe34ea640951237f0f7
 
 [sub_resource type="Animation" id="Animation_dar5d"]
 resource_name = "woman_throw"
@@ -152,6 +173,20 @@ animations = [{
 "loop": true,
 "name": &"Shooter_idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_uqk74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cpe02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_h2bf3")
+}],
+"loop": false,
+"name": &"Shooter_run",
+"speed": 8.0
 }]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_r2q3l"]
@@ -291,11 +326,19 @@ stretch_mode = 3
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_op2ap")
+<<<<<<< HEAD
+=======
+volume_db = -30.0
+
+[node name="SFXs" type="AudioStreamPlayer" parent="."]
+volume_db = -15.0
+>>>>>>> ea48cc873546ba1cd096ffe34ea640951237f0f7
 autoplay = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="timeout" from="CountDownTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
+[connection signal="animation_finished" from="Player" to="." method="_on_player_animation_finished"]
 [connection signal="body_entered" from="ClothingLineArea" to="." method="_on_clothing_line_area_body_entered"]
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]
