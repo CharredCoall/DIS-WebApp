@@ -1,6 +1,6 @@
 # Pigeonhole Principle
 The Pigeonhole Principle is a web-app game. The main game is developed in the Godot Engine, and using http requests, communicating with flask we are able to run this as a web-app.
-The game has a few flaws and unintentiolal gameplay features/bugs, but these are described below in the Gameplay Description section.
+The game has a few flaws and unintentional gameplay features/bugs, but these are described below in the Gameplay Description section.
 The database for our game is a way to keep track of all the data and potentially play and compete with other people.
 
 ## Requirements
@@ -23,21 +23,21 @@ Run the code below to install the necessary modules.
 
 ## Gameplay Description
 The Pigeonhole Principle is a game about owning and improving pigeons to get better scores in the two minigames.
-This is done by playing the minigames and improving the individual pigeon's stats - con and chance.
+This is done by playing the minigames and improving the individual pigeon's stats - constitution and chance.
 
 ### Login Screen
 When you enter the web-app there is a play button, this makes you be able to enter a username and a password, there are two buttons, one to create a new account and one to log back in to an existing account, you have the option of having the game "remember me" using cookies. 
 
 ### Main Menu
 The main menu is the game hub, where you can go into the shop, see highscores, customize pigeons and enter the games with a specific pigeon.
-In the bottom left is a button for the highscore menu, this keeps track of all accounts and their scores in both games, you can use the sqitch button to look at both games' highscores.
-In the bottom right is a button for the shop menu, where you can spend money to by cosmetics or hats for your pigeons, these have no gameplay benefits, but look great on your pigeons.
+In the bottom left is a button for the highscore menu, this keeps track of all accounts and their scores in both games, you can use the switch button to look at both games' highscores.
+In the bottom right is a button for the shop menu, where you can spend money to buy cosmetics or hats for your pigeons, these have no gameplay benefits, but look great on your pigeons.
 After waiting for a bit in the main menu there will slowly begin to fly in some pigeons, you can have up to three and once you have three birds occationally fly across the screen never landing in a "pigeonhole".
 After a pigeon has settled in a pigeonhole you can click on them, once clicked on the camera will zoom in on the specific pigeon. Now you can equip hats that you have bought and look at the pigeon's stats.
 There is also a play button this will give one of two options "Shooter" and "Clicker", clicking on one of the buttons will start that particular minigame.
 
 ### Minigames
-In our minigames, we won't tell how to get an optimal score on each of the games, but you will have to get optimal stats on the pigeons you play with, our game isn't designed so that you get better results purely by having better stats, but a combinatiopn of low and high stats might go a long way.
+In our minigames, we won't tell how to get an optimal score on each of the games, but you will have to get optimal stats on the pigeons you play with, our game isn't designed so that you get better results purely by having better stats, but a combination of low and high stats might go a long way.
 
 #### Shooter Minigame
 For this minigame, you use the left and right arrowkeys to move your pigeon as well as the spacebar to shoot.
