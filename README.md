@@ -32,7 +32,7 @@ When you enter the web-app there is a play button, this makes you be able to ent
 The main menu is the game hub, where you can go into the shop, see highscores, customize pigeons and enter the games with a specific pigeon.
 In the bottom left is a button for the highscore menu, this keeps track of all accounts and their scores in both games, you can use the switch button to look at both games' highscores.
 In the bottom right is a button for the shop menu, where you can spend money to buy cosmetics or hats for your pigeons, these have no gameplay benefits, but look great on your pigeons.
-After waiting for a bit in the main menu there will slowly begin to fly in some pigeons, you can have up to three and once you have three birds occationally fly across the screen never landing in a "pigeonhole".
+After waiting for a bit in the main menu there will slowly begin to fly in some pigeons, you can have up to three and once you have three birds occasionally fly across the screen never landing in a "pigeonhole".
 After a pigeon has settled in a pigeonhole you can click on them, once clicked on the camera will zoom in on the specific pigeon. Now you can equip hats that you have bought and look at the pigeon's stats.
 There is also a play button this will give one of two options "Shooter" and "Clicker", clicking on one of the buttons will start that particular minigame.
 
