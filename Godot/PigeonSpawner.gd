@@ -51,6 +51,9 @@ func _ready():
 		return
 		#$TEMPORARY_LOGIN._start_request("/user",HTTPClient.METHOD_GET,{"username": "testUser", "pass": "testPassword"})
 	else:
+		rooms = [Vector2(600,260),Vector2(1432,810),Vector2(1430,270)]
+		full_rooms = []
+		
 		$HTTPRequest.request_completed.connect(self._on_request_completed)
 		timer.wait_time = randi_range(5,20)
 		timer.start()
@@ -61,7 +64,6 @@ func _ready():
 		_place_pigeons()
 		
 func _place_pigeons():
-	
 	for saved_pig in GameVariables.tenants:
 		var the_pig = pigeon_scene.instantiate()
 		the_pig.position = GameVariables.tenants[saved_pig]["pos"]
@@ -119,10 +121,9 @@ func _on_timer_timeout():
 	if not rooms.is_empty():
 		room_pos = rooms.pick_random()
 		GameVariables.tenants[str(pigeon.get_name())] = room_pos
-		if not GameVariables.room_occupancy.has(str(room_pos)):
-			GameVariables.room_occupancy[str(room_pos)] = 1
-		else:
-			GameVariables.room_occupancy[str(room_pos)] += 1
+		rooms.erase(room_pos)
+		full_rooms.append(room_pos)
+		
 	else:
 		var x 
 		var y 
@@ -165,14 +166,10 @@ func _on_timer_timeout():
 		pigeon.scale.x = -1
 	
 	#Remove room 
-	if GameVariables.room_occupancy.get(str(room_pos)) == 1 and GameVariables.room_occupancy.has(str(room_pos)):
 		_start_request("/pigeon",HTTPClient.METHOD_POST, {"user": GameVariables.current_user_id, "pigeonhole": _gamepos_to_dbid(room_pos)})
-		rooms.erase(room_pos)
-		full_rooms.append(room_pos)
 	
 	print('BIRB')
 	print(GameVariables.tenants)
-	print(GameVariables.room_occupancy)
 	print(rooms)
 
 func _on_pigeon_clicked():
