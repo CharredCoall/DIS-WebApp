@@ -10,8 +10,8 @@ signal error
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW)
-	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
+	Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_ARROW, Vector2(10,10))
+	Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND, Vector2(10,10))
 	var window = JavaScriptBridge.get_interface("window")
 	
 	if window != null :
@@ -26,9 +26,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("Mouse_Left") :
-		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND)
+		Input.set_custom_mouse_cursor(load("res://Art/1.png"), Input.CURSOR_POINTING_HAND, Vector2(10,10))
 	if Input.is_action_just_released("Mouse_Left"):
-		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND)
+		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND, Vector2(10,10))
 
 func _open_logintab():
 	$AnimationPlayer.play("ZoomLoginTab")

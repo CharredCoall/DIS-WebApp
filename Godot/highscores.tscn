@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dw5qmr7hag3qs"]
+[gd_scene load_steps=10 format=3 uid="uid://b2711ioqoy2qw"]
 
 [ext_resource type="Texture2D" uid="uid://dwravo5ou75l4" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Norm.PNG" id="1_2jvd4"]
 [ext_resource type="Texture2D" uid="uid://cnq25mahbs8rv" path="res://Art/Buttons/BigButtons/BigButtons/Highscore/Scores Click.PNG" id="2_1a7wj"]
@@ -125,8 +125,6 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_je3rc")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="ShowScores"]
-
-[node name="SFXs" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="ShowScores/TextureButton" to="ShowScores" method="_change_game"]
 [connection signal="pressed" from="ShowScores/Exit" to="ShowScores" method="_exit_pressed"]
