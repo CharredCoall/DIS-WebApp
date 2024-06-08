@@ -127,6 +127,10 @@ body {
 
 	</head>
 	<body>
+		<audio id="intro">
+			<source src="static/Loading_Bird_Sound.wav" type="audio/wav">
+		</audio>
+
 		<canvas id="canvas">
 			HTML5 canvas appears to be unsupported in the current browser.<br >
 			Please try updating or use a different browser.
@@ -260,6 +264,7 @@ const engine = new Engine(GODOT_CONFIG);
 		}, displayFailureNotice);
 	}
 }());
+
 
 window.onbeforeunload = async function (e) {
 	await fetch(window.location.href + "/quit");

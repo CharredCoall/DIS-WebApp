@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/hotel music.mp3-c108e7a8c48315837f12365897f6d
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

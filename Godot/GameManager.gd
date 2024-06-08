@@ -19,8 +19,6 @@ func _ready():
 	if window != null :
 		var this_url = window.location.href
 		GameVariables.url = this_url
-
-
 	$HTTPRequest.request_completed.connect(self._on_request_completed)
 	_start_request("/user",HTTPClient.METHOD_GET,{})
 

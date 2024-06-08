@@ -37,7 +37,7 @@ func set_score(new_score):
 	money = int(20. + ceil(float(score)**0.9/5.))
 
 func level_up(oldcon:int, intelligence:int):
-	con = int(round(oldcon+ 0.5 + (float(intelligence)/20.)*1.005**score))
+	con = int(round(oldcon+ 1.5 + (float(intelligence)/20.)*1.005**score))
 
 func display_stuff(oldcon:int):
 	announce_label.text = "Times Up!"
