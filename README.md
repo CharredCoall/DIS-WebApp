@@ -42,7 +42,7 @@ In our minigames, we won't tell how to get an optimal score on each of the games
 #### Shooter Minigame
 For this minigame, you use the left and right arrowkeys to move your pigeon as well as the spacebar to shoot.
 Your goal is to hit the clothes being thrown by the lady on the right, getting 100 points for each one hit.
-You have 30 seconds to as as many as possible.
+You have 30 seconds to hit as many as possible.
 Once done you will recieve your score, level-up and the amount of money you have earned. Then you can head back to the main menu, where the score, stats and money should be updated.
 
 #### Clicker Minigame
