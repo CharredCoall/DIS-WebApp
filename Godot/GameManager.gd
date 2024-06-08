@@ -1,7 +1,5 @@
 extends Node
 
-@onready var sfx = get_parent().get_node("SFXs")
-
 var http_ready := true
 var last_route := ""
 var last_method 
@@ -33,19 +31,13 @@ func _process(delta):
 		Input.set_custom_mouse_cursor(load("res://Art/0.png"), Input.CURSOR_POINTING_HAND, Vector2(10,10))
 
 func _open_logintab():
-	sfx.stream = load("res://Art/SFX/clickSFX.wav")
-	sfx.play()
 	$AnimationPlayer.play("ZoomLoginTab")
 
 
 func _close_logintab():
-	sfx.stream = load("res://Art/SFX/clickSFX.wav")
-	sfx.play()
 	$AnimationPlayer.play_backwards("ZoomLoginTab")
 
 func _login_last_user():
-	sfx.stream = load("res://Art/SFX/clickSFX.wav")
-	sfx.play()
 	_start_request("/load_game",HTTPClient.METHOD_GET, {"user": last_user})
 
 func _start_request(route, method, data):

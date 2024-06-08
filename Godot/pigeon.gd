@@ -26,9 +26,8 @@ func _on_button_pressed():
 		
 		GameVariables.pigeon_state[str(get_name())] = "pigeon_touch"
 		
-		#animation_player.play("hat_touch")
 		sprite_animator.play("pigeon_touch")
-		
+	
 		GameVariables.visited_pigeon = button.get_parent().get_name()
 		
 		emit_signal("pigeon_clicked")
